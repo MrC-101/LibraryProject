@@ -1,0 +1,67 @@
+{% extends "layout.html" %} {% block headline %}
+<style>
+    table {
+        border-spacing: 0;
+    }
+
+    td {
+        padding: 2px;
+    }
+
+    td:first-child {
+        padding-right: 0px;
+    }
+
+    td:last-child {
+        padding-left: 0px;
+    }
+</style>
+{{ book.title }} {% endblock %} {% block subhead %} by
+<a href="{{url_for('main.bibliography', author=book.author) }}"
+    >{{ book.author }}</a
+>
+{% endblock %} {% block content %}
+<form
+    method="POST"
+    action="{{ url_for('main.edit_title', id=book.id) }}"
+    novalidate
+>
+    {{ form.csrf_token }} &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70,
+    value=book.title) }}{% for err in form.title.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %} <br /><br />&emsp;&emsp;&nbsp;Author: {{ form.author(size=70,
+    value=book.author) }} {% for err in form.author.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %} <br /><br />&emsp;Published: {{ form.first_publish(size=70,
+    value=book.first_publish) }} {% for err in form.first_publish.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %} <br /><br />&emsp;&emsp;&emsp;&nbsp;ISBN: {{ form.isbn(size=70,
+    value=book.isbn) }} {% for err in form.isbn.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}<br /><br />&emsp;&emsp;&ensp;Rating: {{ form.rating(size=70,
+    value=book.rating) }} {% for err in form.rating.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&emsp;{{ form.submit(class="btn btn-secondary btn-sm") }}
+    <button class="btn btn-secondary btn-sm">
+        <a
+            href="{{ url_for('main.home') }}"
+            style="text-decoration: none; color: white"
+            >Cancel</a
+        >
+    </button>
+    <button class="btn btn-danger btn-sm">
+        <a
+            href="{{ url_for('main.book_details', id=book.id) }}"
+            style="text-decoration: none; color: white"
+            >Delete</a
+        >
+    </button>
+</form>
+<hr />
+<br />
+
+{% endblock %}

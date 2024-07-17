@@ -1,0 +1,63 @@
+{% extends 'layout.html' %} {% block headline %} Add Title
+<style>
+    table {
+        border-spacing: 0;
+    }
+
+    td {
+        padding: 2px;
+    }
+
+    td:first-child {
+        padding-right: 0px;
+    }
+
+    td:last-child {
+        padding-left: 0px;
+    }
+</style>
+{% endblock %} {% block subhead %} {% for message in get_flashed_messages() %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+    ></button>
+</div>
+{% endfor %} {% endblock %} {% block content %}
+
+<form method="POST" action="{{ url_for('main.add_title') }}" novalidate>
+    {{ form.csrf_token }} &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70)
+    }}{% for err in form.title.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %} <br /><br />&emsp;&emsp;&nbsp;Author: {{ form.author(size=70)
+    }} {% for err in form.author.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %} <br /><br />&emsp;Published: {{ form.first_publish(size=70) }}
+    {% for err in form.first_publish.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %} <br /><br />&emsp;&emsp;&emsp;&nbsp;ISBN: {{ form.isbn(size=70)
+    }} {% for err in form.isbn.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}<br /><br />&emsp;&emsp;&ensp;Rating: {{ form.rating(size=70) }}
+    {% for err in form.rating.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{ form.submit(class="btn
+    btn-secondary btn-sm") }}
+    <button class="btn btn-secondary btn-sm">
+        <a
+            href="{{ url_for('main.home') }}"
+            style="text-decoration: none; color: white"
+            >Cancel</a
+        >
+    </button>
+</form>
+<hr />
+<br />
+
+{% endblock %}
