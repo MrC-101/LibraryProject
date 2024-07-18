@@ -20,11 +20,11 @@ in collection {% elif author_total == 1 %} {{ author_total }} book in collection
                 style="text-decoration: none; color: orangered"
                 >Delete</a
             ></button
-        >&ensp;▫️
+        >&ensp;▫️ {{book.first_publish}} -
         <a href="{{ url_for('main.edit_title', id=book.id) }}"
             >{{ book.title }}</a
         >
-        - {{ book.author }} - {{ book.rating }}/10
+        - {{ book.rating }}/10
     </li>
     {% endfor %} {% endif %}
 </ul>

@@ -20,6 +20,6 @@ def create_app():
     migrate.init_app(app, db)
 
     app.register_blueprint(main_bp)
-
+    
     return app
 
