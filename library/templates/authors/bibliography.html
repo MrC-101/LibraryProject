@@ -9,19 +9,19 @@ in collection {% elif author_total == 1 %} {{ author_total }} book in collection
     <li>
         <button class="btn btn-outline-secondary btn-sm">
             <a
-                href="{{ url_for('main.edit_title', id=book.id) }}"
+                href="{{ url_for('book.edit_title', id=book.id) }}"
                 style="text-decoration: none; color: darkgray"
                 >Edit</a
             >
         </button>
         <button class="btn btn-outline-danger btn-sm">
             <a
-                href="{{ url_for('main.book_details', id=book.id, book=book) }}"
+                href="{{ url_for('book.book_details', id=book.id, book=book) }}"
                 style="text-decoration: none; color: orangered"
                 >Delete</a
             ></button
         >&ensp;▫️ {{book.first_publish}} -
-        <a href="{{ url_for('main.edit_title', id=book.id) }}"
+        <a href="{{ url_for('book.edit_title', id=book.id) }}"
             >{{ book.title }}</a
         >
         - {{ book.rating }}/10

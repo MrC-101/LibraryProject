@@ -28,7 +28,7 @@
 </div>
 {% endfor %} {% endblock %} {% block content %}
 
-<form method="POST" action="{{ url_for('main.add_title') }}" novalidate>
+<form method="POST" action="{{ url_for('book.add_title') }}" novalidate>
     {{ form.csrf_token }} &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70)
     }}{% for err in form.title.errors %}
     <span style="color: red">{{ err }}</span>

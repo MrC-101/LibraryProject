@@ -5,7 +5,7 @@ block content %} &ensp;<label>Book:&emsp; {{ book.title }}</label><br />
 <br />
 &ensp;<button class="btn btn-danger btn-sm">
     <a
-        href="{{ url_for('main.delete_title', id=book.id) }}"
+        href="{{ url_for('book.delete_title', id=book.id) }}"
         style="text-decoration: none; color: white"
         >Delete</a
     >

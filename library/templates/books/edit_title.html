@@ -17,13 +17,13 @@
     }
 </style>
 {{ book.title }} {% endblock %} {% block subhead %} by
-<a href="{{url_for('main.bibliography', author=book.author) }}"
+<a href="{{url_for('author.bibliography', author=book.author) }}"
     >{{ book.author }}</a
 >
 {% endblock %} {% block content %}
 <form
     method="POST"
-    action="{{ url_for('main.edit_title', id=book.id) }}"
+    action="{{ url_for('book.edit_title', id=book.id) }}"
     novalidate
 >
     {{ form.csrf_token }} &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70,
@@ -55,7 +55,7 @@
     </button>
     <button class="btn btn-danger btn-sm">
         <a
-            href="{{ url_for('main.book_details', id=book.id) }}"
+            href="{{ url_for('book.book_details', id=book.id) }}"
             style="text-decoration: none; color: white"
             >Delete</a
         >
