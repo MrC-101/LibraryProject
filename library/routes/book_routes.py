@@ -9,6 +9,8 @@ book_bp = Blueprint('book',__name__)
 def add_title():
     books = Book.query.order_by('author').order_by('title').all()
     total = len(books)
+    authors = Author.query.all()
+    total_auth = len(authors)
     form = AddForm()
     if form.validate_on_submit():
         title = request.form['title']
@@ -25,12 +27,14 @@ def add_title():
         else:
             flash('That book is already in the library.')
     else:
-        return render_template('books/add_title.html', form=form, total=total)
+        return render_template('books/add_title.html', form=form, total=total, total_auth=total_auth)
 
 @book_bp.route('/edit_title', methods=['GET', 'POST'])
 def edit_title():
     books = Book.query.order_by('author').order_by('title').all()
     total = len(books)
+    authors = Author.query.all()
+    total_auth = len(authors)
     form = UpdateForm()
     id = request.args.get('id')
     book = Book.query.get(id)
@@ -43,7 +47,7 @@ def edit_title():
         db.session.commit()
         return redirect(url_for('main.home'))
 
-    return render_template('books/edit_title.html', form=form, book=book, total=total)
+    return render_template('books/edit_title.html', form=form, book=book, total=total, total_auth=total_auth)
 
 @book_bp.route('/delete_title/<int:id>', methods=['GET', 'POST'])
 def delete_title(id):
@@ -56,13 +60,17 @@ def delete_title(id):
 def book_details(id):
     books = Book.query.order_by('author').order_by('title').all()
     total = len(books)
+    authors = Author.query.all()
+    total_auth = len(authors)
     book = Book.query.get(id)
-    return render_template('books/book_details.html', book=book, total=total)
+    return render_template('books/book_details.html', book=book, total=total, total_auth=total_auth)
 
 @book_bp.route('/edit_rating', methods=['GET', 'POST'])
 def edit_rating():
     books = Book.query.order_by('author').order_by('title').all()
     total = len(books)
+    authors = Author.query.all()
+    total_auth = len(authors)
     id = request.args.get('id')
     book = Book.query.get(id)
     if request.method == 'POST':
@@ -70,4 +78,4 @@ def edit_rating():
         db.session.commit()
         return redirect(url_for('main.home'))
 
-    return render_template('books/edit_rating.html', book=book, total=total)
+    return render_template('books/edit_rating.html', book=book, total=total, total_auth=total_auth)

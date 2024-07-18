@@ -44,7 +44,7 @@
                         <li>
                             <a
                                 class="dropdown-item"
-                                style="color: grey; font-size: medium"
+                                style="font-size: medium"
                                 href="{{ url_for('book.add_title') }}"
                                 >Add Title</a
                             >
@@ -126,9 +126,9 @@
                 <li class="nav-item">
                     <a
                         class="nav-link"
-                        style="font-size: medium"
+                        style="color: white; font-size: medium"
                         href="{{ url_for('main.search') }}"
-                        >Search</a
+                        >Search 🔍</a
                     >
                 </li>
             </ul>
@@ -140,14 +140,30 @@
         >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a
-                        class="nav-link lead"
-                        style="color: white; font-size: medium"
-                        href="#"
-                    >
-                        {{ total }} books in catalog</a
-                    >
+                    <table>
+                        <tr>
+                            <a
+                                class="nav-link lead"
+                                style="color: white; font-size: 10px"
+                                href="#"
+                            >
+                                {{ total }} books in catalog</a
+                            >
+                        </tr>
+                        <tr>
+                            <a
+                                class="nav-link lead"
+                                style="color: white; font-size: 10px"
+                                href="#"
+                            >
+                                {{ total_auth }} authors in catalog</a
+                            >
+                        </tr>
+                    </table>
                 </li>
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"></li>
                 <li class="nav-item">
                     <a
                         class="nav-link"

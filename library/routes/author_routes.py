@@ -9,7 +9,10 @@ author_bp = Blueprint('author',__name__)
 def bibliography():
     books = Book.query.order_by('author').order_by('first_publish').order_by('title').all()
     total = len(books)
+    authors = Author.query.all()
+    total_auth = len(authors)
+    
     author = request.args.get('author')
     books = Book.query.filter_by(author=author).order_by('first_publish').order_by('title').all()
     author_total = len(books)
-    return render_template('authors/bibliography.html', books=books, author=author, total=total, author_total=author_total)
+    return render_template('authors/bibliography.html', books=books, author=author, total=total, author_total=author_total, total_auth=total_auth)

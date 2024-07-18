@@ -1,6 +1,6 @@
 {% extends "layout.html" %} {% block headline %} Books Library {% endblock %} {%
-block subhead %} {{ total }} books in the Catalogue {% endblock %} {% block
-content %}
+block subhead %} &nbsp;{{ total }} books - {{ total_auth }} authors in Total{%
+endblock %} {% block content %}
 <ul>
     {% if books|count == 0 %}
     <p>Library is empty</p>
