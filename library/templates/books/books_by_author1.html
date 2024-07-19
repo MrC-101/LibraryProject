@@ -6,22 +6,14 @@ endblock %} {% block content %}
     {% else %} {% for book in books %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
-            <a
-                href="{{ url_for('book.edit_title', id=book.id) }}"
-                style="text-decoration: none; color: darkgray"
-                >Edit</a
-            >
+            <a href="{{ url_for('book.edit_title', id=book.id) }}"
+                style="text-decoration: none; color: darkgray">Edit</a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
-            <a
-                href="{{ url_for('book.book_details', id=book.id, book=book) }}"
-                style="text-decoration: none; color: orangered"
-                >Delete</a
-            ></button
-        >&ensp;▫️ {{ book.title }} - {{ book.author }} - {{ book.rating
-        }}/10&ensp;<a href="{{ url_for('book.edit_rating', id=book.id) }}"
-            >Edit Rating</a
-        >
+            <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
+                style="text-decoration: none; color: orangered">Delete</a></button>&ensp;▫️ {{ book.title }} -
+        {{ book.author }} - {{ book.rating
+        }}/10&ensp;<a href="{{ url_for('book.edit_rating', id=book.id) }}">Edit Rating</a>
     </li>
     {% endfor %} {% endif %}
 </ul>

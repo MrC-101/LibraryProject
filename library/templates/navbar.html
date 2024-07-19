@@ -82,16 +82,31 @@
                         Authors
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
                         <li>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a
+                                class="dropdown-item"
+                                style="font-size: medium"
+                                href="{{ url_for('main.search') }}"
+                                >Edit Author</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                class="dropdown-item"
+                                style="font-size: medium"
+                                href="{{ url_for('main.search') }}"
+                                >Edit Author</a
+                            >
                         </li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#"
-                                >Something else here</a
+                            <a
+                                class="dropdown-item"
+                                style="color: red; font-size: medium"
+                                href="{{ url_for('main.search') }}"
+                                >Delete Author</a
                             >
                         </li>
                     </ul>
@@ -138,30 +153,6 @@
             class="collapse navbar-collapse justify-content-end"
             id="navbarSupportedContent"
         >
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <table>
-                        <tr>
-                            <a
-                                class="nav-link lead"
-                                style="color: white; font-size: 10px"
-                                href="#"
-                            >
-                                {{ total }} books in catalog</a
-                            >
-                        </tr>
-                        <tr>
-                            <a
-                                class="nav-link lead"
-                                style="color: white; font-size: 10px"
-                                href="#"
-                            >
-                                {{ total_auth }} authors in catalog</a
-                            >
-                        </tr>
-                    </table>
-                </li>
-            </ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"></li>
                 <li class="nav-item">
