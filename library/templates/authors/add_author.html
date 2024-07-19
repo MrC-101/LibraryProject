@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+{% block headline %}
+Add Author
+<style>
+    table {
+        border-spacing: 0;
+    }
+
+    td {
+        padding: 2px;
+    }
+
+    td:first-child {
+        padding-right: 0px;
+    }
+
+    td:last-child {
+        padding-left: 0px;
+    }
+</style>
+{% endblock %}
+
+{% block subhead %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('author.add_author') }}" novalidate>
+    {{ form.csrf_token }}
+    &emsp;&emsp;&ensp;&nbsp;Name: {{ form.name(size=70) }}
+    {% for err in form.name.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;Country: {{ form.country(size=70) }}
+    {% for err in form.country.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&ensp;Born: {{ form.born(size=4) }}
+    {% for err in form.born.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&ensp;Died: {{ form.died(size=4) }}
+    {% for err in form.died.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br /><br />
+    &emsp;&emsp;&emsp;&nbsp;Email: {{ form.email(size=70) }}
+    {% for err in form.email.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br /><br />
+    &emsp;&emsp;&emsp;&emsp;&nbsp;Bio: {{ form.bio(cols="73", rows="7") }}
+    {% for err in form.bio.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{ form.submit(class="btn
+    btn-secondary btn-sm") }}
+    <button class="btn btn-secondary btn-sm">
+        <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+    </button>
+</form>
+<hr />
+<br />
+{% endblock %}

@@ -7,7 +7,7 @@ book_bp = Blueprint('book',__name__)
 
 @book_bp.route('/add_title', methods=['GET', 'POST'])
 def add_title():
-    books = Book.query.order_by('author').order_by('title').all()
+    books = db.session.query(Book).all()
     total = len(books)
     authors = Author.query.all()
     total_auth = len(authors)
@@ -31,7 +31,7 @@ def add_title():
 
 @book_bp.route('/edit_title', methods=['GET', 'POST'])
 def edit_title():
-    books = Book.query.order_by('author').order_by('title').all()
+    books = db.session.query(Book).all()
     total = len(books)
     authors = Author.query.all()
     total_auth = len(authors)
@@ -58,7 +58,7 @@ def delete_title(id):
 
 @book_bp.route('/book_details/<int:id>')
 def book_details(id):
-    books = Book.query.order_by('author').order_by('title').all()
+    books = db.session.query(Book).all()
     total = len(books)
     authors = Author.query.all()
     total_auth = len(authors)

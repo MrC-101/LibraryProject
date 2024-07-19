@@ -6,14 +6,19 @@ get_flashed_messages() %}
     </svg>
     <div>{{ message }}</div>
 </div>
-{% endfor %} {% endblock %} {% block subhead %}
+{% endfor %}
+{% endblock %}
+
+{% block subhead %}
 <form method="POST" action="{{ url_for('main.search') }}" novalidate>
     {{ form.csrf_token }}
     <p>
+        {% if flag!='author' %}
         &nbsp;Title: &emsp;<br />
         {{ form.title(size=100) }} {% for err in form.title.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
+        {% endif %}
     </p>
     <p>
         &nbsp;Author:<br />
@@ -21,11 +26,12 @@ get_flashed_messages() %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
     </p>
-    <p>
+    <p>{% if flag!='author' %}
         &nbsp;ISBN:<br />
         {{ form.isbn(size=100) }} {% for err in form.isbn.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
+        {% endif %}
     </p>
     <br />
     {{ form.submit(class="btn btn-secondary btn-sm") }}
@@ -37,8 +43,7 @@ get_flashed_messages() %}
     {% else %} {% for book in books %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
-            <a href="{{ url_for('book.edit_title', id=book.id) }}"
-                style="text-decoration: none; color: darkgray">Edit
+            <a href="{{ url_for('book.edit_title', id=book.id) }}" style="text-decoration: none; color: darkgray">Edit
             </a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
@@ -49,8 +54,7 @@ get_flashed_messages() %}
         <a href="{{ url_for('book.edit_title', id=book.id) }}">{{ book.title
             }}</a>
         - {{book.first_publish}} -
-        <a
-            href="{{ url_for('author.bibliography', id=book.id, author=book.author) }}">{{
+        <a href="{{ url_for('author.bibliography', id=book.id, author=book.author) }}">{{
             book.author }}</a>
         - {{ book.rating }}/10
         {% endfor %}

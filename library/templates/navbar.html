@@ -1,125 +1,70 @@
-<nav
-    class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body"
-    data-bs-theme="dark"
->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
-        <a
-            class="navbar-brand"
-            style="font-size: x-large; font-weight: bold"
-            href="/"
-            >LIBRARY</a
-        >
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-        >
+        <a class="navbar-brand" style="font-size: x-large; font-weight: bold" href="/">LIBRARY</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active">
-                    <a
-                        class="nav-link"
-                        style="font-size: medium"
-                        href="{{ url_for('main.home') }}"
-                        >Home</a
-                    >
+                    <a class="nav-link" style="font-size: medium" href="{{ url_for('main.home') }}">Home</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         Books
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark bg-dark">
                         <li>
-                            <a
-                                class="dropdown-item"
-                                style="font-size: medium"
-                                href="{{ url_for('book.add_title') }}"
-                                >Add Title</a
-                            >
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('book.add_title') }}">Add
+                                Title</a>
                         </li>
                         <li>
-                            <a
-                                class="dropdown-item"
-                                style="font-size: medium"
-                                href="{{ url_for('main.search') }}"
-                                >Edit Title</a
-                            >
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.search', flag='book') }}">Edit Title</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a
-                                class="dropdown-item"
-                                style="color: red; font-size: medium"
-                                href="{{ url_for('main.search') }}"
-                                >Delete Title</a
-                            >
+                            <a class="dropdown-item" style="color: red; font-size: medium"
+                                href="{{ url_for('main.search') }}">Delete
+                                Title</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         Authors
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a
-                                class="dropdown-item"
-                                style="font-size: medium"
-                                href="{{ url_for('main.search') }}"
-                                >Edit Author</a
-                            >
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('author.add_author') }}">Add Author</a>
                         </li>
                         <li>
-                            <a
-                                class="dropdown-item"
-                                style="font-size: medium"
-                                href="{{ url_for('main.search') }}"
-                                >Edit Author</a
-                            >
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.search', flag='author') }}">Edit
+                                Author</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a
-                                class="dropdown-item"
-                                style="color: red; font-size: medium"
-                                href="{{ url_for('main.search') }}"
-                                >Delete Author</a
-                            >
+                            <a class="dropdown-item" style="color: red; font-size: medium"
+                                href="{{ url_for('main.search') }}">Delete
+                                Author</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                    >
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         Publishers
                     </a>
                     <ul class="dropdown-menu">
@@ -131,45 +76,26 @@
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#"
-                                >Something else here</a
-                            >
+                            <a class="dropdown-item" href="#">Something else
+                                here</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        style="color: white; font-size: medium"
-                        href="{{ url_for('main.search') }}"
-                        >Search 🔍</a
-                    >
+                    <a class="nav-link" style="color: white; font-size: medium"
+                        href="{{ url_for('main.search') }}">Search 🔍</a>
                 </li>
             </ul>
         </div>
-
-        <div
-            class="collapse navbar-collapse justify-content-end"
-            id="navbarSupportedContent"
-        >
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"></li>
                 <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        style="font-size: medium"
-                        href="{{ url_for('main.search') }}"
-                        >User</a
-                    >
+                    <a class="nav-link" style="font-size: medium" href="{{ url_for('main.search') }}">User</a>
                 </li>
                 <li class="nav-item">
-                    <a
-                        class="nav-link"
-                        style="font-size: medium; color: red"
-                        href="/init"
-                        >⚙️</a
-                    >
+                    <a class="nav-link" style="font-size: medium; color: red" href="/init">⚙️</a>
                 </li>
             </ul>
         </div>
