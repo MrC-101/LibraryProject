@@ -65,17 +65,17 @@ def book_details(id):
     book = Book.query.get(id)
     return render_template('books/book_details.html', book=book, total=total, total_auth=total_auth)
 
-@book_bp.route('/edit_rating', methods=['GET', 'POST'])
-def edit_rating():
-    books = Book.query.order_by('author').order_by('title').all()
-    total = len(books)
-    authors = Author.query.all()
-    total_auth = len(authors)
-    id = request.args.get('id')
-    book = Book.query.get(id)
-    if request.method == 'POST':
-        book.rating = request.form['rating']
-        db.session.commit()
-        return redirect(url_for('main.home'))
+# @book_bp.route('/edit_rating', methods=['GET', 'POST'])
+# def edit_rating():
+#     books = Book.query.order_by('author').order_by('title').all()
+#     total = len(books)
+#     authors = Author.query.all()
+#     total_auth = len(authors)
+#     id = request.args.get('id')
+#     book = Book.query.get(id)
+#     if request.method == 'POST':
+#         book.rating = request.form['rating']
+#         db.session.commit()
+#         return redirect(url_for('main.home'))
 
-    return render_template('books/edit_rating.html', book=book, total=total, total_auth=total_auth)
+#     return render_template('books/edit_rating.html', book=book, total=total, total_auth=total_auth)
