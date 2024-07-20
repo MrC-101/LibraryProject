@@ -1,24 +1,22 @@
-{% extends "layout.html" %} {% block headline %}
-<style>
-    table {
-        border-spacing: 0;
-    }
+{% extends "layout.html" %}
 
-    td {
-        padding: 2px;
-    }
+{% block headline %}
+{{ book.title }}
+{% endblock %}
 
-    td:first-child {
-        padding-right: 0px;
-    }
-
-    td:last-child {
-        padding-left: 0px;
-    }
-</style>
-{{ book.title }} {% endblock %} {% block subhead %} by
+{% block subhead %}
+<hr>
+&nbsp;by
 <a href="{{url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
-{% endblock %} {% block content %}
+- {{ book.authors[0].books|count }} books in the collection 
+<button type="button" class="btn btn-secondary"
+    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
+    <a style="color:white; text-decoration:none" href="{{ url_for('author.edit_author', id=book.authors[0].id) }}">Edit
+        Author </a>
+</button>
+{% endblock %}
+
+{% block content %}
 <form method="POST" action="{{ url_for('book.edit_title', id=book.id) }}" novalidate>
     {{ form.csrf_token }} &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70,
     value=book.title) }}{% for err in form.title.errors %}

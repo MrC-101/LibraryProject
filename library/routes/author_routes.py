@@ -2,6 +2,7 @@ from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Book, Author
 from library.forms import AddAuthorForm, EditAuthorForm
+import operator
 
 author_bp = Blueprint('author',__name__)
 
@@ -12,7 +13,10 @@ def bibliography():
     author_id = int(author_obj.id)
     # books = Book.query.filter_by(author=author).order_by('first_publish', 'title').all()
     author = db.session.query(Author).filter_by(fullname=author).first()
+    
     books = author.books
+    books.sort(key=operator.attrgetter('first_publish', 'title')) 
+    
     author_total = len(books)
     return render_template('authors/bibliography.html', books=books, author=author.fullname, author_total=author_total, author_id=author_id)
 
@@ -23,7 +27,6 @@ def add_author():
         name = request.form['name']
         country = request.form['country']
         city = request.form['city']
-        # author_obj = Author.query.filter_by(fullname=author).first()
         born = request.form['born']
         died = form.died.data
         email = form.email.data
@@ -46,7 +49,6 @@ def edit_author():
     if author.bio:
         form.bio.data=author.bio
     if form.validate_on_submit():
-        print('after POST',author.fullname)
         if author:
             author.fullname = form.name.data
             author.country = form.country.data
@@ -58,7 +60,5 @@ def edit_author():
         
             db.session.commit()
             return redirect(url_for('main.home'))
-        else:
-            print('author not found!!!!!!!!!')
 
     return render_template('authors/edit_author.html', id=id, form=form, author=author)

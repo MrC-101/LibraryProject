@@ -2,7 +2,7 @@ from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Book, Author
 from library.forms import AddForm, SearchForm, UpdateForm
-
+import operator
 
 main_bp = Blueprint('main',__name__)
 
@@ -113,16 +113,19 @@ def home():
     authors_totals = Author.query.all()
     total_auth = len(authors_totals)
     total = len(books_totals)
-    
+    flag = request.args.get('flag')
     authors = db.session.query(Author).order_by('fullname').all()
     # books=[]
     # for author in authors:
     #     for book in author.books:
     #         books.append(book)
     books=[book for author in authors for book in author.books]
-    import operator
-    books.sort(key=operator.attrgetter('author', 'first_publish', 'title')) 
-    return render_template('index.html', books=books, total_auth=total_auth,total=total, title='')
+    books.sort(key=operator.attrgetter('author', 'first_publish', 'title'))
+    
+    if flag == 'authors_list':
+        return render_template('index.html', books=books, authors=authors, flag=flag, total=total, total_auth=total_auth)
+    else: 
+        return render_template('index.html', books=books, title='', total=total, total_auth=total_auth)
 
 @main_bp.route('/search', methods=['GET', 'POST'])
 def search():
@@ -175,9 +178,6 @@ def search():
             
             elif Book.query.filter_by(isbn=isbn_returned) and isbn_returned is not '':
                 book = Book.query.filter_by(isbn=isbn_returned).first()
-                for _ in range(10):
-                    print(isbn_returned)
-                    print('here here 2')
                 return redirect(url_for('author.bibliography', author=book.author))
             
             else:

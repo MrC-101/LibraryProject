@@ -41,7 +41,11 @@
                         aria-expanded="false">
                         Authors
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-dark">
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.home', flag='authors_list') }}">List Authors</a>
+                        </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
                                 href="{{ url_for('author.add_author') }}">Add Author</a>
@@ -67,7 +71,7 @@
                         aria-expanded="false">
                         Publishers
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu dropdown-menu-dark bg-dark">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li>
                             <a class="dropdown-item" href="#">Another action</a>
@@ -88,8 +92,8 @@
                 </li>
             </ul>
         </div>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-right float-right">
                 <li class="nav-item"></li>
                 <li class="nav-item">
                     <a class="nav-link" style="font-size: medium" href="{{ url_for('main.search') }}">User</a>

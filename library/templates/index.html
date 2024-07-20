@@ -1,18 +1,42 @@
 {% extends "layout.html" %}
-{% block headline %} Books Library {% endblock %}
+
+{% block headline %}
+{% if flag != 'authors_list' %}
+Books Library
+{% else %}
+Authors List
+{% endif %}
+{% endblock %}
+
 {%block subhead %}
+
 <hr />
 &nbsp;{{ total }} books - {{ total_auth }} authors in Total
+
+{% if flag != 'authors_list' %}
+<button type="button" class="btn btn-secondary float-right"
+    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
+    <a style="color:white; text-decoration:none" href="{{ url_for('main.home', flag='authors_list') }}">
+        Authors List </a>
+</button>
+
+{% else %}
+
+<button type="button" class="btn btn-secondary float-right"
+    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
+    <a style="color:white; text-decoration:none" href="{{ url_for('main.home') }}">
+        Books List </a>
+</button>
+{% endif %}
 {% endblock %}
+
 {%block content %}
+{% if flag != 'authors_list' %}
 <ul>
     {% if books|count == 0 %}
     <p>Library is empty</p>
     {% else %}
-    {% set title='random' %}
     {% for book in books %}
-    {% if book.title|lower != title|lower %}
-
     <li>
         <button class="btn btn-outline-secondary btn-sm">
             <a href="{{ url_for('book.edit_title', id=book.id) }}"
@@ -23,7 +47,7 @@
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
         <a href="{{ url_for('book.edit_title', id=book.id) }}">{{ book.title
-                                }}</a>
+                                    }}</a>
         - {{book.first_publish}} -
         {% for author in book.authors %}
         <a href="{{ url_for('author.bibliography', id=book.id, author=author.fullname) }}">
@@ -31,10 +55,33 @@
         {% endfor %}
         - {{ book.rating }}/10
     </li>
-    {% set title = book.title|lower %}
-    {%endif%}
     {% endfor %}
     {% endif %}
 </ul>
 <br />
+{% else %}
+<ul>
+    {% if authors|count == 0 %}
+    <p>Library is empty</p>
+
+    {% else %}
+
+    {% for author in authors %}
+    <li>
+        <button class="btn btn-outline-secondary btn-sm">
+            <a href="{{ url_for('author.edit_author', id=author.id) }}"
+                style="text-decoration: none; color: darkgray">Edit</a>
+        </button>
+        <button class="btn btn-outline-danger btn-sm">
+            <a href="#" style="text-decoration: none; color: orangered">Delete</a>
+        </button>&ensp;▫️
+        <a href="{{ url_for('author.edit_author', id=author.id) }}">{{ author.fullname}}</a>
+        - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - {{author.books|count}} books in
+        collection
+    </li>
+    {% endfor %}
+    {% endif %}
+</ul>
+<br />
+{% endif %}
 {% endblock %}
