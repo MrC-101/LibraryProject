@@ -44,6 +44,12 @@ Add Author
     {% endfor %}
     <br />
     <br />
+    &emsp;&emsp;&emsp;&ensp;&nbsp;City: {{ form.city(size=70) }}
+    {% for err in form.city.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
     &emsp;&emsp;&emsp;&ensp;Born: {{ form.born(size=4) }}
     {% for err in form.born.errors %}
     <span style="color: red">{{ err }}</span>

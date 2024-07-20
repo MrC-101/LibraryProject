@@ -19,9 +19,15 @@ def add_title():
         rating = request.form['rating']
         first_publish = form.first_publish.data
         isbn = form.isbn.data
+        provisional_author = db.session.query(Author).filter_by(fullname=request.form['plusauthor']).first()        
         if not Book.query.filter_by(title=title, author=author, isbn=isbn).first():
             new_book = Book(title=title, author=author, first_publish=first_publish, isbn=isbn, rating=rating, authors=[author_obj])
             db.session.add(new_book)
+            if provisional_author:
+                new_book.authors.append(provisional_author)
+                form.plusauthor.data = ''
+            else:
+                form.plusauthor.data = ''
             db.session.commit()
             return redirect(url_for('main.home'))
         else:
@@ -41,6 +47,12 @@ def edit_title():
     if form.validate_on_submit():
         book.title = request.form['title']
         book.author = request.form['author']
+        provisional_author = db.session.query(Author).filter_by(fullname=request.form['plusauthor']).first()
+        if provisional_author:
+            book.authors.append(provisional_author)
+            form.plusauthor.data = ''
+        else:
+            form.plusauthor.data = ''
         book.isbn = request.form['isbn']
         book.first_publish = request.form['first_publish']
         book.rating = request.form['rating']

@@ -32,6 +32,7 @@ class Author(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fullname = db.Column(db.String, nullable=False)
     country = db.Column(db.String, default='', nullable=True)
+    city = db.Column(db.String, default='', nullable = True)
     born = db.Column(db.String(4), default='', nullable=True)
     died = db.Column(db.String(4), default='', nullable=True)
     bio = db.Column(db.Text, default='', nullable=True)

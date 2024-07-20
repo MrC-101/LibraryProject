@@ -8,6 +8,22 @@ main_bp = Blueprint('main',__name__)
 
 @main_bp.route('/init')
 def init():
+
+    # books = db.session.query(Book).filter_by(title='First Kiss').all()
+    # for book in books:
+    #     for author in book.authors:
+    #         print(author.fullname, book.title, book.id)
+                
+    # for author in book.authors:
+    #     print(author.fullname)
+        
+    # for author in book.authors:
+    #     print(author.fullname, book.title, book.id)
+            
+    # MrC = db.session.query(Author).filter_by(fullname='MrC').first()
+    # book = db.session.query(Book).filter_by(id=7).first()
+    # book.authors.append(MrC)
+    # db.session.commit()
     # author = db.session.query(Author).get(51)
     # print(author.books)
     # author = db.session.query(Author).get(1)
@@ -90,15 +106,23 @@ def init():
     # print(book)
     # print(book.author_lname)
     # print(book.authors.author.id)
-    
+
 @main_bp.route('/')
 def home():
-    books = db.session.query(Book).order_by('author', 'first_publish', 'title').all()
-    authors = Author.query.all()
-    total_auth = len(authors)
-    total = len(books)
-    return render_template('index.html', books=books, total_auth=total_auth, total=total)
-
+    books_totals = db.session.query(Book).order_by('author', 'first_publish', 'title').all()
+    authors_totals = Author.query.all()
+    total_auth = len(authors_totals)
+    total = len(books_totals)
+    
+    authors = db.session.query(Author).order_by('fullname').all()
+    # books=[]
+    # for author in authors:
+    #     for book in author.books:
+    #         books.append(book)
+    books=[book for author in authors for book in author.books]
+    import operator
+    books.sort(key=operator.attrgetter('author', 'first_publish', 'title')) 
+    return render_template('index.html', books=books, total_auth=total_auth,total=total, title='')
 
 @main_bp.route('/search', methods=['GET', 'POST'])
 def search():
@@ -117,6 +141,8 @@ def search():
             isbn_returned = form.isbn.data
             form.title.data = ''
             form.author.data = ''
+            form.isbn.data = ''
+            
             if Book.query.filter_by(title=title_returned, author=author_returned).first():
                 book = Book.query.filter_by(title=title_returned).filter_by(author=author_returned).first()
                 return redirect(url_for('book.edit_title', id=book.id, total=total, total_auth=total_auth))
@@ -130,26 +156,32 @@ def search():
                     book = Book.query.filter_by(title=title_returned).first()
                     return redirect(url_for('book.edit_title', author=book.author, id=book.id, total=total, total_auth=total_auth))
             
-            elif Book.query.filter_by(author=author_returned).first() and not Book.query.filter_by(title=title_returned).first():
+            elif Book.query.filter_by(author=author_returned).first() and not Book.query.filter_by(title=title_returned).first() or Author.query.filter_by(fullname=author_returned).first():
                 author_obj = Author.query.filter_by(fullname=author_returned).first()
-                print(author_obj.id)
                 books = Book.query.filter_by(author=author_returned).all()
-                
+          
                 if len(books) > 1:
                     form = SearchForm()
-                    print(author_returned)
+                    for _ in range(10):
+                        print('here here 1')
                     return redirect(url_for('author.bibliography', author=author_returned, author_id=author_obj.id, form=form, books=books, total=total, total_auth=total_auth))
                 
                 elif len(books) == 1:
                     book = Book.query.filter_by(author=author_returned).first()
                     return redirect(url_for('book.edit_title', author=author_returned, author_id=author_obj.id, id=book.id, total=total, total_auth=total_auth))
+                
+                else:
+                    return redirect(url_for('author.edit_author', author=author_returned, id=author_obj.id))
             
-            elif Book.query.filter_by(isbn=isbn_returned):
+            elif Book.query.filter_by(isbn=isbn_returned) and isbn_returned is not '':
                 book = Book.query.filter_by(isbn=isbn_returned).first()
-                return redirect(url_for('author.bibliography', author=book.author, total=total, total_auth=total_auth))
+                for _ in range(10):
+                    print(isbn_returned)
+                    print('here here 2')
+                return redirect(url_for('author.bibliography', author=book.author))
             
             else:
-                flash('Book not found')
+                flash('Nothing found in the Database')
                 books = Book.query.order_by('author').all()
                 form = SearchForm()
                 return render_template('search.html', form=form, books=books, total=total, total_auth=total_auth)

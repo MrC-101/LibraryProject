@@ -9,7 +9,10 @@
     {% if books|count == 0 %}
     <p>Library is empty</p>
     {% else %}
+    {% set title='random' %}
     {% for book in books %}
+    {% if book.title|lower != title|lower %}
+
     <li>
         <button class="btn btn-outline-secondary btn-sm">
             <a href="{{ url_for('book.edit_title', id=book.id) }}"
@@ -20,12 +23,16 @@
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
         <a href="{{ url_for('book.edit_title', id=book.id) }}">{{ book.title
-                        }}</a>
+                                }}</a>
         - {{book.first_publish}} -
-        <a href="{{ url_for('author.bibliography', id=book.id, author=book.author) }}">
-            {{ book.author }}</a>
+        {% for author in book.authors %}
+        <a href="{{ url_for('author.bibliography', id=book.id, author=author.fullname) }}">
+            {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
+        {% endfor %}
         - {{ book.rating }}/10
     </li>
+    {% set title = book.title|lower %}
+    {%endif%}
     {% endfor %}
     {% endif %}
 </ul>

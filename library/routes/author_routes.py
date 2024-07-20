@@ -7,19 +7,14 @@ author_bp = Blueprint('author',__name__)
 
 @author_bp.route('/bibliography', methods=['GET', 'POST'])
 def bibliography():
-    books = db.session.query(Book).all()
-    total = len(books)
-    authors = Author.query.all()
-    total_auth = len(authors)
-    
     author = request.args.get('author')
-   
     author_obj = Author.query.filter_by(fullname=author).first()
     author_id = int(author_obj.id)
-    print('int id:',author_id)
-    books = Book.query.filter_by(author=author).order_by('first_publish', 'title').all()
+    # books = Book.query.filter_by(author=author).order_by('first_publish', 'title').all()
+    author = db.session.query(Author).filter_by(fullname=author).first()
+    books = author.books
     author_total = len(books)
-    return render_template('authors/bibliography.html', books=books, author=author, total=total, author_total=author_total, total_auth=total_auth, author_id=author_id)
+    return render_template('authors/bibliography.html', books=books, author=author.fullname, author_total=author_total, author_id=author_id)
 
 @author_bp.route('/add_author', methods=['GET', 'POST'])
 def add_author():
@@ -27,13 +22,14 @@ def add_author():
     if form.validate_on_submit():
         name = request.form['name']
         country = request.form['country']
+        city = request.form['city']
         # author_obj = Author.query.filter_by(fullname=author).first()
         born = request.form['born']
         died = form.died.data
         email = form.email.data
         bio = form.bio.data
         if not Author.query.filter_by(fullname=name, country=country, born=born).first():
-            new_author = Author(fullname=name, country=country, born=born, died=died, email=email, bio=bio)
+            new_author = Author(fullname=name, country=country, city=city, born=born, died=died, email=email, bio=bio)
             db.session.add(new_author)
             db.session.commit()
             return redirect(url_for('main.home'))
@@ -46,9 +42,7 @@ def add_author():
 def edit_author():
     form = EditAuthorForm()
     id = request.args.get('id')
-    print(id)
     author = Author.query.get(id)
-    print(author.fullname)
     if author.bio:
         form.bio.data=author.bio
     if form.validate_on_submit():
@@ -56,6 +50,7 @@ def edit_author():
         if author:
             author.fullname = form.name.data
             author.country = form.country.data
+            author.city = form.city.data
             author.born = form.born.data
             author.died = form.died.data
             author.email = form.email.data
