@@ -1,6 +1,8 @@
 {% extends "layout.html" %} {% block headline %} Book Details {% endblock %} {%
 block content %} &ensp;<label>Book:&emsp; {{ book.title }}</label><br />
-&ensp;<label>Author: {{ book.author }}</label><br />
+{% for author in book.authors %}
+&ensp;<label>Author: {{ author.fullname }}</label><br />
+{% endfor %}
 &ensp;<label>Rating:&nbsp; {{ book.rating }}</label><br />
 <br />
 &ensp;<button class="btn btn-danger btn-sm">

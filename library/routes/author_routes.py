@@ -1,6 +1,6 @@
 from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
-from library.models import Book, Author
+from library.models import Author, Book
 from library.forms import AddAuthorForm, EditAuthorForm
 import operator
 
@@ -62,3 +62,22 @@ def edit_author():
             return redirect(url_for('main.home'))
 
     return render_template('authors/edit_author.html', id=id, form=form, author=author)
+
+@author_bp.route('/delete_author/<int:id>', methods=['GET', 'POST'])
+def delete_author(id):
+    author = db.session.query(Author).get(id)
+    for book in author.books:
+        if len(book.authors) is 1:
+            db.session.delete(book)
+            db.session.commit()
+    for book in author.books:
+        book.authors.remove(author)
+        book.author = book.authors[0].fullname
+    db.session.delete(author)
+    db.session.commit()
+    return redirect(url_for('main.home', flag='authors_list'))
+
+@author_bp.route('/author_details/<int:id>')
+def author_details(id):
+    author = db.session.query(Author).get(id)
+    return render_template('authors/author_details.html', author=author)

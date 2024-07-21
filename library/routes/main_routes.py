@@ -1,14 +1,21 @@
 from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Book, Author
-from library.forms import AddForm, SearchForm, UpdateForm
+from library.forms import SearchForm
 import operator
 
 main_bp = Blueprint('main',__name__)
 
 @main_bp.route('/init')
 def init():
-
+    book = db.session.query(Book).get(202)
+    print(book.authors)
+    # author=db.session.query(Author).get(60)
+    # print(author.fullname)
+    # print('auth books: ', len(author.books))
+    # print('b1 auths: ', len(author.books[0].authors))
+    # print('b2 auths: ', len(author.books[1].authors))
+    # print('b3 auths: ', len(author.books[2].authors))
     # books = db.session.query(Book).filter_by(title='First Kiss').all()
     # for book in books:
     #     for author in book.authors:
@@ -115,13 +122,13 @@ def home():
     total = len(books_totals)
     flag = request.args.get('flag')
     authors = db.session.query(Author).order_by('fullname').all()
-    # books=[]
-    # for author in authors:
-    #     for book in author.books:
-    #         books.append(book)
-    books=[book for author in authors for book in author.books]
-    books.sort(key=operator.attrgetter('author', 'first_publish', 'title'))
-    
+    # # books=[]
+    # # for author in authors:
+    # #     for book in author.books:
+    # #         books.append(book)
+    # books=[book for author in authors for book in author.books]
+    # books.sort(key=operator.attrgetter('author', 'first_publish', 'title'))
+    books = db.session.query(Book).order_by('author', 'first_publish', 'title').all()
     if flag == 'authors_list':
         return render_template('index.html', books=books, authors=authors, flag=flag, total=total, total_auth=total_auth)
     else: 

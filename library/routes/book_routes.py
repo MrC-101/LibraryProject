@@ -70,12 +70,8 @@ def delete_title(id):
 
 @book_bp.route('/book_details/<int:id>')
 def book_details(id):
-    books = db.session.query(Book).all()
-    total = len(books)
-    authors = Author.query.all()
-    total_auth = len(authors)
     book = Book.query.get(id)
-    return render_template('books/book_details.html', book=book, total=total, total_auth=total_auth)
+    return render_template('books/book_details.html', book=book)
 
 # @book_bp.route('/edit_rating', methods=['GET', 'POST'])
 # def edit_rating():

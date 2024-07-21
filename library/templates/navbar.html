@@ -17,6 +17,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark bg-dark">
                         <li>
+                            <a class="dropdown-item" style="font-size: medium" href="{{ url_for('main.home') }}">List
+                                Titles</a>
+                        </li>
+                        <li>
+                        <li>
                             <a class="dropdown-item" style="font-size: medium"
                                 href="{{ url_for('book.add_title') }}">Add
                                 Title</a>
@@ -52,7 +57,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.search', flag='author') }}">Edit
+                                href="{{ url_for('main.search', flag='authors_list') }}">Edit
                                 Author</a>
                         </li>
                         <li>
@@ -60,7 +65,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="color: red; font-size: medium"
-                                href="{{ url_for('main.search') }}">Delete
+                                href="{{ url_for('main.search', flag='authors_list') }}">Delete
                                 Author</a>
                         </li>
                     </ul>
