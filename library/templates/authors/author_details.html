@@ -3,18 +3,21 @@
 {% block headline %} Author Details {% endblock %}
 
 {%block content %}
-&ensp;<label>Author:&emsp; {{ author.fullname }}</label><br />
-&ensp;<label>Country: {{ author.country }}</label><br />
-&ensp;<label>City:&nbsp; {{ author.city }}</label><br />
-&ensp;<label>Born:&nbsp; {{ author.born }}</label><br />
-&ensp;<label>Died:&nbsp; {{ author.died }}</label><br />
-&ensp;<label>Books:&nbsp; {{ author.books|count }} currently</label><br />
+&ensp;<label>Author:&emsp;{{ author.fullname }}</label><br />
+&ensp;<label>Country:&ensp;{{ author.country }}</label><br />
+&ensp;<label>City:&emsp;&emsp;&nbsp;{{ author.city }}</label><br />
+&ensp;<label>Born:&emsp;&emsp;{{ author.born }}</label><br />
+&ensp;<label>Died:&emsp;&emsp;{{ author.died }}</label><br />
+&ensp;<label>Books:&emsp;&nbsp;{{ author.books|count }} currently</label><br />
 <br />
-&ensp;<button class="btn btn-danger btn-sm">
-    <a href="{{ url_for('author.delete_author', id=author.id) }}" style="text-decoration: none; color: white">Delete</a>
+&ensp;<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('author.edit_author', id=author.id) }}" style="text-decoration: none; color: white">Edit</a>
 </button>
 <button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('main.home', flag='auhtors_list') }}" style="text-decoration: none; color: white">Cancel</a>
+    <a href="{{ url_for('main.home', flag='authors_list') }}" style="text-decoration: none; color: white">Cancel</a>
+</button>
+<button class="btn btn-danger btn-sm">
+    <a href="{{ url_for('author.delete_author', id=author.id) }}" style="text-decoration: none; color: white">Delete</a>
 </button>
 <hr />
 <br />

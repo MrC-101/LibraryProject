@@ -1,22 +1,32 @@
-{% extends "layout.html" %} {% block headline %} Book Details {% endblock %} {%
-block content %} &ensp;<label>Book:&emsp; {{ book.title }}</label><br />
-&ensp;<label>Author: {{ book.author }}</label><br />
+{% extends "layout.html" %}
+
+{% block headline %} Book Details {% endblock %}
+
+{%block content %}
+&ensp;<label>Title:&emsp;&emsp;&ensp;&emsp;{{ book.title }}</label><br />
+&ensp;<label>Author: &emsp;&ensp;&ensp;{{ book.author }}</label><br />
 {% for author in book.authors %}
 {% if author.fullname != book.author %}
-&ensp;<label>Co-Author: {{ author.fullname }}</label><br />
+&ensp;<label>Co-Author: &ensp;{{ author.fullname }}</label><br />
 {% endif %}
 {% endfor %}
-<hr>
-{% if book.authors|length == 1 %}
-&ensp;<label>Co-Author: {{ book.co_author }}</label><br />
+{% if book.authors|length == 1 and book.co_author != none %}
+&ensp;<label>Co-Author: &ensp;{{ book.co_author }}</label><br />
 {% endif %}
-&ensp;<label>Rating:&nbsp; {{ book.rating }}</label><br />
+&ensp;<label>Year: &emsp;&emsp;&ensp;&nbsp;&ensp;{{ book.first_publish }}</label><br />
+{% if book.isbn and book.isbn is not none %}
+&ensp;<label>ISBN: &emsp;&emsp;&ensp;&ensp;{{ book.isbn }}</label><br />
+{% endif %}
+&ensp;<label>Rating:&emsp;&ensp;&ensp;&ensp;{{ book.rating }}</label><br />
 <br />
-&ensp;<button class="btn btn-danger btn-sm">
-    <a href="{{ url_for('book.delete_title', id=book.id) }}" style="text-decoration: none; color: white">Delete</a>
+&ensp;<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('book.edit_title', id=book.id) }}" style="text-decoration: none; color: white">Edit</a>
 </button>
 <button class="btn btn-secondary btn-sm">
     <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+</button>
+<button class="btn btn-danger btn-sm">
+    <a href="{{ url_for('book.delete_title', id=book.id) }}" style="text-decoration: none; color: white">Delete</a>
 </button>
 <hr />
 <br />

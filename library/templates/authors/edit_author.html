@@ -66,6 +66,10 @@ Edit Author
     <button class="btn btn-secondary btn-sm">
         <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>
+    <button class="btn btn-danger btn-sm">
+        <a href="{{ url_for('author.delete_author', id=author.id) }}"
+            style="text-decoration: none; color: white">Delete</a>
+    </button>
 </form>
 <hr />
 <br />
