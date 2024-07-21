@@ -8,9 +8,8 @@ Edit Author
 &nbsp;
 <a style="text-decoration: none; font-weight:normal; font-size:medium"
     href="{{ url_for('author.bibliography', author=author.fullname)}}">{{ author.fullname }}</a> -
-{{ author.books|length }}
-books
-in collection
+{{ author.books|length }} books in collection
+
 {% for message in get_flashed_messages() %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     {{ message }}

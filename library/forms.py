@@ -12,6 +12,7 @@ class SearchForm(FlaskForm):
 class UpdateForm(FlaskForm):
     title = StringField(label='title', validators=[DataRequired()])
     author = StringField(label='author', validators=[DataRequired()])
+    co_author = StringField(label='co_author')
     plusauthor = StringField(label='+author')
     first_publish = IntegerField(label='first_publish', validators=[DataRequired()])
     isbn = StringField(label='isbn')

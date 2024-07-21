@@ -8,7 +8,7 @@
 <hr>
 &nbsp;by
 <a href="{{url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
-- {{ book.authors[0].books|count }} books in the collection 
+- {{ book.authors[0].books|count }} books in the collection
 <button type="button" class="btn btn-secondary"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('author.edit_author', id=book.authors[0].id) }}">Edit
@@ -24,7 +24,10 @@
     {% endfor %} <br /><br />&emsp;&emsp;&nbsp;Author: {{ form.author(size=70,
     value=book.author) }} {% for err in form.author.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %} <br /><br />&emsp;&ensp;+Author:
+    {% endfor %} <br /><br />&emsp;&emsp;&nbsp;Co-Author: {{ form.co_author(size=70,
+    value=book.co_author) }} {% for err in form.co_author.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}<br /><br />&emsp;&ensp;+Author:
     {{ form.plusauthor(size=70, placeholder='use in case of multiple authors') }}
     {% for err in form.plusauthor.errors %}
     <span style="color: red">{{ err }}</span>

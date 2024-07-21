@@ -21,8 +21,13 @@ def add_title():
         isbn = form.isbn.data
         provisional_author = db.session.query(Author).filter_by(fullname=request.form['plusauthor']).first()        
         if not Book.query.filter_by(title=title, author=author, isbn=isbn).first():
-            new_book = Book(title=title, author=author, first_publish=first_publish, isbn=isbn, rating=rating, authors=[author_obj])
-            db.session.add(new_book)
+            if provisional_author:
+                co_author = provisional_author.fullname
+                new_book = Book(title=title, author=author, co_author=co_author, first_publish=first_publish, isbn=isbn, rating=rating, authors=[author_obj])
+                db.session.add(new_book)
+            else:
+                new_book = Book(title=title, author=author, first_publish=first_publish, isbn=isbn, rating=rating, authors=[author_obj])
+                db.session.add(new_book)
             if provisional_author:
                 new_book.authors.append(provisional_author)
                 form.plusauthor.data = ''

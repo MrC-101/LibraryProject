@@ -8,7 +8,7 @@
 &ensp;<label>City:&nbsp; {{ author.city }}</label><br />
 &ensp;<label>Born:&nbsp; {{ author.born }}</label><br />
 &ensp;<label>Died:&nbsp; {{ author.died }}</label><br />
-&ensp;<label>Books:&nbsp; {{ author.books|count }}</label><br />
+&ensp;<label>Books:&nbsp; {{ author.books|count }} currently</label><br />
 <br />
 &ensp;<button class="btn btn-danger btn-sm">
     <a href="{{ url_for('author.delete_author', id=author.id) }}" style="text-decoration: none; color: white">Delete</a>

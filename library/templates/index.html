@@ -53,6 +53,9 @@ Authors List
         <a href="{{ url_for('author.bibliography', id=book.id, author=author.fullname) }}">
             {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
         {% endfor %}
+        {% if book.co_author and book.authors|length < 2 %}
+        | {{book.co_author}}
+        {% endif %}
         - {{ book.rating }}/10
     </li>
     {% endfor %}
@@ -73,7 +76,8 @@ Authors List
                 style="text-decoration: none; color: darkgray">Edit</a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
-            <a href="{{ url_for('author.author_details', id=author.id) }}" style="text-decoration: none; color: orangered">Delete</a>
+            <a href="{{ url_for('author.author_details', id=author.id) }}"
+                style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
         <a href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
         - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - {{author.books|count}} books in

@@ -71,10 +71,13 @@ def delete_author(id):
             db.session.delete(book)
             db.session.commit()
     for book in author.books:
-        book.authors.remove(author)
+        # book.authors.remove(author)
         book.author = book.authors[0].fullname
+        book.co_author = author.fullname        
+        db.session.commit()
     db.session.delete(author)
     db.session.commit()
+
     return redirect(url_for('main.home', flag='authors_list'))
 
 @author_bp.route('/author_details/<int:id>')
