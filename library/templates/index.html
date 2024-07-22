@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
 
 {% block headline %}
-{% if flag != 'authors_list' %}
-Books Library
+
+{% if flag != 'authors_list' and flag != 'authors_by_letter' %}
+<a href="{{ url_for('main.home', flag='authors_list')}}" style="text-decoration:none; color:black">Books</a>
+
 {% else %}
-Authors List
+
+<a href="{{ url_for('main.home')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Authors</a>
 {% endif %}
+
 {% endblock %}
 
 {%block subhead %}
@@ -13,8 +17,8 @@ Authors List
 <hr />
 &nbsp;{{ total }} books - {{ total_auth }} authors in Total
 
-{% if flag != 'authors_list' %}
-<button type="button" class="btn btn-secondary float-right"
+{% if flag != 'authors_list' and flag != 'authors_by_letter' %}
+<button type="button" class="btn btn-success float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home', flag='authors_list') }}">
         Authors List </a>
@@ -22,7 +26,7 @@ Authors List
 
 {% else %}
 
-<button type="button" class="btn btn-secondary float-right"
+<button type="button" class="btn btn-success float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home') }}">
         Books List </a>
@@ -30,8 +34,15 @@ Authors List
 {% endif %}
 {% endblock %}
 
+{% block a_z %}
+{% if flag == 'authors_by_letter' or flag == 'authors_list' %}
+{% include 'a_z_authors.html' %}
+{% else %}
+{% include 'a_z_books.html' %}
+{% endif %}
+{% endblock %}
 {%block content %}
-{% if flag != 'authors_list' %}
+{% if flag != 'authors_list' and flag != 'authors_by_letter' and flag != 'books_by_letter' %}
 <ul>
     {% if books|count == 0 %}
     <p>Library is empty</p>
@@ -62,7 +73,7 @@ Authors List
     {% endif %}
 </ul>
 <br />
-{% else %}
+{% elif flag == 'authors_list' %}
 <ul>
     {% if authors|count == 0 %}
     <p>Library is empty</p>
@@ -80,12 +91,68 @@ Authors List
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
         <a href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
-        - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - {{author.books|count}} books in
+        - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - {{author.books|count}} books
+        in
         collection
     </li>
     {% endfor %}
     {% endif %}
 </ul>
 <br />
+
+{% elif flag == 'authors_by_letter' %}
+<ul>
+    {% if authors_by_letter|count == 0 %}
+    <p>Library is empty</p>
+
+    {% else %}
+
+    {% for author in authors_by_letter %}
+    <li>
+        <button class="btn btn-outline-secondary btn-sm">
+            <a href="{{ url_for('author.edit_author', id=author.id) }}"
+                style="text-decoration: none; color: darkgray">Edit</a>
+        </button>
+        <button class="btn btn-outline-danger btn-sm">
+            <a href="{{ url_for('author.author_details', id=author.id) }}"
+                style="text-decoration: none; color: orangered">Delete</a>
+        </button>&ensp;▫️
+        <a href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
+        - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - {{author.books|count}} books in
+        collection
+    </li>
+    {% endfor %}
+    {% endif %}
+</ul>
+{% elif flag == 'books_by_letter' %}
+<ul>
+    {% if books_by_letter|count == 0 %}
+    <p>There is no book starting with this letter</p>
+    {% else %}
+    {% for book in books_by_letter %}
+    <li>
+        <button class="btn btn-outline-secondary btn-sm">
+            <a href="{{ url_for('book.edit_title', id=book.id) }}"
+                style="text-decoration: none; color: darkgray">Edit</a>
+        </button>
+        <button class="btn btn-outline-danger btn-sm">
+            <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
+                style="text-decoration: none; color: orangered">Delete</a>
+        </button>&ensp;▫️
+        <a href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title
+                                    }}</a>
+        - {{book.first_publish}} -
+        {% for author in book.authors %}
+        <a href="{{ url_for('author.bibliography', id=book.id, author=author.fullname) }}">
+            {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
+        {% endfor %}
+        {% if book.co_author and book.authors|length < 2 %}
+        | {{book.co_author}}
+        {% endif %}
+        - {{ book.rating }}/10
+    </li>
+    {% endfor %}
+    {% endif %}
+</ul>
 {% endif %}
 {% endblock %}

@@ -20,7 +20,8 @@ class Book(db.Model):
     title = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
     co_author = db.Column(db.String, nullable=True)
-    isbn = db.Column(db.String, nullable=True)
+    isbn10 = db.Column(db.String, nullable=True)
+    isbn13 = db.Column(db.String, nullable=True)
     first_publish = db.Column(db.Integer, nullable=True)
     rating = db.Column(db.Float, nullable=True)
     authors = db.relationship('Author', secondary='book_author', back_populates='books')
@@ -31,6 +32,12 @@ class Book(db.Model):
 class Author(db.Model):
     __tablename__ = 'authors'
     id = db.Column(db.Integer, primary_key=True)
+    fname = db.Column(db.String, nullable=True)
+    lname = db.Column(db.String, nullable=True)
+    midname = db.Column(db.String, nullable=True)
+    name_pref = db.Column(db.String, nullable=True)
+    name_suf = db.Column(db.String, nullable=True)
+    gender = db.Column(db.String, nullable=True)
     fullname = db.Column(db.String, nullable=False)
     country = db.Column(db.String, default='', nullable=True)
     city = db.Column(db.String, default='', nullable = True)
@@ -39,7 +46,6 @@ class Author(db.Model):
     bio = db.Column(db.Text, default='', nullable=True)
     email = db.Column(db.String, default='', nullable=True)
     books = db.relationship("Book", secondary='book_author', back_populates='authors')
-          
+    
     def __repr__(self):
-        return f'DB_ID: {self.id},  Name: {self.fullname}, {self.books}'
-
+            return f'DB_ID: {self.id},  Name: {self.fullname}, {self.books}'

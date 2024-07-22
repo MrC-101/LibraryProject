@@ -1,13 +1,17 @@
 {% extends "layout.html" %}
 
-{% block headline %} Author Details {% endblock %}
+{% block headline %}
+Author Details
+{% endblock %}
 
 {%block content %}
-&ensp;<label>Author:&emsp;{{ author.fullname }}</label><br />
+&ensp;<label>Author:&emsp;<a
+        href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname }}</a></label><br />
+&ensp;<label>Gender:&ensp;&nbsp;{{ author.gender }}</label><br>
 &ensp;<label>Country:&ensp;{{ author.country }}</label><br />
 &ensp;<label>City:&emsp;&emsp;&nbsp;{{ author.city }}</label><br />
-&ensp;<label>Born:&emsp;&emsp;{{ author.born }}</label><br />
-&ensp;<label>Died:&emsp;&emsp;{{ author.died }}</label><br />
+&ensp;<label>Born:&emsp;&ensp;&nbsp;{{ author.born }}</label><br />
+&ensp;<label>Died:&emsp;&ensp;&nbsp;{{ author.died }}</label><br />
 &ensp;<label>Books:&emsp;&nbsp;{{ author.books|count }} currently</label><br />
 <br />
 &ensp;<button class="btn btn-secondary btn-sm">

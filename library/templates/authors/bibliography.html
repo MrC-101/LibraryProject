@@ -2,17 +2,24 @@
 {% block headline %} {{ author }}'s Bibliography {% endblock %}
 {% block subhead %}
 <hr />
-&nbsp;
+<button type="button" class="btn btn-secondary {#float-right#}"
+    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
+    <a style="color:white; text-decoration:none" href="{{ url_for('author.edit_author', id=author_id) }}">Edit Author
+    </a>
+</button>
+<button type="button" class="btn btn-danger {#float-right#}"
+    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
+    <a style="color:white; text-decoration:none" href="{{ url_for('author.author_details', id=author_id) }}">Delete
+        Author
+    </a>
+</button>
+&nbsp;&nbsp;
 {% if author_total>1 %}
 {{ author_total }} books in collection
 {% elif author_total == 1 %}
 {{ author_total }} book in collection
 {% endif %}
-<button type="button" class="btn btn-secondary float-right"
-    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
-    <a style="color:white; text-decoration:none" href="{{ url_for('author.edit_author', id=author_id) }}">
-        Edit Author </a>
-</button>
+
 {% endblock %}
 
 {% block content %}

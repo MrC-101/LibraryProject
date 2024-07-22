@@ -34,8 +34,11 @@
     {% endfor %} <br /><br />&emsp;&nbsp;Published: {{ form.first_publish(size=70,
     value=book.first_publish) }} {% for err in form.first_publish.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %} <br /><br />&emsp;&emsp;&emsp;&ensp;ISBN: {{ form.isbn(size=70,
-    value=book.isbn) }} {% for err in form.isbn.errors %}
+    {% endfor %} <br /><br />&emsp;&emsp;ISBN-10: {{ form.isbn10(size=70,
+    value=book.isbn10) }} {% for err in form.isbn10.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}<br /><br />&emsp;&emsp;ISBN-13: {{ form.isbn13(size=70,
+    value=book.isbn13) }} {% for err in form.isbn13.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}<br /><br />&emsp;&emsp;&ensp;&nbsp;Rating: {{ form.rating(size=70,
     value=book.rating) }} {% for err in form.rating.errors %}
@@ -44,7 +47,7 @@
     <br />
     <br />
     <br />
-    &emsp;&emsp;&emsp;&emsp;{{ form.submit(class="btn btn-secondary btn-sm") }}
+    &emsp;&emsp;&emsp;&emsp;{{ form.submit(class="btn btn-success btn-sm") }}
     <button class="btn btn-secondary btn-sm">
         <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>

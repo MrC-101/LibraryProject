@@ -21,8 +21,38 @@ Edit Author
 {% block content %}
 <form method="POST" action="{{ url_for('author.edit_author', id=id) }}" novalidate>
     {{ form.csrf_token }}
-    &emsp;&emsp;&ensp;&nbsp;Name: {{ form.name(size=70, value=author.fullname) }}
-    {% for err in form.name.errors %}
+    &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10, value=author.name_pref) }}
+    {% for err in form.name_pref.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;First Name: {{ form.fname(size=70, value=author.fname) }}
+    {% for err in form.fname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;Mid Name: {{ form.midname(size=70, value=author.midname) }}
+    {% for err in form.midname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;Last Name: {{ form.lname(size=70, value=author.lname) }}
+    {% for err in form.lname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&nbsp;Suffix: {{ form.name_suf(size=10, value=author.name_suf) }}
+    {% for err in form.name_suf.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&ensp;Gender: {{ form.gender(size=1, value=author.gender) }}
+    {% for err in form.gender.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
@@ -62,7 +92,7 @@ Edit Author
     <br />
     <br />
     &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{ form.submit(class="btn
-    btn-secondary btn-sm") }}
+    btn-success btn-sm") }}
     <button class="btn btn-secondary btn-sm">
         <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>

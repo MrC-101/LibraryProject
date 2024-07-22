@@ -8,8 +8,11 @@ main_bp = Blueprint('main',__name__)
 
 @main_bp.route('/init')
 def init():
-    
-    book = db.session.query(Book).get(256)
+    author = db.session.query(Author).get(51)
+    print(author.fullname)
+    print(author.fname)
+    print(author.lname)
+    # book = db.session.query(Book).get(256)
     # for i in range(len(book.authors)):
     #     print(book.authors[i].fullname)
     

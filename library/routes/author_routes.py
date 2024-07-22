@@ -2,7 +2,7 @@ from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Author, Book
 from library.forms import AddAuthorForm, EditAuthorForm
-import operator
+import operator, select
 
 author_bp = Blueprint('author',__name__)
 
@@ -24,18 +24,34 @@ def bibliography():
 def add_author():
     form = AddAuthorForm()
     if form.validate_on_submit():
-        name = request.form['name']
+        name_pref = form.name_pref.data
+        fname = request.form['fname']
+        midname = request.form['midname']
+        lname = request.form['lname']
+        name_suf = form.name_suf.data
+        gender = form.gender.data
+        if midname != '' and midname != None:
+            if fname != '':
+                fullname = fname + ' ' + midname + ' ' + lname
+            else:
+                fullname = fname
+        else:
+            if fname != '':
+                fullname = fname + ' ' + lname
+            else: 
+                fullname = fname
         country = request.form['country']
         city = request.form['city']
         born = request.form['born']
         died = form.died.data
         email = form.email.data
         bio = form.bio.data
-        if not Author.query.filter_by(fullname=name, country=country, born=born).first():
-            new_author = Author(fullname=name, country=country, city=city, born=born, died=died, email=email, bio=bio)
+        if not Author.query.filter_by(lname=lname, fname=fname, country=country, born=born).first():
+            new_author = Author(name_pref=name_pref, fname=fname, lname=lname, name_suf=name_suf, gender=gender, fullname=fullname, country=country, city=city, born=born, died=died, email=email, bio=bio)
             db.session.add(new_author)
+            id=new_author.id
             db.session.commit()
-            return redirect(url_for('main.home'))
+            return redirect(url_for('author.author_details', id=id))
         else:
             flash('This author is already in the library.')
     else:
@@ -50,7 +66,22 @@ def edit_author():
         form.bio.data=author.bio
     if form.validate_on_submit():
         if author:
-            author.fullname = form.name.data
+            author.name_pref = form.name_pref.data
+            author.fname = form.fname.data
+            author.midname = form.midname.data
+            author.lname = form.lname.data
+            author.name_suf = form.name_suf.data
+            author.gender = form.gender.data
+            if author.midname != '' and author.midname != None:
+                if author.fname != '':
+                    author.fullname = author.fname + ' ' + author.midname + ' ' + author.lname
+                else:
+                    author.fullname = author.lname
+            else:
+                if author.fname != '':
+                    author.fullname = author.fname + ' ' + author.lname
+                else:
+                    author.fullname = author.lname
             author.country = form.country.data
             author.city = form.city.data
             author.born = form.born.data
@@ -59,7 +90,7 @@ def edit_author():
             author.bio = request.form['bio']
         
             db.session.commit()
-            return redirect(url_for('main.home'))
+            return redirect(url_for('author.author_details', id=author.id))
 
     return render_template('authors/edit_author.html', id=id, form=form, author=author)
 
@@ -67,11 +98,11 @@ def edit_author():
 def delete_author(id):
     author = db.session.query(Author).get(id)
     for book in author.books:
-        if len(book.authors) is 1:
+        if len(book.authors) == 1:
             db.session.delete(book)
             db.session.commit()
     for book in author.books:
-        # book.authors.remove(author)
+        book.authors.remove(author)
         book.author = book.authors[0].fullname
         book.co_author = author.fullname        
         db.session.commit()
@@ -84,3 +115,16 @@ def delete_author(id):
 def author_details(id):
     author = db.session.query(Author).get(id)
     return render_template('authors/author_details.html', author=author)
+
+@author_bp.route('/authors_by_leter')
+def authors_by_letter():
+    letter=request.args.get('letter')
+    authors = db.session.query(Author).all()
+    total_auth = len(authors)
+    books = db.session.query(Book).all()
+    total = len(books)
+    if letter != '*':
+        authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).all()
+    else:
+        authors_by_letter = db.session.query(Author).order_by('fullname').all()
+    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth)

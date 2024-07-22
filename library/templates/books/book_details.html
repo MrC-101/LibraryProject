@@ -4,18 +4,23 @@
 
 {%block content %}
 &ensp;<label>Title:&emsp;&emsp;&ensp;&emsp;{{ book.title }}</label><br />
-&ensp;<label>Author: &emsp;&ensp;&ensp;{{ book.author }}</label><br />
+&ensp;<label>Author: &emsp;&ensp;&nbsp;<a href="{{ url_for('author.bibliography', author=book.author)}}">
+        {{ book.author }}</a> </label> <br />
 {% for author in book.authors %}
 {% if author.fullname != book.author %}
-&ensp;<label>Co-Author: &ensp;{{ author.fullname }}</label><br />
+&ensp;<label>Co-Author: &ensp;<a
+        href="{{ url_for('author.bibliography', author=author.fullname)}}">{{ author.fullname }}</a></label><br />
 {% endif %}
 {% endfor %}
 {% if book.authors|length == 1 and book.co_author != none %}
 &ensp;<label>Co-Author: &ensp;{{ book.co_author }}</label><br />
 {% endif %}
 &ensp;<label>Year: &emsp;&emsp;&ensp;&nbsp;&ensp;{{ book.first_publish }}</label><br />
-{% if book.isbn and book.isbn is not none %}
-&ensp;<label>ISBN: &emsp;&emsp;&ensp;&ensp;{{ book.isbn }}</label><br />
+{% if book.isbn10 and book.isbn10 is not none %}
+&ensp;<label>ISBN-10: &emsp;&ensp;{{ book.isbn10 }}</label><br />
+{% endif %}
+{% if book.isbn13 and book.isbn13 is not none %}
+&ensp;<label>ISBN-13: &emsp;&ensp;{{ book.isbn13 }}</label><br />
 {% endif %}
 &ensp;<label>Rating:&emsp;&ensp;&ensp;&ensp;{{ book.rating }}</label><br />
 <br />

@@ -1,21 +1,5 @@
 {% extends 'layout.html' %} {% block headline %} Add Title
-<style>
-    table {
-        border-spacing: 0;
-    }
 
-    td {
-        padding: 2px;
-    }
-
-    td:first-child {
-        padding-right: 0px;
-    }
-
-    td:last-child {
-        padding-left: 0px;
-    }
-</style>
 {% endblock %} {% block subhead %} {% for message in get_flashed_messages() %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     {{ message }}
@@ -37,8 +21,11 @@
     {% endfor %} <br /><br />&emsp;Published: {{ form.first_publish(size=70) }}
     {% for err in form.first_publish.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %} <br /><br />&emsp;&emsp;&emsp;&nbsp;ISBN: {{ form.isbn(size=70)
-    }} {% for err in form.isbn.errors %}
+    {% endfor %} <br /><br />&emsp;&ensp;&nbsp;ISBN-10: {{ form.isbn10(size=70)
+    }} {% for err in form.isbn10.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}<br /><br />&emsp;&ensp;&nbsp;ISBN-13: {{ form.isbn13(size=70)
+    }} {% for err in form.isbn13.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}<br /><br />&emsp;&emsp;&ensp;Rating: {{ form.rating(size=70) }}
     {% for err in form.rating.errors %}
@@ -48,7 +35,7 @@
     <br />
     &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{ form.submit(class="btn
     btn-secondary btn-sm") }}
-    <button class="btn btn-secondary btn-sm">
+    <button class="btn btn-success btn-sm">
         <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>
 </form>
