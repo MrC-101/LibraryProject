@@ -30,13 +30,13 @@ def add_author():
         lname = request.form['lname']
         name_suf = form.name_suf.data
         gender = form.gender.data
-        if midname != '' and midname != None:
-            if fname != '':
+        if midname != '' and midname != None and midname != 'None':
+            if fname != '' and fname != None:
                 fullname = fname + ' ' + midname + ' ' + lname
             else:
                 fullname = fname
         else:
-            if fname != '':
+            if fname != '' and fname != None and fname != 'None':
                 fullname = fname + ' ' + lname
             else: 
                 fullname = fname
@@ -72,13 +72,13 @@ def edit_author():
             author.lname = form.lname.data
             author.name_suf = form.name_suf.data
             author.gender = form.gender.data
-            if author.midname != '' and author.midname != None:
-                if author.fname != '':
+            if author.midname != '' and author.midname != None and author.midname != 'None':
+                if author.fname != '' and author.fname != None and author.fname != 'None':
                     author.fullname = author.fname + ' ' + author.midname + ' ' + author.lname
                 else:
                     author.fullname = author.lname
             else:
-                if author.fname != '':
+                if author.fname != '' and author.fname != None and author.fname != 'None':
                     author.fullname = author.fname + ' ' + author.lname
                 else:
                     author.fullname = author.lname

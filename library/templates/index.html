@@ -18,7 +18,7 @@
 &nbsp;{{ total }} books - {{ total_auth }} authors in Total
 
 {% if flag != 'authors_list' and flag != 'authors_by_letter' %}
-<button type="button" class="btn btn-success float-right"
+<button type="button" class="btn btn-secondary float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home', flag='authors_list') }}">
         Authors List </a>
@@ -26,7 +26,7 @@
 
 {% else %}
 
-<button type="button" class="btn btn-success float-right"
+<button type="button" class="btn btn-secondary float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home') }}">
         Books List </a>
@@ -36,10 +36,11 @@
 
 {% block a_z %}
 {% if flag == 'authors_by_letter' or flag == 'authors_list' %}
-{% include 'a_z_authors.html' %}
+{% set url = 'author.authors_by_letter' %}
 {% else %}
-{% include 'a_z_books.html' %}
+{% set url = 'book.books_by_letter' %}
 {% endif %}
+{% include 'a_z.html' %}
 {% endblock %}
 {%block content %}
 {% if flag != 'authors_list' and flag != 'authors_by_letter' and flag != 'books_by_letter' %}
