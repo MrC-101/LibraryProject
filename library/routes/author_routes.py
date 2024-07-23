@@ -59,11 +59,10 @@ def add_author():
     
 @author_bp.route('/edit_author', methods=['GET', 'POST'])
 def edit_author():
-    form = EditAuthorForm()
     id = request.args.get('id')
     author = Author.query.get(id)
-    if author.bio:
-        form.bio.data=author.bio
+    form = EditAuthorForm(gender=author.gender, bio=author.bio)
+
     if form.validate_on_submit():
         if author:
             author.name_pref = form.name_pref.data

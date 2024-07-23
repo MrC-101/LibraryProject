@@ -18,16 +18,19 @@ def add_title():
         author_obj = Author.query.filter_by(fullname=author).first()
         rating = request.form['rating']
         first_publish = form.first_publish.data
+        pages = request.form['pages']
+        genre = request.form['genre']
         isbn10 = form.isbn10.data
         isbn13 = form.isbn13.data
+        summary = request.form['summary']
         provisional_author = db.session.query(Author).filter_by(fullname=request.form['plusauthor']).first()        
         if not Book.query.filter_by(title=title, author=author, isbn10=isbn10, isbn13=isbn13).first():
             if provisional_author:
                 co_author = provisional_author.fullname
-                new_book = Book(title=title, author=author, co_author=co_author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, rating=rating, authors=[author_obj])
+                new_book = Book(title=title, author=author, co_author=co_author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, rating=rating, pages=pages, genre=genre, summary=summary, authors=[author_obj])
                 db.session.add(new_book)
             else:
-                new_book = Book(title=title, author=author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, rating=rating, authors=[author_obj])
+                new_book = Book(title=title, author=author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, rating=rating, pages=pages, genre=genre, summary=summary, authors=[author_obj])
                 db.session.add(new_book)
             if provisional_author:
                 new_book.authors.append(provisional_author)
@@ -35,7 +38,8 @@ def add_title():
             else:
                 form.plusauthor.data = ''
             db.session.commit()
-            return redirect(url_for('main.home', flag='authors_list'))
+            return redirect(url_for('author.bibliography', author=author))
+            # return redirect(url_for('main.home', flag='authors_list'))
         else:
             flash('That book is already in the library.')
     else:
@@ -47,9 +51,9 @@ def edit_title():
     total = len(books)
     authors = Author.query.all()
     total_auth = len(authors)
-    form = UpdateForm()
     id = request.args.get('id')
     book = Book.query.get(id)
+    form = UpdateForm(summary=book.summary)
     if form.validate_on_submit():
         book.title = request.form['title']
         book.author = request.form['author']
@@ -59,12 +63,16 @@ def edit_title():
             form.plusauthor.data = ''
         else:
             form.plusauthor.data = ''
+        book.pages = request.form['pages']
+        book.genre = request.form['genre']
         book.isbn10 = request.form['isbn10']
         book.isbn13 = request.form['isbn13']
         book.first_publish = request.form['first_publish']
         book.rating = request.form['rating']
+        book.summary = request.form['summary']
         db.session.commit()
-        return redirect(url_for('main.home', flag='authors_list'))
+        return redirect(url_for('author.bibliography', author=book.author))
+        # return redirect(url_for('main.home', flag='authors_list'))
 
     return render_template('books/edit_title.html', form=form, book=book, total=total, total_auth=total_auth)
 

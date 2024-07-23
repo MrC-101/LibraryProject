@@ -8,34 +8,69 @@
 {% endfor %} {% endblock %} {% block content %}
 
 <form method="POST" action="{{ url_for('book.add_title') }}" novalidate>
-    {{ form.csrf_token }} &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70)
-    }}{% for err in form.title.errors %}
+    {{ form.csrf_token }}
+    &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70) }}
+    {% for err in form.title.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %} <br /><br />&emsp;&emsp;&nbsp;Author: {{ form.author(size=70)
-    }} {% for err in form.author.errors %}
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&nbsp;Author: {{ form.author(size=70) }}
+    {% for err in form.author.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %} <br /><br />&emsp;&ensp;+Author:
-    {{ form.plusauthor(size=70, placeholder='use in case of multiple authors') }}
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;+Author: {{ form.plusauthor(size=70, placeholder='use in case of multiple authors') }}
     {% for err in form.plusauthor.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %} <br /><br />&emsp;Published: {{ form.first_publish(size=70) }}
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;Published: {{ form.first_publish(size=70) }}
     {% for err in form.first_publish.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %} <br /><br />&emsp;&ensp;&nbsp;ISBN-10: {{ form.isbn10(size=70)
-    }} {% for err in form.isbn10.errors %}
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&nbsp;Pages No: {{ form.pages(size=70) }}
+    {% for err in form.pages.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %}<br /><br />&emsp;&ensp;&nbsp;ISBN-13: {{ form.isbn13(size=70)
-    }} {% for err in form.isbn13.errors %}
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&ensp;&nbsp;Genre: {{ form.genre(size=70) }}
+    {% for err in form.genre.errors %}
     <span style="color: red">{{ err }}</span>
-    {% endfor %}<br /><br />&emsp;&emsp;&ensp;Rating: {{ form.rating(size=70) }}
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;&nbsp;ISBN-10: {{ form.isbn10(size=70) }}
+    {% for err in form.isbn10.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;&nbsp;ISBN-13: {{ form.isbn13(size=70) }}
+    {% for err in form.isbn13.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&ensp;Rating: {{ form.rating(size=70) }}
     {% for err in form.rating.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{ form.submit(class="btn
-    btn-secondary btn-sm") }}
-    <button class="btn btn-success btn-sm">
+    &emsp;&nbsp;Summary: {{ form.summary(cols="73", rows="7") }}
+    {% for err in form.summary.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{ form.submit(class="btn btn-success btn-sm") }}
+    <button class="btn btn-secondary btn-sm">
         <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>
 </form>

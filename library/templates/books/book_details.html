@@ -1,6 +1,19 @@
 {% extends "layout.html" %}
 
-{% block headline %} Book Details {% endblock %}
+{% block headline %} 
+Book Details 
+<br>
+<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('book.edit_title', id=book.id) }}" style="text-decoration: none; color: white">Edit</a>
+</button>
+<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+</button>
+<button class="btn btn-danger btn-sm">
+    <a href="{{ url_for('book.delete_title', id=book.id) }}" style="text-decoration: none; color: white">Delete</a>
+</button>
+
+{% endblock %}
 
 {%block content %}
 &ensp;<label>Title:&emsp;&emsp;&ensp;&emsp;{{ book.title }}</label><br />
@@ -16,6 +29,8 @@
 &ensp;<label>Co-Author: &ensp;{{ book.co_author }}</label><br />
 {% endif %}
 &ensp;<label>Year: &emsp;&emsp;&ensp;&nbsp;&ensp;{{ book.first_publish }}</label><br />
+&ensp;<label>Pages:&emsp;&emsp;&ensp;&nbsp;{{ book.pages }}</label><br />
+&ensp;<label>Genre:&emsp;&emsp;&ensp;&nbsp;{{ book.genre }}</label><br />
 {% if book.isbn10 and book.isbn10 is not none %}
 &ensp;<label>ISBN-10: &emsp;&ensp;{{ book.isbn10 }}</label><br />
 {% endif %}
@@ -23,16 +38,10 @@
 &ensp;<label>ISBN-13: &emsp;&ensp;{{ book.isbn13 }}</label><br />
 {% endif %}
 &ensp;<label>Rating:&emsp;&ensp;&ensp;&ensp;{{ book.rating }}</label><br />
-<br />
-&ensp;<button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('book.edit_title', id=book.id) }}" style="text-decoration: none; color: white">Edit</a>
-</button>
-<button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
-</button>
-<button class="btn btn-danger btn-sm">
-    <a href="{{ url_for('book.delete_title', id=book.id) }}" style="text-decoration: none; color: white">Delete</a>
-</button>
-<hr />
-<br />
-&ensp; {% endblock %}
+&ensp;<label>Summary:</label>
+<div class="jumbotron" style="margin-top:0">
+    <div class="container">
+        {{ book.summary }}
+    </div>
+</div>
+{% endblock %}

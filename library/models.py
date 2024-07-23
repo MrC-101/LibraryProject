@@ -20,18 +20,22 @@ class Book(db.Model):
     title = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
     co_author = db.Column(db.String, nullable=True)
+    pages = db.Column(db.Integer, nullable=True)
     isbn10 = db.Column(db.String, nullable=True)
     isbn13 = db.Column(db.String, nullable=True)
     first_publish = db.Column(db.Integer, nullable=True)
     rating = db.Column(db.Float, nullable=True)
+    genre = db.Column(db.String, nullable=True)
+    summary = db.Column(db.Text, default='', nullable=True)
     authors = db.relationship('Author', secondary='book_author', back_populates='books')
     
     def __repr__(self):
-        return f'DB_ID: {self.id},  Title: {self.title},  Author: {self.author}, Authors: {self.authors}'
+        return f'DB_ID: {self.id},  Title: {self.title},  Author: {self.author} Published: {self.first_publish}'
     
 class Author(db.Model):
     __tablename__ = 'authors'
     id = db.Column(db.Integer, primary_key=True)
+    penname = db.Column(db.String, nullable=True)
     fname = db.Column(db.String, nullable=True)
     lname = db.Column(db.String, nullable=True)
     midname = db.Column(db.String, nullable=True)

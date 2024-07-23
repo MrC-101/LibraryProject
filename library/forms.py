@@ -16,9 +16,12 @@ class UpdateForm(FlaskForm):
     co_author = StringField(label='co_author')
     plusauthor = StringField(label='+author')
     first_publish = IntegerField(label='first_publish', validators=[DataRequired()])
+    pages = IntegerField(label='pages', validators=[Optional(strip_whitespace=True)])
+    genre = StringField(label='genre')
     isbn10 = StringField(label='isbn10')
     isbn13 = StringField(label='isbn13')
-    rating = FloatField(label='rating')
+    rating = FloatField(label='rating', validators=[Optional(strip_whitespace=True)])
+    summary = TextAreaField(label='summary', validators=[Optional()])
     submit = SubmitField(label='Update')
 
 class AddForm(FlaskForm):
@@ -26,9 +29,12 @@ class AddForm(FlaskForm):
     author = StringField(label='author', validators=[DataRequired()])
     plusauthor = StringField(label='+author')
     first_publish = IntegerField(label='first_publish', validators=[DataRequired()])
+    pages = IntegerField(label='pages', validators=[Optional(strip_whitespace=True)])
+    genre = StringField(label='genre')
     isbn10 = StringField(label='isbn10')
     isbn13 = StringField(label='isbn13')
-    rating = FloatField(label='rating')
+    rating = FloatField(label='rating', validators=[Optional(strip_whitespace=True)])
+    summary = TextAreaField(label='summary', validators=[Optional()])
     submit = SubmitField(label='Add Title')
 
 class AddAuthorForm(FlaskForm):
@@ -37,6 +43,7 @@ class AddAuthorForm(FlaskForm):
     midname = StringField(label='Middle Name')
     lname = StringField(label='Last Name', validators=[DataRequired()])
     name_suf = StringField(label='Name Suffix')
+    penname = StringField(label='Pen Name')
     gender = SelectField(label='Gender', choices=[(1,'Male'),(2,'Female')])
     country = StringField(label='Country')
     city = StringField(label='City')

@@ -1,31 +1,23 @@
 {% extends "layout.html" %}
 
 {% block headline %}
-
 {% if flag != 'authors_list' and flag != 'authors_by_letter' %}
 <a href="{{ url_for('main.home', flag='authors_list')}}" style="text-decoration:none; color:black">Books</a>
-
 {% else %}
-
 <a href="{{ url_for('main.home')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Authors</a>
 {% endif %}
-
 {% endblock %}
 
 {%block subhead %}
-
 <hr />
 &nbsp;{{ total }} books - {{ total_auth }} authors in Total
-
 {% if flag != 'authors_list' and flag != 'authors_by_letter' %}
 <button type="button" class="btn btn-secondary float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home', flag='authors_list') }}">
         Authors List </a>
 </button>
-
 {% else %}
-
 <button type="button" class="btn btn-secondary float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home') }}">
@@ -42,6 +34,7 @@
 {% endif %}
 {% include 'a_z.html' %}
 {% endblock %}
+
 {%block content %}
 {% if flag != 'authors_list' and flag != 'authors_by_letter' and flag != 'books_by_letter' %}
 <ul>

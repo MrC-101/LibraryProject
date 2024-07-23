@@ -1,23 +1,6 @@
 {% extends 'layout.html' %}
 {% block headline %}
 Add Author
-<style>
-    table {
-        border-spacing: 0;
-    }
-
-    td {
-        padding: 2px;
-    }
-
-    td:first-child {
-        padding-right: 0px;
-    }
-
-    td:last-child {
-        padding-left: 0px;
-    }
-</style>
 {% endblock %}
 
 {% block subhead %}
@@ -32,7 +15,6 @@ Add Author
 {% block content %}
 <form method="POST" action="{{ url_for('author.add_author') }}" novalidate>
     {{ form.csrf_token }}
-
     &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10) }}
     {% for err in form.name_pref.errors %}
     <span style="color: red">{{ err }}</span>

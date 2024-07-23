@@ -51,7 +51,7 @@ Edit Author
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&ensp;Gender: {{ form.gender(size=1, value=author.gender) }}
+    &emsp;&emsp;&ensp;Gender: {{ form.gender(size=1, default=author.gender) }}
     {% for err in form.gender.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
