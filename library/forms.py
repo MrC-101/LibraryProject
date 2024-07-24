@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FloatField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Optional
-
+from wtforms_alchemy import QuerySelectMultipleField
 
 class SearchForm(FlaskForm):
     title = StringField(label='title', validators=[Optional()])
@@ -11,16 +11,17 @@ class SearchForm(FlaskForm):
     submit = SubmitField(label='Search')
     
 class UpdateForm(FlaskForm):
+    coauths = QuerySelectMultipleField('Coauths')
     title = StringField(label='title', validators=[DataRequired()])
     author = StringField(label='author', validators=[DataRequired()])
     co_author = StringField(label='co_author')
     plusauthor = StringField(label='+author')
     first_publish = IntegerField(label='first_publish', validators=[DataRequired()])
-    pages = IntegerField(label='pages', validators=[Optional(strip_whitespace=True)])
+    pages = IntegerField(label='pages', validators=[Optional()])
     genre = StringField(label='genre')
     isbn10 = StringField(label='isbn10')
     isbn13 = StringField(label='isbn13')
-    rating = FloatField(label='rating', validators=[Optional(strip_whitespace=True)])
+    rating = FloatField(label='rating', validators=[Optional()])
     summary = TextAreaField(label='summary', validators=[Optional()])
     submit = SubmitField(label='Update')
 
@@ -29,15 +30,16 @@ class AddForm(FlaskForm):
     author = StringField(label='author', validators=[DataRequired()])
     plusauthor = StringField(label='+author')
     first_publish = IntegerField(label='first_publish', validators=[DataRequired()])
-    pages = IntegerField(label='pages', validators=[Optional(strip_whitespace=True)])
+    pages = IntegerField(label='pages', validators=[Optional()])
     genre = StringField(label='genre')
     isbn10 = StringField(label='isbn10')
     isbn13 = StringField(label='isbn13')
-    rating = FloatField(label='rating', validators=[Optional(strip_whitespace=True)])
+    rating = FloatField(label='rating', validators=[Optional()])
     summary = TextAreaField(label='summary', validators=[Optional()])
     submit = SubmitField(label='Add Title')
 
 class AddAuthorForm(FlaskForm):
+    penname = StringField(label='Pen Name')
     name_pref = StringField(label='Name Prefix')
     fname = StringField(label='First Name')
     midname = StringField(label='Middle Name')
@@ -54,6 +56,7 @@ class AddAuthorForm(FlaskForm):
     submit = SubmitField(label='Add Author')
     
 class EditAuthorForm(FlaskForm):
+    penname = StringField(label='Pen Name')
     name_pref = StringField(label='Name Prefix')
     fname = StringField(label='First Name')
     midname = StringField(label='Middle Name')

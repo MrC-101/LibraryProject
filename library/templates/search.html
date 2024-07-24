@@ -27,8 +27,15 @@ get_flashed_messages() %}
         {% endfor %}
     </p>
     <p>{% if flag!='authors_list' %}
-        &nbsp;ISBN:<br />
-        {{ form.isbn(size=100) }} {% for err in form.isbn.errors %}
+        &nbsp;ISBN-10:<br />
+        {{ form.isbn10(size=100) }} {% for err in form.isbn10.errors %}
+        <span style="color: red">{{ err }}</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>{% if flag!='authors_list' %}
+        &nbsp;ISBN-13:<br />
+        {{ form.isbn13(size=100) }} {% for err in form.isbn13.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
         {% endif %}

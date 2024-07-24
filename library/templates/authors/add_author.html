@@ -15,6 +15,12 @@ Add Author
 {% block content %}
 <form method="POST" action="{{ url_for('author.add_author') }}" novalidate>
     {{ form.csrf_token }}
+    &emsp;&emsp;&nbsp;Pen Name: {{ form.penname(size=70) }}
+    {% for err in form.penname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
     &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10) }}
     {% for err in form.name_pref.errors %}
     <span style="color: red">{{ err }}</span>

@@ -21,6 +21,12 @@ Edit Author
 {% block content %}
 <form method="POST" action="{{ url_for('author.edit_author', id=id) }}" novalidate>
     {{ form.csrf_token }}
+    &emsp;&nbsp;Pen Name: {{ form.penname(size=70, value=author.penname) }}
+    {% for err in form.penname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
     &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10, value=author.name_pref) }}
     {% for err in form.name_pref.errors %}
     <span style="color: red">{{ err }}</span>

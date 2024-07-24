@@ -19,6 +19,7 @@
 {% block content %}
 <form method="POST" action="{{ url_for('book.edit_title', id=book.id) }}" novalidate>
     {{ form.csrf_token }}
+
     &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70, value=book.title) }}
     {% for err in form.title.errors %}
     <span style="color: red">{{ err }}</span>
@@ -29,16 +30,26 @@
     {% for err in form.author.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
-    <br />
-    <br />
-    &ensp;&nbsp;Co-Author: {{ form.co_author(size=70, value=book.co_author) }}
-    {% for err in form.co_author.errors %}
+    <br>
+    <br>
+    {% set ns = namespace(i = 0) %}
+    {% for author in book.authors %}
+    {% if author.fullname != book.author %}
+    {% set ns.i = ns.i + 1 %}
+    &ensp;<label>Co-Author {{ ns.i }}: {{ author.fullname }}</label><br><br>
+    {% endif %}
+    {% endfor %}
+    &emsp;&ensp;+ Author: {{ form.plusauthor(size=70, placeholder='Add a co-author') }}
+    {% for err in form.plusauthor.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&ensp;+ Author: {{ form.plusauthor(size=70, placeholder='use in case of multiple authors') }}
-    {% for err in form.plusauthor.errors %}
+    &emsp;&ensp;&nbsp;- Author: In case you need to remove co-author/s of the book, select from the list below.<br>
+
+    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;<span style="color:red; font-weight:bold">CAUTION: Selected authors will be removed!</span> (Use CTRL to select multiple)<br>
+    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;{{ form.coauths(cols='30', rows='3') }}
+    {% for err in form.coauths.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
@@ -86,7 +97,7 @@
     <br />
     <br />
     <br />
-    &emsp;&emsp;&emsp;&emsp;{{ form.submit(class="btn btn-success btn-sm") }}
+    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{ form.submit(class="btn btn-success btn-sm") }}
     <button class="btn btn-secondary btn-sm">
         <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>

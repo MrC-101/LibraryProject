@@ -13,12 +13,23 @@ def add_title():
     total_auth = len(authors)
     form = AddForm()
     if form.validate_on_submit():
+       
         title = request.form['title']
         author = request.form['author']
+        if not db.session.query(Author).filter_by(fullname=author).first():
+            pname = db.session.query(Author).filter(Author.penname.icontains(author)).first()
+            # pname = db.session.query(Author).filter_by(penname=author).first()
+            if author in pname.penname:
+                author = pname.fullname
+            else:
+                flash('Author not found')
+                
         author_obj = Author.query.filter_by(fullname=author).first()
         rating = request.form['rating']
+        rating = 0 if rating == '' else rating
         first_publish = form.first_publish.data
         pages = request.form['pages']
+        pages = None if pages == '' else pages
         genre = request.form['genre']
         isbn10 = form.isbn10.data
         isbn13 = form.isbn13.data
@@ -53,22 +64,40 @@ def edit_title():
     total_auth = len(authors)
     id = request.args.get('id')
     book = Book.query.get(id)
+    # form = UpdateForm(summary=book.summary, data={"coauths":book.authors})
+    # we do not need coauths preselected because selected will be deleted
     form = UpdateForm(summary=book.summary)
+    form.coauths.query = book.authors   
     if form.validate_on_submit():
+        for author in form.coauths.data:
+            book.authors.remove(author)
         book.title = request.form['title']
         book.author = request.form['author']
+        if not db.session.query(Author).filter_by(fullname=book.author).first():
+            pname = db.session.query(Author).filter(Author.penname.icontains(book.author)).first()
+            # pname = db.session.query(Author).filter_by(penname=book.author).first()
+            if book.author in pname.penname:
+                book.author = pname.fullname
+            else:
+                flash('Author not found')
         provisional_author = db.session.query(Author).filter_by(fullname=request.form['plusauthor']).first()
         if provisional_author:
             book.authors.append(provisional_author)
             form.plusauthor.data = ''
         else:
             form.plusauthor.data = ''
-        book.pages = request.form['pages']
+        if request.form['pages'] == '':
+            book.pages = None
+        else:
+            book.pages = request.form['pages']
         book.genre = request.form['genre']
         book.isbn10 = request.form['isbn10']
         book.isbn13 = request.form['isbn13']
         book.first_publish = request.form['first_publish']
-        book.rating = request.form['rating']
+        if request.form['rating'] == '' or request.form['rating'] == None:
+            book.rating = 0
+        else:
+            book.rating = request.form['rating']
         book.summary = request.form['summary']
         db.session.commit()
         return redirect(url_for('author.bibliography', author=book.author))

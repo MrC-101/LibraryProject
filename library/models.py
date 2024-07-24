@@ -52,4 +52,4 @@ class Author(db.Model):
     books = db.relationship("Book", secondary='book_author', back_populates='authors')
     
     def __repr__(self):
-            return f'DB_ID: {self.id},  Name: {self.fullname}, {self.books}'
+            return f'{self.fullname} (id: {self.id})'

@@ -157,11 +157,19 @@ def search():
             total = len(books)
             title_returned = form.title.data
             author_returned = form.author.data
-            isbn_returned = form.isbn.data
+            isbn10_returned = form.isbn10.data
+            isbn13_returned = form.isbn13.data
             form.title.data = ''
             form.author.data = ''
-            form.isbn.data = ''
+            form.isbn10.data = ''
+            form.isbn13.data = ''
             
+            if not db.session.query(Author).filter_by(fullname=author_returned).first():
+                pname = db.session.query(Author).filter(Author.penname.icontains(author_returned)).first()
+                # pname = db.session.query(Author).filter_by(penname=book.author).first()
+                if author_returned in pname.penname:
+                    author_returned = pname.fullname
+                
             if Book.query.filter_by(title=title_returned, author=author_returned).first():
                 book = Book.query.filter_by(title=title_returned).filter_by(author=author_returned).first()
                 return redirect(url_for('book.edit_title', id=book.id, total=total, total_auth=total_auth))
@@ -192,10 +200,14 @@ def search():
                 else:
                     return redirect(url_for('author.edit_author', author=author_returned, id=author_obj.id))
             
-            elif Book.query.filter_by(isbn=isbn_returned) and isbn_returned is not '':
-                book = Book.query.filter_by(isbn=isbn_returned).first()
+            elif Book.query.filter_by(isbn10=isbn10_returned) and isbn10_returned is not '':
+                book = Book.query.filter_by(isbn10=isbn10_returned).first()
                 return redirect(url_for('author.bibliography', author=book.author))
-            
+ 
+            elif Book.query.filter_by(isbn13=isbn13_returned) and isbn13_returned is not '':
+                book = Book.query.filter_by(isbn13=isbn13_returned).first()
+                return redirect(url_for('author.bibliography', author=book.author))
+                       
             else:
                 flash('Nothing found in the Database')
                 books = Book.query.order_by('author').all()
