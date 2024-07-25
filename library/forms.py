@@ -9,7 +9,19 @@ class SearchForm(FlaskForm):
     isbn10 = StringField(label='isbn10', validators=[Optional()])
     isbn13 = StringField(label='isbn13', validators=[Optional()])
     submit = SubmitField(label='Search')
+
+class SearchBooksForm(FlaskForm):
+    title = StringField(label='title', validators=[Optional()])
+    submit = SubmitField(label='Search')
     
+class SearchAuthorsForm(FlaskForm):
+    author = StringField(label='author', validators=[Optional()])
+    submit = SubmitField(label='Search')
+
+class SearchAllItemsForm(FlaskForm):
+    all_items = StringField(label='all_items', validators=[Optional()])
+    submit = SubmitField(label='Search')
+      
 class UpdateForm(FlaskForm):
     coauths = QuerySelectMultipleField('Coauths')
     title = StringField(label='title', validators=[DataRequired()])

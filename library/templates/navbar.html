@@ -18,7 +18,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark bg-dark">
                         <li>
-                            <a class="dropdown-item" style="font-size: medium" href="{{ url_for('main.home') }}">List
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.home', flag='books_list') }}">List
                                 Titles</a>
                         </li>
                         <li>
@@ -29,14 +30,14 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.search', flag='book') }}">Edit Title</a>
+                                href="{{ url_for('main.search_books') }}">Edit Title</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
                             <a class="dropdown-item" style="color: red; font-size: medium"
-                                href="{{ url_for('main.search') }}">Delete
+                                href="{{ url_for('main.search_books') }}">Delete
                                 Title</a>
                         </li>
                     </ul>
@@ -58,7 +59,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.search', flag='authors_list') }}">Edit
+                                href="{{ url_for('main.search_authors') }}">Edit
                                 Author</a>
                         </li>
                         <li>
@@ -66,7 +67,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="color: red; font-size: medium"
-                                href="{{ url_for('main.search', flag='authors_list') }}">Delete
+                                href="{{ url_for('main.search_authors') }}">Delete
                                 Author</a>
                         </li>
                     </ul>
@@ -91,10 +92,30 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" style="color: white; font-size: medium"
-                        href="{{ url_for('main.search') }}">Search 🔍</a>
+                <li class="nav-item dropdown">
+                    <a style="color: white; font-size: medium" class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Search 🔍
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark bg-dark">
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.search_books', flag='books_list') }}">Search
+                                Title</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.search_authors', flag='authors_list') }}">Search Author</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.search_all') }}">Search
+                                All</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -102,7 +123,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-right float-right">
                 <li class="nav-item"></li>
                 <li class="nav-item">
-                    <a class="nav-link" style="font-size: medium" href="{{ url_for('main.search') }}">User</a>
+                    <a class="nav-link" style="font-size: medium" href="{{ url_for('main.search_books') }}">User</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" style="font-size: medium; color: red" href="/init">⚙️</a>

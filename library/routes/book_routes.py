@@ -19,10 +19,12 @@ def add_title():
         if not db.session.query(Author).filter_by(fullname=author).first():
             pname = db.session.query(Author).filter(Author.penname.icontains(author)).first()
             # pname = db.session.query(Author).filter_by(penname=author).first()
-            if author in pname.penname:
-                author = pname.fullname
+            if pname:
+                if author in pname.penname:
+                    author = pname.fullname
             else:
-                flash('Author not found')
+                flash('Author not found. Check Author Name.')
+                return render_template('books/add_title.html', form=form, total=total, total_auth=total_auth)
                 
         author_obj = Author.query.filter_by(fullname=author).first()
         rating = request.form['rating']

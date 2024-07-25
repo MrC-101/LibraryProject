@@ -24,13 +24,13 @@ def bibliography():
 def add_author():
     form = AddAuthorForm()
     if form.validate_on_submit():
-        penname = form.penname.data
+        penname = request.form['penname']
         name_pref = form.name_pref.data
         fname = request.form['fname']
         midname = request.form['midname']
         lname = request.form['lname']
         name_suf = form.name_suf.data
-        gender = form.gender.data
+        gender = request.form['gender']
         if midname != '' and midname != None and midname != 'None':
             if fname != '' and fname != None:
                 fullname = fname + ' ' + midname + ' ' + lname
@@ -55,9 +55,9 @@ def add_author():
         if not Author.query.filter_by(lname=lname, fname=fname, country=country, born=born).first():
             new_author = Author(penname=penname, name_pref=name_pref, fname=fname, lname=lname, name_suf=name_suf, gender=gender, fullname=fullname, country=country, city=city, born=born, died=died, email=email, bio=bio)
             db.session.add(new_author)
-            id=new_author.id
+            # id=new_author.id
             db.session.commit()
-            return redirect(url_for('author.author_details', id=id))
+            return redirect(url_for('main.home', flag='authors_list'))
         else:
             flash('This author is already in the library.')
     else:

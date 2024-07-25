@@ -2,14 +2,16 @@
 
 {% block headline %}
 {% if flag != 'authors_list' and flag != 'authors_by_letter' %}
+<a class="float-right" href="{{ url_for('main.search_books', flag='books_list') }}" style="text-decoration:none"> 🔍 </a>
 <a href="{{ url_for('main.home', flag='authors_list')}}" style="text-decoration:none; color:black">Books</a>
 <a style="text-decoration:none" href="{{ url_for('book.add_title') }}"> +</a>
-<a style="color: red; text-decoration:none" href="{{ url_for('main.search') }}">-</a>
+<a style="color: red; text-decoration:none" href="{{ url_for('main.search_books') }}">-</a>
 
 {% else %}
+<a class="float-right" href="{{ url_for('main.search_authors', flag='authors_list') }}" style="text-decoration:none"> 🔍 </a>
 <a href="{{ url_for('main.home')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Authors</a>
 <a style="text-decoration:none" href="{{ url_for('author.add_author') }}"> +</a>
-<a style="color: red; text-decoration:none" href="{{ url_for('main.search', flag='authors_list') }}">-</a>
+<a style="color: red; text-decoration:none" href="{{ url_for('main.search_authors', flag='authors_list') }}">-</a>
 {% endif %}
 
 {% endblock %}

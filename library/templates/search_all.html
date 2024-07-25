@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block headline %}
+
+
+{% endblock headline %}
+
+{% block subhead %}
+<form method="POST" action="{{ url_for('main.search_all', authors=authors, books=books) }}" novalidate>
+    {{ form.csrf_token }}
+    <p>
+        &nbsp;Search For: &emsp;<br />
+        {{ form.all_items(size=100) }}
+        {% for err in form.all_items.errors %}
+        <span style="color: red">{{ err }}</span>
+        {% endfor %}
+    </p>
+    <br />
+    {{ form.submit(class="btn btn-secondary btn-sm") }}
+</form>
+{% endblock subhead %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+<div class="alert-danger d-flex justify-items-left justify-content-left align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
+        <use xlink:href="#exclamation-triangle-fill" />
+    </svg>
+    <div>{{ message }}</div>
+</div>
+{% endfor %}
+
+{% if books %}
+{% for book in books %}
+<li>
+    <button class="btn btn-outline-secondary btn-sm">
+        <a href="{{ url_for('book.edit_title', id=book.id) }}" style="text-decoration: none; color: darkgray">Edit
+        </a>
+    </button>
+    <button class="btn btn-outline-danger btn-sm">
+        <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
+            style="text-decoration: none; color: orangered">Delete
+        </a>
+    </button>&ensp;▫️
+    <a href="{{ url_for('book.edit_title', id=book.id) }}">{{ book.title
+            }}</a>
+    - {{book.first_publish}} -
+    <a href="{{ url_for('author.bibliography', id=book.id, author=book.author) }}">{{
+            book.author }}</a>
+    - {{ book.rating }}/10
+</li>
+{% endfor %}
+{% endif %}
+
+{% if authors %}
+{% for author in authors %}
+<li>
+    <button class="btn btn-outline-secondary btn-sm">
+        <a href="{{ url_for('author.edit_author', id=author.id) }}" style="text-decoration: none; color: darkgray">Edit
+        </a>
+    </button>
+    <button class="btn btn-outline-danger btn-sm">
+        <a href="{{ url_for('author.author_details', id=author.id) }}"
+            style="text-decoration: none; color: orangered">Delete
+        </a>
+    </button>&ensp;▫️
+    <a href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname }}</a>
+</li>
+{% endfor %}
+{% endif %}
+
+{% endblock content %}
