@@ -5,7 +5,7 @@ Author Details
 {% endblock %}
 
 {%block content %}
-&ensp;<label>Author:&emsp;&emsp;<a
+&ensp;<label>Author:&emsp;&emsp;<a style="text-decoration:none"
         href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname }}</a></label><br />
 &ensp;<label>Pen Name:&ensp;{{ author.penname }}</label><br>
 &ensp;<label>Gender:&emsp;&ensp;&nbsp;{{ author.gender }}</label><br>
@@ -13,7 +13,8 @@ Author Details
 &ensp;<label>City:&emsp;&emsp;&emsp;&nbsp;{{ author.city }}</label><br />
 &ensp;<label>Born:&emsp;&emsp;&ensp;&nbsp;{{ author.born }}</label><br />
 &ensp;<label>Died:&emsp;&emsp;&ensp;&nbsp;{{ author.died }}</label><br />
-&ensp;<label>Books:&emsp;&emsp;<a href="{{ url_for('author.bibliography', author=author.fullname) }}">
+&ensp;<label>Books:&emsp;&emsp;<a style="text-decoration:none"
+        href="{{ url_for('author.bibliography', author=author.fullname) }}">
         {{ author.books|count }} currently</a></label>
 <br />
 <br />
@@ -24,7 +25,8 @@ Author Details
     <a href="{{ url_for('author.delete_author', id=author.id) }}" style="text-decoration: none; color: white">Delete</a>
 </button>
 <button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('main.home', flag='authors_list') }}" style="text-decoration: none; color: white">Back to Authors</a>
+    <a href="{{ url_for('main.home', flag='authors_list') }}" style="text-decoration: none; color: white">Back to
+        Authors</a>
 </button>
 <hr />
 <br />

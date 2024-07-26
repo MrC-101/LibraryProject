@@ -2,13 +2,15 @@
 
 {% block headline %}
 {% if flag != 'authors_list' and flag != 'authors_by_letter' %}
-<a class="float-right" href="{{ url_for('main.search_books', flag='books_list') }}" style="text-decoration:none"> 🔍 </a>
+<a class="float-right" href="{{ url_for('main.search_books', flag='books_list') }}" style="text-decoration:none"> 🔍
+</a>
 <a href="{{ url_for('main.home', flag='authors_list')}}" style="text-decoration:none; color:black">Books</a>
 <a style="text-decoration:none" href="{{ url_for('book.add_title') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_books') }}">-</a>
 
 {% else %}
-<a class="float-right" href="{{ url_for('main.search_authors', flag='authors_list') }}" style="text-decoration:none"> 🔍 </a>
+<a class="float-right" href="{{ url_for('main.search_authors', flag='authors_list') }}" style="text-decoration:none"> 🔍
+</a>
 <a href="{{ url_for('main.home')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Authors</a>
 <a style="text-decoration:none" href="{{ url_for('author.add_author') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_authors', flag='authors_list') }}">-</a>
@@ -59,15 +61,18 @@
             <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        <a href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a>
+        <a style="text-decoration:none" href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a>
         - {{book.first_publish}} -
+
+        <a style="text-decoration:none"
+            href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
         {% for author in book.authors %}
-        <a href="{{ url_for('author.bibliography', author=author.fullname) }}">
-            {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
-        {% endfor %}
-        {% if book.co_author and book.authors|length < 2 %}
-        | {{book.co_author}}
+        {% if author.fullname != book.author %}
+        <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
+            {{ '|' if loop.first else ''}} {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
         {% endif %}
+        {% endfor %}
+
         <a style="font-weight:bolder; text-decoration:none"
             href="{{ url_for('author.bibliography', author=book.authors[0].fullname) }}">
             - {{book.authors[0].books|count}} books in collection</a>
@@ -93,9 +98,11 @@
             <a href="{{ url_for('author.author_details', id=author.id) }}"
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        <a href="{{ url_for('author.author_details', id=author.id) }}">{{ author.fullname}}</a>
+        <a style="text-decoration:none"
+            href="{{ url_for('author.author_details', id=author.id) }}">{{ author.fullname}}</a>
         - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} -
-        <a href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books
+        <a style="text-decoration:none"
+            href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books
             in
             collection</a>
     </li>
@@ -121,7 +128,8 @@
             <a href="{{ url_for('author.author_details', id=author.id) }}"
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        <a href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
+        <a style="text-decoration:none"
+            href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
         - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - {{author.books|count}} books in
         collection
     </li>
@@ -143,16 +151,18 @@
             <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        <a href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title
+        <a style="text-decoration:none" href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title
                                     }}</a>
         - {{book.first_publish}} -
+
+        <a style="text-decoration:none"
+            href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
         {% for author in book.authors %}
-        <a href="{{ url_for('author.bibliography', id=book.id, author=author.fullname) }}">
-            {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
-        {% endfor %}
-        {% if book.co_author and book.authors|length < 2 %}
-        | {{book.co_author}}
+        {% if author.fullname != book.author %}
+        <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
+            {{ '|' if loop.first else ''}} {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
         {% endif %}
+        {% endfor %}
     </li>
     {% endfor %}
     {% endif %}

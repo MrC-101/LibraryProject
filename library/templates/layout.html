@@ -15,10 +15,25 @@
     {% include 'navbar.html' %}
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-12">{% block headline %}{% endblock %}</h1>
+            <h1 class="display-12">
+
+                {% block headline %}{% endblock %}</h1>
+
             <p>{% block subhead %}{% endblock %}</p>
+
         </div>
         {% block a_z %}{% endblock %}
+    </div>
+
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert-danger d-flex justify-items-left justify-content-left align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
+                <use xlink:href="#exclamation-triangle-fill" />
+            </svg>
+            <div>{{ message }}</div>
+        </div>
+        {% endfor %}
     </div>
 
     <div>{% block content %}{% endblock %}</div>

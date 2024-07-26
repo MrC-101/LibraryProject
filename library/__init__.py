@@ -9,6 +9,7 @@ from library.routes.author_routes import author_bp
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 DATABASE_URL = os.getenv('DATABASE_URL')
+# DATABASE_URL = 'sqlite:///books-collection.db'
 APP_SECR_KEY = os.getenv('APP_SECR_KEY')
 
 def create_app():

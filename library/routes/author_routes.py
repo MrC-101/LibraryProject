@@ -30,7 +30,11 @@ def add_author():
         midname = request.form['midname']
         lname = request.form['lname']
         name_suf = form.name_suf.data
-        gender = request.form['gender']
+        gender = form.gender.data
+        if gender == 1 or gender == '1':
+            gender = 'Male'
+        elif gender == 2 or gender == '2':
+            gender = 'Female'
         if midname != '' and midname != None and midname != 'None':
             if fname != '' and fname != None:
                 fullname = fname + ' ' + midname + ' ' + lname
@@ -54,10 +58,12 @@ def add_author():
         bio = form.bio.data
         if not Author.query.filter_by(lname=lname, fname=fname, country=country, born=born).first():
             new_author = Author(penname=penname, name_pref=name_pref, fname=fname, lname=lname, name_suf=name_suf, gender=gender, fullname=fullname, country=country, city=city, born=born, died=died, email=email, bio=bio)
+            
             db.session.add(new_author)
-            # id=new_author.id
             db.session.commit()
-            return redirect(url_for('main.home', flag='authors_list'))
+            author=db.session.query(Author).filter_by(fullname=fullname, lname=lname, fname=fname, born=born).first()
+            # return redirect(url_for('main.home', flag='authors_list'))
+            return redirect(url_for('author.author_details', id=author.id))
         else:
             flash('This author is already in the library.')
     else:

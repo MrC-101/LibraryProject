@@ -1,34 +1,40 @@
-{% extends 'layout.html' %} {% block headline %} {% for message in
-get_flashed_messages() %}
-<div class="alert-danger d-flex justify-items-left justify-content-left align-items-center" role="alert">
-    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
-        <use xlink:href="#exclamation-triangle-fill" />
-    </svg>
-    <div>{{ message }}</div>
-</div>
-{% endfor %}
-{% endblock %}
+{% extends 'layout.html' %}
+
+{% block headline %}
+Search Author
+{% endblock headline %}
 
 {% block subhead %}
 <form method="POST" action="{{ url_for('main.search_authors') }}" novalidate>
     {{ form.csrf_token }}
-    <p>
-        &nbsp;Author:<br />
-        {{ form.author(size=100) }} {% for err in form.author.errors %}
+    <div>
+        {{ form.author(size=100, placeholder='enter full or partial author name') }}
+        {% for err in form.author.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
-    </p>
-    <br />
+    </div>
+    <div>
+        {{ authors|count }} authors found
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&nbsp;Query
+        took {{ duration }}ms
+    </div>
+    <br>
     {{ form.submit(class="btn btn-secondary btn-sm") }}
 </form>
-{% endblock %} {% block content %}
+{% endblock subhead %}
+
+{% block content %}
+
+{% if authors|count == 0 %}
+<p>Library is empty</p>
+{% else %}
 <ul>
-    {% if authors|count == 0 %}
-    <p>Library is empty</p>
-    {% else %} {% for author in authors %}
+    {% if authors %}
+    {% for author in authors %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
-            <a href="{{ url_for('author.edit_author', id=author.id) }}" style="text-decoration: none; color: darkgray">Edit
+            <a href="{{ url_for('author.edit_author', id=author.id) }}"
+                style="text-decoration: none; color: darkgray">Edit
             </a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
@@ -40,5 +46,6 @@ get_flashed_messages() %}
         {% endfor %}
         {% endif %}
     </li>
+    {% endif %}
+    {% endblock content %}
 </ul>
-{% endblock %}

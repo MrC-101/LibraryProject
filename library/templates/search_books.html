@@ -1,25 +1,24 @@
-{% extends 'layout.html' %} {% block headline %} {% for message in
-get_flashed_messages() %}
-<div class="alert-danger d-flex justify-items-left justify-content-left align-items-center" role="alert">
-    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
-        <use xlink:href="#exclamation-triangle-fill" />
-    </svg>
-    <div>{{ message }}</div>
-</div>
-{% endfor %}
-{% endblock %}
+{% extends 'layout.html' %} 
+{% block headline %} 
+Search Title
+{% endblock headline %}
 
 {% block subhead %}
 <form method="POST" action="{{ url_for('main.search_books') }}" novalidate>
     {{ form.csrf_token }}
-    <p>
-        &nbsp;Title: &emsp;<br />
-        {{ form.title(size=100) }}
+    <div>
+        {{ form.title(size=100, placeholder='enter full or partial book title') }}
         {% for err in form.title.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
-    </p>
-    <br />
+    </div>
+    <div>
+        {% set ttl='titles' if books|count > 1 or books|count == 0 else 'title' %}
+        {{ books|count }} {{ttl}} found
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&nbsp;Query
+        took {{ duration }}ms
+    </div>
+<br>
     {{ form.submit(class="btn btn-secondary btn-sm") }}
 </form>
 {% endblock %}
@@ -43,8 +42,15 @@ get_flashed_messages() %}
         <a href="{{ url_for('book.edit_title', id=book.id) }}">{{ book.title
             }}</a>
         - {{book.first_publish}} -
-        <a href="{{ url_for('author.bibliography', id=book.id, author=book.author) }}">{{
-            book.author }}</a>
+        
+        <a href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
+        {% for author in book.authors %}
+        {% if author.fullname != book.author %}
+        <a href="{{ url_for('author.bibliography', author=author.fullname) }}">
+            {{ '|' if loop.first else ''}} {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
+        {% endif %}
+        {% endfor %}
+
         - {{ book.rating }}/10
         {% endfor %}
         {% endif %}

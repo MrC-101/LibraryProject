@@ -127,9 +127,9 @@ def books_by_letter():
     books = db.session.query(Book).all()
     total = len(books)
     if letter != '*':
-        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).all()
+        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by('author', 'title').all()
     else:
-        books_by_letter = db.session.query(Book).order_by('author', 'first_publish', 'title').all()
+        books_by_letter = db.session.query(Book).order_by('author', 'title').all()
     return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth)
 
 
