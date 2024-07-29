@@ -138,9 +138,6 @@
 </ul>
 {% elif flag == 'books_by_letter' %}
 <ul>
-    {% if books_by_letter|count == 0 %}
-    <p>There is no book starting with this letter</p>
-    {% else %}
     {% for book in books_by_letter %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
@@ -159,13 +156,13 @@
             href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
         {% for author in book.authors %}
         {% if author.fullname != book.author %}
+        {{ '|' }}
         <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-            {{ '|' if loop.first else ''}} {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
+            {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
         {% endif %}
         {% endfor %}
     </li>
     {% endfor %}
-    {% endif %}
 </ul>
 {% endif %}
 {% endblock %}

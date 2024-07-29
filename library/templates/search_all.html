@@ -32,6 +32,8 @@ Search Any
 
 <ul>
     {% if authors %}
+    {% set auth='Authors' if authors|count > 1 or authors|count == 0 else 'Author' %}
+    <h5>{{ authors|count }} {{auth}} related to your search</h5>
     {% for author in authors %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
@@ -51,6 +53,8 @@ Search Any
 </ul>
 <ul>
     {% if books %}
+    {% set ttl='Books' if books|count > 1 or books|count == 0 else 'Book' %}
+    <h5>{{ books|count }} {{ ttl }} related to your search</h5>
     {% for book in books %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">

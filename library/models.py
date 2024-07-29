@@ -1,7 +1,11 @@
 
 # from sqlalchemy.orm import relationship
-# from sqlalchemy import Table
+# from sqlalchemy import Table,Index, func, cast, text
 from library.extensions import db
+
+# def to_tsvector_ix(*columns):
+#     s = " || ' ' || ".join(columns)
+#     return func.to_tsvector('english', text(s))
 
 # book_author = db.Table('book_author',
 #                     db.Column('book_id', db.Integer, db.ForeignKey('books.id'), primary_key=True),
@@ -23,7 +27,7 @@ class Book(db.Model):
     pages = db.Column(db.Integer, nullable=True)
     isbn10 = db.Column(db.String, nullable=True)
     isbn13 = db.Column(db.String, nullable=True)
-    first_publish = db.Column(db.Integer, nullable=True)
+    first_publish = db.Column(db.String, nullable=True)
     rating = db.Column(db.Float, nullable=True)
     genre = db.Column(db.String, nullable=True)
     summary = db.Column(db.Text, default='', nullable=True)
@@ -50,6 +54,8 @@ class Author(db.Model):
     bio = db.Column(db.Text, default='', nullable=True)
     email = db.Column(db.String, default='', nullable=True)
     books = db.relationship("Book", secondary='book_author', back_populates='authors')
+    
+    # __ts_vector__ = to_tsvector_ix('fname', 'lname', 'born', 'died', 'gender', 'country', 'city', 'bio', 'midname', 'penname')
     
     def __repr__(self):
             return f'{self.fullname} (id: {self.id})'

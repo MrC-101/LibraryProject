@@ -3,6 +3,7 @@ from library.extensions import db
 from library.models import Book, Author
 from library.forms import SearchAllItemsForm, SearchAuthorsForm, SearchBooksForm
 import operator, time
+from sqlalchemy import or_, all_
 
 main_bp = Blueprint('main',__name__)
 
@@ -186,8 +187,8 @@ def search_all():
         all_items = form.all_items.data
         form.all_items.data = ''
         
-        authors = db.session.query(Author).filter(Author.fullname.icontains(all_items)).order_by('fullname').all()
-        books = db.session.query(Book).filter(Book.title.icontains(all_items)).order_by('title', 'author', 'first_publish').all()
+        authors = db.session.query(Author).filter(or_ (Author.fullname.icontains(all_items), Author.died.icontains(all_items), Author.born.icontains(all_items), Author.country.icontains(all_items), Author.city.icontains(all_items), Author.penname.icontains(all_items))).all()
+        books = db.session.query(Book).filter(or_ (Book.title.icontains(all_items), Book.summary.icontains(all_items), Book.genre.icontains(all_items), Book.first_publish.icontains(all_items))).all()
         
         end = time.perf_counter_ns()
         duration = str((end - start)/1000000)[:4]

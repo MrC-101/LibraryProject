@@ -1,5 +1,5 @@
 from flask import Flask
-import os
+import os, pymysql
 from dotenv import load_dotenv
 from library.extensions import db, migrate
 from library.routes.book_routes import book_bp
@@ -8,7 +8,8 @@ from library.routes.author_routes import author_bp
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
-DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL') #postgres
+# DATABASE_URL = 'mysql+pymysql://root:1234@localhost:3307/librarydb'
 # DATABASE_URL = 'sqlite:///books-collection.db'
 APP_SECR_KEY = os.getenv('APP_SECR_KEY')
 
