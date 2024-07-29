@@ -1,4 +1,6 @@
-To use the application you will need to create a .env file in the root directory where the .flaskenv file is too. In that .env file you will store your DATABASE_URL and your APP_SECRET_KEY variables.
+A Library Web Application written in Python.
+To use the application you will need to create a .env file in the root directory where the .flaskenv file is too. 
+In that .env file you will store your DATABASE_URL and your APP_SECRET_KEY variables.
 
 <code>example for Postgresql
 DATABASE_URL='postgresql://user:password@localhost:5432/library_db'
