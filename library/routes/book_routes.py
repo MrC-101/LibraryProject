@@ -2,6 +2,7 @@ from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Book, Author
 from library.forms import AddForm, UpdateForm
+from library.maintenance import vacuum
 
 book_bp = Blueprint('book',__name__)
 
@@ -51,6 +52,10 @@ def add_title():
             else:
                 form.plusauthor.data = ''
             db.session.commit()
+            
+            # DB VACUUM ANALYZE
+            vacuum()
+            
             return redirect(url_for('author.bibliography', author=author))
             # return redirect(url_for('main.home', flag='authors_list'))
         else:
@@ -102,6 +107,10 @@ def edit_title():
             book.rating = request.form['rating']
         book.summary = request.form['summary']
         db.session.commit()
+        
+        # DB VACUUM ANALYZE
+        vacuum()
+        
         return redirect(url_for('author.bibliography', author=book.author))
         # return redirect(url_for('main.home', flag='authors_list'))
 
@@ -112,6 +121,10 @@ def delete_title(id):
     book = Book.query.get(id)
     db.session.delete(book)
     db.session.commit()
+    
+    # DB VACUUM ANALYZE
+    vacuum()
+    
     return redirect(url_for('main.home'))
 
 @book_bp.route('/book_details/<int:id>')

@@ -3,6 +3,7 @@ from library.extensions import db
 from library.models import Author, Book
 from library.forms import AddAuthorForm, EditAuthorForm
 import operator, select
+from library.maintenance import vacuum
 
 author_bp = Blueprint('author',__name__)
 
@@ -47,7 +48,10 @@ def add_author():
                 fullname = fname
         if penname == '' or penname == None or penname == 'None':
             if fname != '' and fname != None and fname != 'None':
-                penname = fname + ' ' + lname
+                if midname != '' and midname != None and midname != 'None':
+                    penname = fname + ' ' + midname + ' ' + lname
+                else:
+                    penname = penname = fname + ' ' + lname
             else:
                 penname = lname        
         country = request.form['country']
@@ -57,10 +61,14 @@ def add_author():
         email = form.email.data
         bio = form.bio.data
         if not Author.query.filter_by(lname=lname, fname=fname, country=country, born=born).first():
-            new_author = Author(penname=penname, name_pref=name_pref, fname=fname, lname=lname, name_suf=name_suf, gender=gender, fullname=fullname, country=country, city=city, born=born, died=died, email=email, bio=bio)
+            new_author = Author(penname=penname, name_pref=name_pref, fname=fname, midname=midname, lname=lname, name_suf=name_suf, gender=gender, fullname=fullname, country=country, city=city, born=born, died=died, email=email, bio=bio)
             
             db.session.add(new_author)
             db.session.commit()
+            
+            # DB VACUUM ANALYZE
+            vacuum()
+            
             author=db.session.query(Author).filter_by(fullname=fullname, lname=lname, fname=fname, born=born).first()
             # return redirect(url_for('main.home', flag='authors_list'))
             return redirect(url_for('author.author_details', id=author.id))
@@ -107,6 +115,10 @@ def edit_author():
             author.bio = request.form['bio']
         
             db.session.commit()
+            
+            # DB VACUUM ANALYZE
+            vacuum()
+            
             return redirect(url_for('author.author_details', id=author.id))
 
     return render_template('authors/edit_author.html', id=id, form=form, author=author)
@@ -125,6 +137,9 @@ def delete_author(id):
         db.session.commit()
     db.session.delete(author)
     db.session.commit()
+    
+    # DB VACUUM ANALYZE
+    vacuum()
 
     return redirect(url_for('main.home', flag='authors_list'))
 

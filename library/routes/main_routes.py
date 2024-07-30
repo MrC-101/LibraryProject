@@ -3,13 +3,18 @@ from library.extensions import db
 from library.models import Book, Author
 from library.forms import SearchAllItemsForm, SearchAuthorsForm, SearchBooksForm
 import operator, time
-from sqlalchemy import or_, all_
+from sqlalchemy import or_
+from library.maintenance import vacuum
 
 main_bp = Blueprint('main',__name__)
 
 @main_bp.route('/init')
 def init():
-    # db.create_all()
+    
+    vacuum()    
+
+    # # db.create_all()
+    
     # authors=[
     #       Author(fullname='Gabriel García Márquez'),
     #       Author(fullname='Umberto Eco'),
@@ -118,6 +123,7 @@ def search_authors():
             
             books = db.session.query(Book).all()
             total = len(books)
+            
             author_returned = form.author.data
             
             if Author.query.filter_by(fullname=author_returned).first():
@@ -130,28 +136,93 @@ def search_authors():
                     return render_template('search_authors.html', flag='authors_list', form=form, authors=authors, total=total, total_auth=total_auth, duration=duration)                
                 else:
                     return redirect(url_for('author.author_details', author=author_returned, id=authors[0].id))
-                
+                        
             elif db.session.query(Author).filter(Author.fullname.icontains(author_returned)).all():
+                for i in range(10):
+                    print('all authors')
+                authors=[]
+                authors1=[]
+                authors2=[]
+                authors3=[]
+                duration1=0
+                duration2=0
+                duration3=0
+                   
                 if db.session.query(Author).filter(Author.lname.istartswith(author_returned)).all():
+                    for i in range(10):
+                        print('authors1-lname')
                     start = time.perf_counter_ns()
-                    authors = db.session.query(Author).filter(Author.lname.istartswith(author_returned)).order_by('fullname', 'lname').all()
+                    authors1 = db.session.query(Author).filter(Author.lname.istartswith(author_returned)).order_by('lname','fullname').all()
                     
                     end = time.perf_counter_ns()
-                    duration = str((end - start)/1000000)[:4]
-                elif db.session.query(Author).filter(Author.fname.istartswith(author_returned)).all():
+                    duration1 = (end - start)/1000000
+                    
+                if db.session.query(Author).filter(Author.fname.istartswith(author_returned)).all():
+                    for i in range(10):
+                        print('authors2-fname')
                     start = time.perf_counter_ns()
-                    authors = db.session.query(Author).filter(Author.fname.istartswith(author_returned)).order_by('fullname', 'lname').all()
+                    authors2 = db.session.query(Author).filter(Author.fname.istartswith(author_returned)).order_by('fullname', 'lname').all()
                     
                     end = time.perf_counter_ns()
-                    duration = str((end - start)/1000000)[:4]
-                else: 
-                    start = time.perf_counter_ns()  
-                    authors = db.session.query(Author).filter(Author.fullname.icontains(author_returned)).all()
+                    duration2 = (end - start)/1000000
+                    
+                if db.session.query(Author).filter(Author.midname.istartswith(author_returned)).all():
+                    for i in range(10):
+                        print('authors3-midname')
+                    start = time.perf_counter_ns()
+                    authors3= db.session.query(Author).filter(Author.midname.istartswith(author_returned)).order_by('lname','fullname').all()
+                    
+                    end = time.perf_counter_ns()
+                    duration3 = (end - start)/1000000
+                    
+                # if db.session.query(Author).filter(Author.fullname.icontains(author_returned)).all():
+                #     start = time.perf_counter_ns()  
+                #     authors4 = db.session.query(Author).filter(Author.fullname.icontains(author_returned)).all()
+                #     end = time.perf_counter_ns()
+                #     duration = str((end - start)/1000000)[:4]
+                if authors1 and authors2 and authors3:  
+                    for i in range(10):
+                        print('all 3')      
+                    authors = authors1 + authors2 + authors3
+                elif authors1 and authors2:
+                    for i in range(10):
+                        print('1+2')
+                    authors = authors1 + authors2
+                elif authors1 and authors3:
+                    for i in range(10):
+                        print('1+3')
+                    authors = authors1 + authors3
+                elif authors2 and authors3:
+                    for i in range(10):
+                        print('2+3')
+                    authors = authors2 + authors3
+                elif authors1:
+                    for i in range(10):
+                        print('1-lname')
+                    authors = authors1
+                elif authors2:
+                    for i in range(10):
+                        print('2-fname')
+                    authors = authors2
+                elif authors3:
+                    for i in range(10):
+                        print('3-midname')
+                    authors = authors3
+                else:
+                    start = time.perf_counter_ns()
+                    flash('Nothing found in the Database. Check your spelling or try a different Name')
+                    authors = Author.query.order_by('fullname').all()
                     end = time.perf_counter_ns()
                     duration = str((end - start)/1000000)[:4]
-                      
+                    form = SearchAuthorsForm()
+                    return render_template('search_authors.html', form=form, authors=authors, total=total, total_auth=total_auth, duration=duration)
+                    
+                duration = str(duration1+duration2+duration3)[:4]
+                
                 if authors:
                     if len(authors) > 1:
+                        for i in range(10):
+                            print('authors list')
                         # return redirect(url_for('main.search_authors', flag='authors_list', form=form, authors=authors, total=total, total_auth=total_auth, duration=duration))
                         return render_template('search_authors.html', form=form, authors=authors, duration=duration)
                     else:
@@ -169,6 +240,8 @@ def search_authors():
     else:
         # end = time.perf_counter_ns()
         # duration = str((end - start)/1000000)[:4]
+        for i in range(10):
+            print('in here !!!')
         return render_template('search_authors.html', form=form, authors=authors, total_auth=total_auth, total=total, flag=flag)
        
 @main_bp.route('/search_all', methods=["GET", "POST"])
