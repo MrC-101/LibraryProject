@@ -7,7 +7,7 @@ Search Title
 <form method="POST" action="{{ url_for('main.search_books') }}" novalidate>
     {{ form.csrf_token }}
     <div>
-        {{ form.title(size=100, placeholder='enter full or partial book title') }}
+        {{ form.title(size=88, placeholder='enter full or partial book title') }}
         {% for err in form.title.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
@@ -15,8 +15,9 @@ Search Title
     <div>
         {% set ttl='titles' if books|count > 1 or books|count == 0 else 'title' %}
         {{ books|count }} {{ttl}} found
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&ensp;&nbsp;Query
-        took {{ duration }}ms
+        <div class="float-right">Query took {{duration}}ms</div>
+        <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Query
+        took {{ duration }}ms -->
     </div>
 <br>
     {{ form.submit(class="btn btn-secondary btn-sm") }}

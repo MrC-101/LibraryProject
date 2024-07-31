@@ -115,7 +115,7 @@ def search_authors():
     authors = Author.query.order_by('fullname', 'lname').all()
     total_auth = len(authors)
     total = len(books)
-    
+    duration = 0
     form = SearchAuthorsForm()
     flag = request.args.get('flag')
     if request.method == 'POST':
@@ -238,8 +238,6 @@ def search_authors():
                 form = SearchAuthorsForm()
                 return render_template('search_authors.html', form=form, authors=authors, total=total, total_auth=total_auth, duration=duration)
     else:
-        # end = time.perf_counter_ns()
-        # duration = str((end - start)/1000000)[:4]
         for i in range(10):
             print('in here !!!')
         return render_template('search_authors.html', form=form, authors=authors, total_auth=total_auth, total=total, flag=flag)

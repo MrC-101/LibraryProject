@@ -8,15 +8,16 @@ Search Author
 <form method="POST" action="{{ url_for('main.search_authors') }}" novalidate>
     {{ form.csrf_token }}
     <div>
-        {{ form.author(size=100, placeholder='search through first, last and middle author names. enter full or partial author name') }}
+        {{ form.author(size=88, placeholder='search through first, last and middle author names. enter full or partial author name') }}
         {% for err in form.author.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
     </div>
     <div>
         {{ authors|count }} authors found
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;&nbsp;Query
-        took {{ duration }}ms
+        <div class="float-right">Query took {{duration}}ms</div>
+        <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;Query
+        took {{ duration }}ms -->
     </div>
     <br>
     {{ form.submit(class="btn btn-secondary btn-sm") }}

@@ -8,7 +8,7 @@ Search Any
 <form method="POST" action="{{ url_for('main.search_all', authors=authors, books=books) }}" novalidate>
     {{ form.csrf_token }}
     <div>
-        {{ form.all_items(size=100, placeholder='will search all databases. you can enter anything') }}
+        {{ form.all_items(size=88, placeholder='will search all databases. you can enter anything') }}
         {% for err in form.all_items.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
@@ -18,10 +18,12 @@ Search Any
         {% set auth='authors' if authors|count > 1 or authors|count == 0 else 'author' %}
         {% set ttl='titles' if books|count > 1 or books|count == 0 else 'title' %}
 
-        {{ authors|count }} {{auth}} and {{ books|count }} {{ ttl }} found. Total: {{ books|count + authors|count }}
+        {{ authors|count }} {{auth}} and {{ books|count }} {{ ttl }} found. Total:
+        {{ books|count + authors|count }}
 
-        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&ensp;Query
-        took {{duration}}ms
+        <div class="float-right">Query took {{duration}}ms</div>
+        <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;&nbsp;Query took
+        {{duration}}ms -->
     </div>
     <br>
     {{ form.submit(class="btn btn-secondary btn-sm") }}
