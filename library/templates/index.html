@@ -171,6 +171,9 @@
             {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
         {% endif %}
         {% endfor %}
+        <a style="font-weight:bolder; text-decoration:none"
+            href="{{ url_for('author.bibliography', author=book.authors[0].fullname) }}">
+            - {{book.authors[0].books|count}} books in collection</a>
     </li>
     {% endfor %}
 </ul>
@@ -201,12 +204,14 @@
         {% set bks='books' %}
         {% endif %}
         <a style="text-decoration:none"
-            href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name }}</a>
-        - {{publisher.publ_est}} - {{publisher.publ_country}} - <a style="text-decoration:none" href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }} {{auth}}</a> and
-        <a style="text-decoration:none"
+            href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
+        - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
+            style="text-decoration:none"
+            href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
+            {{ auth }}</a> and <a style="text-decoration:none"
             href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
-            {{bks}}</a> currently in this
-            agency 
+            {{ bks }}</a>
+        in total
     </li>
     {% endfor %}
     {% endif %}
@@ -236,9 +241,12 @@
         {% endif %}
         <a style="text-decoration:none"
             href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
-        - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a style="text-decoration:none" href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
-        {{ auth }}</a> and <a style="text-decoration:none"
-        href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }} {{ bks }}</a>
+        - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
+            style="text-decoration:none"
+            href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
+            {{ auth }}</a> and <a style="text-decoration:none"
+            href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
+            {{ bks }}</a>
         in total
     </li>
     {% endfor %}

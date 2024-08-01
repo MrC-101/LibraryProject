@@ -177,24 +177,9 @@ def books_by_letter():
     total_auth = len(authors)
     books = db.session.query(Book).all()
     total = len(books)
+    total_publishers = len(db.session.query(Publisher).all())
     if letter != '*':
-        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by('author', 'title').all()
+        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by('title', 'author').all()
     else:
         books_by_letter = db.session.query(Book).order_by('author', 'title').all()
-    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth)
-
-
-# @book_bp.route('/edit_rating', methods=['GET', 'POST'])
-# def edit_rating():
-#     books = Book.query.order_by('author').order_by('title').all()
-#     total = len(books)
-#     authors = Author.query.all()
-#     total_auth = len(authors)
-#     id = request.args.get('id')
-#     book = Book.query.get(id)
-#     if request.method == 'POST':
-#         book.rating = request.form['rating']
-#         db.session.commit()
-#         return redirect(url_for('main.home'))
-
-#     return render_template('books/edit_rating.html', book=book, total=total, total_auth=total_auth)
+    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers)

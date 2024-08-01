@@ -96,10 +96,9 @@ def publishers_by_letter():
     total_auth = len(authors)
     books = db.session.query(Book).all()
     total = len(books)
-    publishers = db.session.query(Publisher).all()
-    total_publishers = len(publishers)
+    total_publishers = len(db.session.query(Publisher).all())
     if letter != '*':
-        publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).all()
+        publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by('publ_name').all()
     else:
         publishers_by_letter = db.session.query(Publisher).order_by('publ_name').all()
     return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers)
