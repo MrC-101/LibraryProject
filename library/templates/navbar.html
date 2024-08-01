@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand link-success link-offset-2 link-opacity-100-hover"
-            style="font-size: x-large; font-weight: bold;" href="{{ url_for('main.home') }}">LIBRARY</a>
+            style="font-size: x-large; font-weight: bold;" href="{{ url_for('main.home', flag='publishers_list') }}">LIBRARY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -80,9 +80,9 @@
                         Publishers
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark bg-dark">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('main.home', flag='publishers_list') }}">List Publishers</a></li>
                         <li>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="{{ url_for('publisher.add_publisher') }}">Add Publisher</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />

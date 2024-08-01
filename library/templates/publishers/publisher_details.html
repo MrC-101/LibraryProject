@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block headline %}
+Publisher Details
+{% endblock %}
+
+{%block content %}
+&ensp;<label>Publisher:&ensp;<a style="text-decoration:none"
+        href="#">{{ publisher.publ_name }}</a></label><br />
+&ensp;<label>Founder:&emsp;{{ publisher.publ_founder }}</label><br>
+&ensp;<label>Parent:&emsp;&ensp;&nbsp;{{ publisher.publ_parent }}</label><br>
+&ensp;<label>Est:&emsp;&emsp;&emsp;&nbsp;{{ publisher.publ_est }}</label><br />
+&ensp;<label>Country:&emsp;{{ publisher.publ_country }}</label><br />
+&ensp;<label>City:&emsp;&emsp;&ensp;&nbsp;{{ publisher.publ_city }}</label><br />
+&ensp;<label>Address:&emsp;{{ publisher.publ_address }}</label><br />
+&ensp;<label>Email:&emsp;&emsp;&nbsp;{{ publisher.publ_email }}</label><br />
+&ensp;<label>Website:&emsp;{{ publisher.publ_website }}</label>
+<br />
+<br />
+&ensp;<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}" style="text-decoration: none; color: white">Edit</a>
+</button>
+<button class="btn btn-danger btn-sm">
+    <a href="#" style="text-decoration: none; color: white">Delete</a>
+</button>
+<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('main.home', flag='publishers_list') }}" style="text-decoration: none; color: white">Back to
+        Publishers</a>
+</button>
+<hr />
+<br />
+&ensp; {% endblock %}

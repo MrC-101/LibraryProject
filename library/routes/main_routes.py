@@ -1,6 +1,6 @@
 from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
-from library.models import Book, Author
+from library.models import Book, Author, Publisher
 from library.forms import SearchAllItemsForm, SearchAuthorsForm, SearchBooksForm
 import operator, time
 from sqlalchemy import or_
@@ -11,8 +11,12 @@ main_bp = Blueprint('main',__name__)
 @main_bp.route('/init')
 def init():
     
-    vacuum()    
-
+    # vacuum()    
+    publ=Publisher.query.get(2)
+    print(publ.publ_name, publ.authors, len(publ.books))
+    for author in publ.authors:
+        print(author.country)    
+    print(publ.authors[0].born)
     # # db.create_all()
     
     # authors=[
@@ -35,16 +39,19 @@ def init():
     # books = [book.title for book in elena.books]
     # print(f"Elena's Books: {', '.join(books)}")
     
-    return redirect(url_for('main.home'))
+    return redirect(url_for('main.home', flag='publishers_list'))
 
 @main_bp.route('/')
 def home():
-    books_totals = db.session.query(Book).order_by('author', 'first_publish', 'title').all()
-    authors_totals = db.session.query(Author).order_by('fullname').all()
-    total_auth = len(authors_totals)
-    total = len(books_totals)
+    books_totals = db.session.query(Book).order_by('author', 'first_publish', 'title').limit(50).all()
+    authors_totals = db.session.query(Author).order_by('fullname').limit(50).all()
+    publishers_totals = db.session.query(Publisher).order_by('publ_name').limit(50).all()
     flag = request.args.get('flag')
     authors = authors_totals
+    publishers = publishers_totals
+    total_books = len(db.session.query(Book).order_by('author', 'first_publish', 'title').all())
+    total_auth = len(db.session.query(Author).order_by('fullname').all())
+    total_publishers = len(db.session.query(Publisher).order_by('publ_name').all())
     # # books=[]
     # # for author in authors:
     # #     for book in author.books:
@@ -53,7 +60,7 @@ def home():
     # books.sort(key=operator.attrgetter('author', 'first_publish', 'title'))
     books = books_totals
     # if flag == 'authors_list':
-    return render_template('index.html', books=books, authors=authors, flag=flag, total=total, total_auth=total_auth)
+    return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, total_publishers=total_publishers)
     # else: 
         # return render_template('index.html', books=books, total=total, total_auth=total_auth)
 

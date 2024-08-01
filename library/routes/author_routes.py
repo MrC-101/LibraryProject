@@ -1,6 +1,6 @@
 from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
-from library.models import Author, Book
+from library.models import Author, Book, Publisher
 from library.forms import AddAuthorForm, EditAuthorForm
 import operator, select
 from library.maintenance import vacuum

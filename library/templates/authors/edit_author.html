@@ -21,25 +21,41 @@ Edit Author
 {% block content %}
 <form method="POST" action="{{ url_for('author.edit_author', id=id) }}" novalidate>
     {{ form.csrf_token }}
+    {% if author.penname == 'None' or author.penname == none %}
+    &emsp;&nbsp;Pen Name: {{ form.penname(size=70) }}
+    {% else %}
     &emsp;&nbsp;Pen Name: {{ form.penname(size=70, value=author.penname) }}
+    {% endif %}    
     {% for err in form.penname.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
+    {% if author.name_pref == 'None' or author.name_pref == none %}
+    &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10) }}
+    {% else %}
     &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10, value=author.name_pref) }}
+    {% endif %}
     {% for err in form.name_pref.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
+    {% if author.fname == 'None' or author.fname == none %}
+    &emsp;First Name: {{ form.fname(size=70) }}
+    {% else %}
     &emsp;First Name: {{ form.fname(size=70, value=author.fname) }}
+    {% endif %}
     {% for err in form.fname.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
+    {% if author.midname == 'None' or author.midname == none %}
+    &emsp;Mid Name: {{ form.midname(size=70) }}
+    {% else %}
     &emsp;Mid Name: {{ form.midname(size=70, value=author.midname) }}
+    {% endif %}
     {% for err in form.midname.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
@@ -51,7 +67,11 @@ Edit Author
     {% endfor %}
     <br />
     <br />
+    {% if author.name_suf == 'None' or author.name_suf == none %}
+    &emsp;&emsp;&emsp;&nbsp;Suffix: {{ form.name_suf(size=10) }}
+    {% else %}
     &emsp;&emsp;&emsp;&nbsp;Suffix: {{ form.name_suf(size=10, value=author.name_suf) }}
+    {% endif %}
     {% for err in form.name_suf.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
@@ -63,7 +83,11 @@ Edit Author
     {% endfor %}
     <br />
     <br />
+    {% if author.country == 'None' or author.country == none %}
+    &emsp;&emsp;Country: {{ form.country(size=70) }}
+    {% else %}
     &emsp;&emsp;Country: {{ form.country(size=70, value=author.country) }}
+    {% endif %}
     {% for err in form.country.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}

@@ -3,14 +3,7 @@
 # from sqlalchemy import Table,Index, func, cast, text
 from library.extensions import db
 
-# def to_tsvector_ix(*columns):
-#     s = " || ' ' || ".join(columns)
-#     return func.to_tsvector('english', text(s))
 
-# book_author = db.Table('book_author',
-#                     db.Column('book_id', db.Integer, db.ForeignKey('books.id'), primary_key=True),
-#                     db.Column('author_id', db.Integer, db.ForeignKey('authors.id'), primary_key=True)
-#                     )
 class BookAuthor(db.Model):
     __tablename__ = "book_author"
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +11,32 @@ class BookAuthor(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("authors.id"))
 
 
+class AuthorPublisher(db.Model):
+    __tablename__ = 'author_publisher'
+    id = db.Column(db.Integer, primary_key=True)
+    author_id = db.Column(db.Integer, db.ForeignKey("authors.id"))
+    publisher_id = db.Column(db.Integer, db.ForeignKey("publishers.id"))
+
+    
+class Publisher(db.Model):
+    __tablename__ = 'publishers'
+    id = db.Column(db.Integer, primary_key=True)
+    publ_name = db.Column(db.String, nullable=False)
+    publ_founder = db.Column(db.String, nullable=True)
+    publ_parent = db.Column(db.String, nullable=True)
+    publ_est = db.Column(db.String, nullable=True)
+    publ_country = db.Column(db.String, nullable=True)
+    publ_city = db.Column(db.String, nullable = True)
+    publ_address = db.Column(db.String, nullable=True)
+    publ_email = db.Column(db.String, nullable=True)
+    publ_website = db.Column(db.String, nullable=True)
+    books = db.relationship('Book', back_populates='publisher')
+    authors = db.relationship('Author', secondary='author_publisher', back_populates='publishers')
+    
+    def __repr__(self):
+        return f'{self.publ_name}'
+
+       
 class Book(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
@@ -31,10 +50,13 @@ class Book(db.Model):
     rating = db.Column(db.Float, nullable=True)
     genre = db.Column(db.String, nullable=True)
     summary = db.Column(db.Text, default='', nullable=True)
+    publisher_id = db.Column(db.Integer, db.ForeignKey("publishers.id"))
+    publisher = db.relationship('Publisher', back_populates='books', uselist=False)
     authors = db.relationship('Author', secondary='book_author', back_populates='books')
     
     def __repr__(self):
-        return f'DB_ID: {self.id},  Title: {self.title},  Author: {self.author} Published: {self.first_publish}'
+        return f'ID: {self.id},  Title: {self.title},  Author: {self.author} Published: {self.first_publish}'
+
     
 class Author(db.Model):
     __tablename__ = 'authors'
@@ -54,8 +76,7 @@ class Author(db.Model):
     bio = db.Column(db.Text, default='', nullable=True)
     email = db.Column(db.String, default='', nullable=True)
     books = db.relationship("Book", secondary='book_author', back_populates='authors')
-    
-    # __ts_vector__ = to_tsvector_ix('fname', 'lname', 'born', 'died', 'gender', 'country', 'city', 'bio', 'midname', 'penname')
+    publishers = db.relationship('Publisher', secondary='author_publisher', back_populates='authors')
     
     def __repr__(self):
             return f'{self.fullname} (id: {self.id})'

@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+{% block headline %}
+Add Publisher
+{% endblock %}
+
+{% block subhead %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('publisher.add_publisher') }}" novalidate>
+    {{ form.csrf_token }}
+    &emsp;&emsp;&ensp;Name: {{ form.publname(size=70) }}
+    {% for err in form.publname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;Founder: {{ form.publfounder(size=70) }}
+    {% for err in form.publfounder.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&nbsp;Parent: {{ form.publparent(size=70) }}
+    {% for err in form.publparent.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&ensp;&nbsp;Est: {{ form.publest(size=4) }}
+    {% for err in form.publest.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;Country: {{ form.publcountry(size=70) }}
+    {% for err in form.publcountry.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&nbsp;City: {{ form.publcity(size=70) }}
+    {% for err in form.publcity.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;Address: {{ form.publaddress(size=70) }}
+    {% for err in form.publaddress.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;Website: {{ form.publwebsite(size=70) }}
+    {% for err in form.publwebsite.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br /><br />
+    &emsp;&emsp;&ensp;&nbsp;Email: {{ form.publemail(size=70) }}
+    {% for err in form.publemail.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br /><br />
+    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;{{ form.submit(class="btn
+    btn-success btn-sm") }}
+    <button class="btn btn-secondary btn-sm">
+        <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+    </button>
+</form>
+<hr />
+<br />
+{% endblock %}

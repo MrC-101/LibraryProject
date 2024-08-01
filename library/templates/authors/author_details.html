@@ -7,15 +7,32 @@ Author Details
 {%block content %}
 &ensp;<label>Author:&emsp;&emsp;<a style="text-decoration:none"
         href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname }}</a></label><br />
+{% if author.penname is not none and author.penname != "None" and author.penname != '' %}
 &ensp;<label>Pen Name:&ensp;{{ author.penname }}</label><br>
+{% endif %}
 &ensp;<label>Gender:&emsp;&ensp;&nbsp;{{ author.gender }}</label><br>
+{% if author.country is not none and author.country != "None" and author.country != '' %}
 &ensp;<label>Country:&emsp;&ensp;{{ author.country }}</label><br />
+{% endif %}
+{% if author.city is not none and author.city != "None" and author.city != '' %}
 &ensp;<label>City:&emsp;&emsp;&emsp;&nbsp;{{ author.city }}</label><br />
+{% endif %}
+{% if author.born is not none and author.born != "None" and author.born != '' %}
 &ensp;<label>Born:&emsp;&emsp;&ensp;&nbsp;{{ author.born }}</label><br />
+{% endif %}
+{% if author.died is not none and author.died != "None" and author.died != '' %}
 &ensp;<label>Died:&emsp;&emsp;&ensp;&nbsp;{{ author.died }}</label><br />
+{% endif %}
 &ensp;<label>Books:&emsp;&emsp;<a style="text-decoration:none"
         href="{{ url_for('author.bibliography', author=author.fullname) }}">
-        {{ author.books|count }} currently</a></label>
+        {{ author.books|count }} currently</a></label><br />
+{% if author.publishers|count > 0 %}
+&ensp;<label>Published:&ensp;
+    {% for publisher in author.publishers %}
+    {{ publisher.publ_name }}{{ ', ' if not loop.last else ''}}
+    {% endfor %}
+    {% endif %}
+</label><br />
 <br />
 <br />
 &ensp;<button class="btn btn-secondary btn-sm">

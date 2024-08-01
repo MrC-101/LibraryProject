@@ -33,6 +33,12 @@ Add Title
     {% endfor %}
     <br />
     <br />
+    &emsp;&nbsp;Publisher: {{ form.publisher(size=70) }}
+    {% for err in form.publisher.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
     &emsp;&nbsp;Pages No: {{ form.pages(size=70) }}
     {% for err in form.pages.errors %}
     <span style="color: red">{{ err }}</span>

@@ -1,52 +1,62 @@
 {% extends "layout.html" %}
 
 {% block headline %}
-{% if flag != 'authors_list' and flag != 'authors_by_letter' %}
+{% if flag != 'authors_list' and flag != 'authors_by_letter' and flag!= 'publishers_list'  and flag != 'publishers_by_letter' %}
 <a class="float-right" href="{{ url_for('main.search_books', flag='books_list') }}" style="text-decoration:none"> 🔍
 </a>
 <a href="{{ url_for('main.home', flag='authors_list')}}" style="text-decoration:none; color:black">Books</a>
 <a style="text-decoration:none" href="{{ url_for('book.add_title') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_books') }}">-</a>
 
-{% else %}
+{% elif flag == 'authors_list' %}
 <a class="float-right" href="{{ url_for('main.search_authors', flag='authors_list') }}" style="text-decoration:none"> 🔍
 </a>
-<a href="{{ url_for('main.home')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Authors</a>
+<a href="{{ url_for('main.home', flag='publishers_list')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Authors</a>
 <a style="text-decoration:none" href="{{ url_for('author.add_author') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_authors', flag='authors_list') }}">-</a>
+
+{% elif flag == 'publishers_list' or flag == 'publishers_by_letter' %}
+<a class="float-right" href="{{ url_for('main.search_authors', flag='authors_list') }}" style="text-decoration:none"> 🔍
+</a>
+<a href="{{ url_for('main.home', flag='books_list')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Publishers</a>
+<a style="text-decoration:none" href="{{ url_for('publisher.add_publisher') }}"> +</a>
+<a style="color: red; text-decoration:none" href="#">-</a>
+
 {% endif %}
 
 {% endblock %}
 
 {%block subhead %}
 <hr />
-&nbsp;{{ total }} books - {{ total_auth }} authors in Total
-{% if flag != 'authors_list' and flag != 'authors_by_letter' %}
+&nbsp;{{ total }} books - {{ total_auth }} authors - {{ total_publishers }} publishers in Total
+<!-- {% if flag != 'authors_list' and flag != 'authors_by_letter' and flag!= 'publishers_list' %}
 <button type="button" class="btn btn-secondary float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home', flag='authors_list') }}">
         Authors List </a>
 </button>
-{% else %}
+{% elif flag!= 'publishers_list' %}
 <button type="button" class="btn btn-secondary float-right"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
     <a style="color:white; text-decoration:none" href="{{ url_for('main.home') }}">
         Books List </a>
 </button>
-{% endif %}
-{% endblock %}
+{% endif %} -->
+{% endblock subhead %}
 
 {% block a_z %}
 {% if flag == 'authors_by_letter' or flag == 'authors_list' %}
 {% set url = 'author.authors_by_letter' %}
-{% else %}
+{% elif flag == 'books_by_letter' or flag == 'books_list' %}
 {% set url = 'book.books_by_letter' %}
+{% elif flag == 'publishers_by_letter' or flag == 'publishers_list' %}
+{% set url = 'publisher.publishers_by_letter' %}
 {% endif %}
 {% include 'a_z.html' %}
-{% endblock %}
+{% endblock a_z %}
 
 {%block content %}
-{% if flag != 'authors_list' and flag != 'authors_by_letter' and flag != 'books_by_letter' %}
+{% if flag != 'authors_list' and flag != 'authors_by_letter' and flag != 'books_by_letter' and flag!= 'publishers_list' and flag != 'publishers_by_letter' %}
 <ul>
     {% if books|count == 0 %}
     <p>Library is empty</p>
@@ -164,5 +174,73 @@
     </li>
     {% endfor %}
 </ul>
-{% endif %}
-{% endblock %}
+{% elif flag == 'publishers_list' %}
+<ul>
+    {% if publishers|count == 0 %}
+    <p>Library is empty</p>
+
+    {% else %}
+
+    {% for publisher in publishers %}
+    <li>
+        <button class="btn btn-outline-secondary btn-sm">
+            <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
+                style="text-decoration: none; color: darkgray">Edit</a>
+        </button>
+        <button class="btn btn-outline-danger btn-sm">
+            <a href="#" style="text-decoration: none; color: orangered">Delete</a>
+        </button>&ensp;▫️
+        {% if publisher.authors|count < 2 %}
+        {% set auth='author' %}
+        {% else %}
+        {% set auth='authors' %}
+        {% endif %}
+        {% if publisher.books|count < 2 %}
+        {% set bks='book' %}
+        {% else %}
+        {% set bks='books' %}
+        {% endif %}
+        <a style="text-decoration:none"
+            href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name }}</a>
+        - {{publisher.publ_est}} - {{publisher.publ_country}} - <a style="text-decoration:none" href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }} {{auth}}</a> and
+        <a style="text-decoration:none"
+            href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
+            {{bks}}</a> currently in this
+            agency 
+    </li>
+    {% endfor %}
+    {% endif %}
+</ul>
+
+{% elif flag == 'publishers_by_letter' %}
+<ul>
+    {% for publisher in publishers_by_letter %}
+    <li>
+        <button class="btn btn-outline-secondary btn-sm">
+            <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
+                style="text-decoration: none; color: darkgray">Edit</a>
+        </button>
+        <button class="btn btn-outline-danger btn-sm">
+            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
+                style="text-decoration: none; color: orangered">Delete</a>
+        </button>&ensp;▫️
+        {% if publisher.authors|count < 2 %}
+        {% set auth='author' %}
+        {% else %}
+        {% set auth='authors' %}
+        {% endif %}
+        {% if publisher.books|count < 2 %}
+        {% set bks='book' %}
+        {% else %}
+        {% set bks='books' %}
+        {% endif %}
+        <a style="text-decoration:none"
+            href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
+        - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a style="text-decoration:none" href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
+        {{ auth }}</a> and <a style="text-decoration:none"
+        href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }} {{ bks }}</a>
+        in total
+    </li>
+    {% endfor %}
+    {% endif %}
+    {% endblock %}

@@ -5,12 +5,11 @@ from library.extensions import db, migrate
 from library.routes.book_routes import book_bp
 from library.routes.main_routes import main_bp
 from library.routes.author_routes import author_bp
+from library.routes.publisher_routes import publisher_bp
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 DATABASE_URL = os.getenv('DATABASE_URL') #postgres
-# DATABASE_URL = 'mysql+pymysql://root:1234@localhost:3307/librarydb'
-# DATABASE_URL = 'sqlite:///books-collection.db'
 APP_SECR_KEY = os.getenv('APP_SECR_KEY')
 
 def create_app():
@@ -26,5 +25,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(book_bp)
     app.register_blueprint(author_bp)
+    app.register_blueprint(publisher_bp)
+    
     return app
 

@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+{% block headline %}
+Edit Publisher
+{% endblock %}
+
+{% block subhead %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{ url_for('publisher.edit_publisher', id=publisher.id) }}" novalidate>
+    {{ form.csrf_token }}
+    &emsp;&emsp;&ensp;Name: {{ form.publname(size=70, value=publisher.publ_name) }}
+    {% for err in form.publname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_founder == 'None' %}
+    &emsp;&ensp;Founder: {{ form.publfounder(size=70) }}
+    {% else %}
+    &emsp;&ensp;Founder: {{ form.publfounder(size=70, value=publisher.publ_founder) }}
+    {% endif %}
+    {% for err in form.publfounder.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_parent == 'None' %}
+    &emsp;&emsp;&nbsp;Parent: {{ form.publparent(size=70) }}
+    {% else %}
+    &emsp;&emsp;&nbsp;Parent: {{ form.publparent(size=70, value=publisher.publ_parent) }}
+    {% endif %}
+    {% for err in form.publparent.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_est == 'None' %}
+    &emsp;&emsp;&emsp;&ensp;&nbsp;Est: {{ form.publest(size=4) }}
+    {% else %}
+    &emsp;&emsp;&emsp;&ensp;&nbsp;Est: {{ form.publest(size=4, value=publisher.publ_est) }}
+    {% endif %}
+    {% for err in form.publest.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_country == 'None' %}
+    &emsp;&ensp;Country: {{ form.publcountry(size=70) }}
+    {% else %}
+    &emsp;&ensp;Country: {{ form.publcountry(size=70, value=publisher.publ_country) }}
+    {% endif %}
+    {% for err in form.publcountry.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_city == 'None' %}
+    &emsp;&emsp;&emsp;&nbsp;City: {{ form.publcity(size=70) }}
+    {% else %}
+    &emsp;&emsp;&emsp;&nbsp;City: {{ form.publcity(size=70, value=publisher.publ_city) }}
+    {% endif %}
+    {% for err in form.publcity.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_address == 'None' %}
+    &emsp;&ensp;Address: {{ form.publaddress(size=70) }}
+    {% else %}
+    &emsp;&ensp;Address: {{ form.publaddress(size=70, value=publisher.publ_address) }}
+    {% endif %}
+    {% for err in form.publaddress.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_website == 'None' %}
+    &emsp;&ensp;Website: {{ form.publwebsite(size=70) }}
+    {% else %}
+    &emsp;&ensp;Website: {{ form.publwebsite(size=70, value=publisher.publ_website) }}
+    {% endif %}
+    {% for err in form.publwebsite.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if publisher.publ_email == 'None' %}
+    &emsp;&emsp;&ensp;&nbsp;Email: {{ form.publemail(size=70) }}
+    {% else %}
+    &emsp;&emsp;&ensp;&nbsp;Email: {{ form.publemail(size=70, value=publisher.publ_email) }}
+    {% endif %}
+    {% for err in form.publemail.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;{{ form.submit(class="btn
+    btn-success btn-sm") }}
+    <button class="btn btn-secondary btn-sm">
+        <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+    </button>
+</form>
+<hr />
+<br />
+{% endblock %}
