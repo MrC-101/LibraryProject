@@ -16,3 +16,4 @@ APP_SECR_KEY="tUBswo%s3!Vp#ux$dX#BQKCtPi9HtNviZngCmkroB9YAVqNjm5pyV"</code>
 DATABASE_URL = 'sqlite:///library_db'
 APP_SECR_KEY="tUBswo%s3!Vp#ux$dX#BQKCtPi9HtNviZngCmkroB9YAVqNjm5pyV"</code>
 
+Also before you add a book title, you'll need to add the author if he/she is not already in the database. Same goes for publisher if you want to add a publisher to the title (not mandatory).
