@@ -2,3 +2,5 @@ venv
 .env
 __pycache__
 instance
+%localappdata%/Malwarebytes/Logs/MBAMSI.log
+%localappdata%/Malwarebytes/Logs/MBAMSI.lock
