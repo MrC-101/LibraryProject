@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block headline %} {{ publisher }}'s Bibliography {% endblock %}
+{% block headline %} {{ publisher }}'s Authors {% endblock %}
 {% block subhead %}
 <hr />
 <button type="button" class="btn btn-warning {#float-right#}"
@@ -17,7 +17,7 @@
 </button>
 <button type="button" class="btn btn-danger {#float-right#}"
     style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
-    <a style="color:white; text-decoration:none" href="#">Delete
+    <a style="color:white; text-decoration:none" href="{{ url_for('publisher.publisher_details', id=publisher_id) }}">Delete
         Publisher
     </a>
 </button>

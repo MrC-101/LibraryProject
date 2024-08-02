@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block headline %}
-Publisher Details
+{{ publisher.publ_name }}
 {% endblock %}
 
 {%block content %}
@@ -21,7 +21,7 @@ Publisher Details
     <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}" style="text-decoration: none; color: white">Edit</a>
 </button>
 <button class="btn btn-danger btn-sm">
-    <a href="#" style="text-decoration: none; color: white">Delete</a>
+    <a href="{{ url_for('publisher.delete_publisher', id=publisher.id) }}" style="text-decoration: none; color: white">Delete</a>
 </button>
 <button class="btn btn-secondary btn-sm">
     <a href="{{ url_for('main.home', flag='publishers_list') }}" style="text-decoration: none; color: white">Back to

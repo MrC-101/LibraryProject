@@ -19,15 +19,14 @@ def publisher_authors():
 def publisher_bibliography():
     publisher = request.args.get('publisher')
     publisher = Publisher.query.filter_by(publ_name=publisher).first()
-    publisher_id = int(publisher.id)
     # books = Book.query.filter_by(author=author).order_by('first_publish', 'title').all()
     # publisher = db.session.query(Publisher).filter_by(publ_name=publisher).first()
     
     books = publisher.books
     books.sort(key=operator.attrgetter('author', 'title', 'first_publish')) 
-    
     publisher_total = len(books)
-    return render_template('publishers/publisher_bibliography.html', books=books, publisher=publisher.publ_name, publisher_total=publisher_total, publisher_id=publisher_id)
+    
+    return render_template('publishers/publisher_bibliography.html', books=books, publisher=publisher.publ_name, publisher_total=publisher_total, publisher_id=publisher.id)
 
 @publisher_bp.route('/add_publisher', methods=['GET', 'POST'])
 def add_publisher():
@@ -102,3 +101,14 @@ def publishers_by_letter():
     else:
         publishers_by_letter = db.session.query(Publisher).order_by('publ_name').all()
     return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers)
+
+@publisher_bp.route('/delete_publisher/<int:id>', methods=['GET', 'POST'])
+def delete_publisher(id):
+    publisher = db.session.query(Publisher).get(id)
+    db.session.delete(publisher)
+    db.session.commit()
+    
+    # DB VACUUM ANALYZE
+    vacuum()
+
+    return redirect(url_for('main.home', flag='publishers_list'))

@@ -17,6 +17,10 @@ class SearchBooksForm(FlaskForm):
 class SearchAuthorsForm(FlaskForm):
     author = StringField(label='author', validators=[Optional()])
     submit = SubmitField(label='Search')
+    
+class SearchPublishersForm(FlaskForm):
+    publisher = StringField(label='publisher', validators=[Optional()])
+    submit = SubmitField(label='Search')
 
 class SearchAllItemsForm(FlaskForm):
     all_items = StringField(label='all_items', validators=[Optional()])

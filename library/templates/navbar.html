@@ -87,11 +87,13 @@
                             <a class="dropdown-item" href="{{ url_for('publisher.add_publisher') }}">Add Publisher</a>
                         </li>
                         <li>
+                            <a class="dropdown-item" href="{{ url_for('main.search_publishers') }}">Edit Publisher</a>
+                        </li>
+                        <li>
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">Something else
-                                here</a>
+                            <a class="dropdown-item" style="color: red; font-size: medium" href="{{ url_for('main.search_publishers') }}">Delete Publisher</a>
                         </li>
                     </ul>
                 </li>
@@ -109,6 +111,10 @@
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
                                 href="{{ url_for('main.search_authors', flag='authors_list') }}">Search Author</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.search_publishers', flag='publishers_list') }}">Search Publisher</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />

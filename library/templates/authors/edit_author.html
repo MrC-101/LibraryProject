@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block headline %}
-Edit Author
+{{ author.fullname }}
 {% endblock %}
 
 {% block subhead %}
@@ -124,7 +124,7 @@ Edit Author
     &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&nbsp;{{ form.submit(class="btn
     btn-success btn-sm") }}
     <button class="btn btn-secondary btn-sm">
-        <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+        <a href="{{ url_for('main.home', flag='authors_list') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>
     <button class="btn btn-danger btn-sm">
         <a href="{{ url_for('author.delete_author', id=author.id) }}"

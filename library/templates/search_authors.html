@@ -16,8 +16,6 @@ Search Author
     <div>
         {{ authors|count }} authors found
         <div class="float-right">Query took {{duration}}ms</div>
-        <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;Query
-        took {{ duration }}ms -->
     </div>
     <br>
     {{ form.submit(class="btn btn-secondary btn-sm") }}
@@ -26,27 +24,31 @@ Search Author
 
 {% block content %}
 
-{% if authors|count == 0 %}
-<p>Library is empty</p>
-{% else %}
 <ul>
-    {% if authors %}
+    {% if authors|count == 0 %}
+    <h4 style="color:red">Library is empty</h4>
+
+    {% else %}
+
     {% for author in authors %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
             <a href="{{ url_for('author.edit_author', id=author.id) }}"
-                style="text-decoration: none; color: darkgray">Edit
-            </a>
+                style="text-decoration: none; color: darkgray">Edit</a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
             <a href="{{ url_for('author.author_details', id=author.id) }}"
-                style="text-decoration: none; color: orangered">Delete
-            </a>
+                style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        <a href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname }}</a>
-        {% endfor %}
-        {% endif %}
+        <a style="text-decoration:none"
+            href="{{ url_for('author.author_details', id=author.id) }}">{{ author.fullname}}</a>
+        - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} -
+        <a style="text-decoration:none"
+            href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books
+            in
+            collection</a>
     </li>
+    {% endfor %}
     {% endif %}
-    {% endblock content %}
 </ul>
+{% endblock content %}
