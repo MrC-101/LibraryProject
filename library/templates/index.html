@@ -27,7 +27,7 @@
 
 {%block subhead %}
 <hr />
-&nbsp;{{ total }} books - {{ total_auth }} authors - {{ total_publishers }} publishers in Total
+&nbsp;{{ total }} <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='books_list') }}">books</a> - {{ total_auth }} <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='authors_list') }}">authors</a> - {{ total_publishers }} <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='publishers_list') }}">publishers</a> in Total
 {% endblock subhead %}
 
 {% block a_z %}
@@ -71,7 +71,7 @@
 
         <a style="font-weight:bolder; text-decoration:none"
             href="{{ url_for('author.bibliography', author=book.authors[0].fullname) }}">
-            - {{book.authors[0].books|count}} books in collection</a>
+            - {{book.authors[0].books|count}} books</a> in collection
     </li>
     {% endfor %}
     {% endif %}
@@ -98,9 +98,9 @@
             href="{{ url_for('author.author_details', id=author.id) }}">{{ author.fullname}}</a>
         - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} -
         <a style="text-decoration:none"
-            href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books
+            href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a>
             in
-            collection</a>
+            collection
     </li>
     {% endfor %}
     {% endif %}
@@ -125,7 +125,8 @@
         </button>&ensp;▫️
         <a style="text-decoration:none"
             href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
-        - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - {{author.books|count}} books in
+        - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
+        href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
         collection
     </li>
     {% endfor %}
