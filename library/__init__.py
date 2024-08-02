@@ -28,4 +28,3 @@ def create_app():
     app.register_blueprint(publisher_bp)
     
     return app
-

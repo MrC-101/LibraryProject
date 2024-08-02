@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
-<title>Index Page</title>
-{% block headline %}
 
+{% block headline %}
 {% if flag != 'authors_list' and flag != 'authors_by_letter' and flag!= 'publishers_list'  and flag != 'publishers_by_letter' %}
 <a class="float-right" href="{{ url_for('main.search_books', flag='books_list') }}" style="text-decoration:none"> 🔍
 </a>
@@ -22,27 +21,12 @@
 <a href="{{ url_for('main.home', flag='books_list')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Publishers</a>
 <a style="text-decoration:none" href="{{ url_for('publisher.add_publisher') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_publishers', flag='publishers_list') }}">-</a>
-
 {% endif %}
-
 {% endblock %}
 
 {%block subhead %}
 <hr />
 &nbsp;{{ total }} books - {{ total_auth }} authors - {{ total_publishers }} publishers in Total
-<!-- {% if flag != 'authors_list' and flag != 'authors_by_letter' and flag!= 'publishers_list' %}
-<button type="button" class="btn btn-secondary float-right"
-    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
-    <a style="color:white; text-decoration:none" href="{{ url_for('main.home', flag='authors_list') }}">
-        Authors List </a>
-</button>
-{% elif flag!= 'publishers_list' %}
-<button type="button" class="btn btn-secondary float-right"
-    style="color:white; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .6rem">
-    <a style="color:white; text-decoration:none" href="{{ url_for('main.home') }}">
-        Books List </a>
-</button>
-{% endif %} -->
 {% endblock subhead %}
 
 {% block a_z %}
@@ -121,7 +105,6 @@
     {% endif %}
 </ul>
 <br />
-
 {% elif flag == 'authors_by_letter' %}
 <ul>
     {% if authors_by_letter|count == 0 %}
@@ -222,7 +205,6 @@
     {% endfor %}
     {% endif %}
 </ul>
-
 {% elif flag == 'publishers_by_letter' %}
 <ul>
     {% if publishers_by_letter|count == 0 %}

@@ -113,11 +113,9 @@ Super Search
             {{ '|' if loop.first else ''}} {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
         {% endif %}
         {% endfor %}
-
         - {{ book.rating }}/10
     </li>
     {% endfor %}
     {% endif %}
 </ul>
-
 {% endblock content %}
