@@ -15,11 +15,12 @@ Super Search
     </div>
 
     <div>
-        {% set auth='authors' if authors_count > 1 or authors_count == 0 else 'author' %}
-        {% set ttl='titles' if books_count > 1 or books_count == 0 else 'title' %}
-        {% set publ='publishers' if publishers_count > 1 or publishers_count == 0 else 'publisher' %}
+        {% set auth='authors' if authors_count != 1 else 'author' %}
+        {% set ttl='titles' if books_count != 1 else 'title' %}
+        {% set publ='publishers' if publishers_count != 1 else 'publisher' %}
 
-        {{ authors_count }} {{auth}}, {{publishers_count}} {{publ}} and {{ books_count }} {{ ttl }} in the Library. Total:
+        {{ authors_count }} {{auth}}, {{publishers_count}} {{publ}} and {{ books_count }} {{ ttl }} in the Library.
+        Total:
         {{ books_count + authors_count + publishers_count }}
 
         <div class="float-right">Query took {{duration}}ms</div>
@@ -32,7 +33,7 @@ Super Search
 {% block content %}
 <ul>
     {% if publishers %}
-    {% set publ='Publishers' if publishers|count > 1 or publishers|count == 0 else 'Publisher' %}
+    {% set publ='Publishers' if publishers|count != 1 else 'Publisher' %}
     <h5>{{ publishers|count }} {{publ}} related to your search</h5>
     {% endif %}
     {% for publisher in publishers %}
@@ -42,18 +43,11 @@ Super Search
                 style="text-decoration: none; color: darkgray">Edit</a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
-            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}" style="text-decoration: none; color: orangered">Delete</a>
+            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
+                style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        {% if publisher.authors|count < 2 %}
-        {% set auth='author' %}
-        {% else %}
-        {% set auth='authors' %}
-        {% endif %}
-        {% if publisher.books|count < 2 %}
-        {% set bks='book' %}
-        {% else %}
-        {% set bks='books' %}
-        {% endif %}
+        {% set auth='author' if publisher.authors|count < 2 else 'authors' %}
+        {% set bks='book' if publisher.books|count < 2 else 'books' %}
         <a style="text-decoration:none"
             href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
         - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
@@ -68,7 +62,7 @@ Super Search
 </ul>
 <ul>
     {% if authors %}
-    {% set auth='Authors' if authors|count > 1 or authors|count == 0 else 'Author' %}
+    {% set auth='Authors' if authors|count != 1 else 'Author' %}
     <h5>{{ authors|count }} {{auth}} related to your search</h5>
     {% for author in authors %}
     <li>
@@ -89,7 +83,7 @@ Super Search
 </ul>
 <ul>
     {% if books %}
-    {% set ttl='Books' if books|count > 1 or books|count == 0 else 'Book' %}
+    {% set ttl='Books' if books|count != 1 else 'Book' %}
     <h5>{{ books|count }} {{ ttl }} related to your search</h5>
     {% for book in books %}
     <li>

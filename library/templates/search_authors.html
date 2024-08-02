@@ -14,7 +14,8 @@ Search Author
         {% endfor %}
     </div>
     <div>
-        {{ authors|count }} authors found
+        {% set auth='authors' if authors|count != 1 else 'author' %}
+        {{ authors|count }} {{auth}} found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>
     <br>

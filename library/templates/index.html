@@ -16,7 +16,8 @@
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_authors', flag='authors_list') }}">-</a>
 
 {% elif flag == 'publishers_list' or flag == 'publishers_by_letter' %}
-<a class="float-right" href="{{ url_for('main.search_publishers', flag='publishers_list') }}" style="text-decoration:none"> 🔍
+<a class="float-right" href="{{ url_for('main.search_publishers', flag='publishers_list') }}"
+    style="text-decoration:none"> 🔍
 </a>
 <a href="{{ url_for('main.home', flag='books_list')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Publishers</a>
 <a style="text-decoration:none" href="{{ url_for('publisher.add_publisher') }}"> +</a>
@@ -180,18 +181,12 @@
                 style="text-decoration: none; color: darkgray">Edit</a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
-            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}" style="text-decoration: none; color: orangered">Delete</a>
+            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
+                style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        {% if publisher.authors|count < 2 %}
-        {% set auth='author' %}
-        {% else %}
-        {% set auth='authors' %}
-        {% endif %}
-        {% if publisher.books|count < 2 %}
-        {% set bks='book' %}
-        {% else %}
-        {% set bks='books' %}
-        {% endif %}
+
+        {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
+        {% set bks='book' if publisher.books|count == 1 else 'books' %}
         <a style="text-decoration:none"
             href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
         - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
@@ -222,16 +217,9 @@
             <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        {% if publisher.authors|count < 2 %}
-        {% set auth='author' %}
-        {% else %}
-        {% set auth='authors' %}
-        {% endif %}
-        {% if publisher.books|count < 2 %}
-        {% set bks='book' %}
-        {% else %}
-        {% set bks='books' %}
-        {% endif %}
+        
+        {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
+        {% set bks='book' if publisher.books|count == 1 else 'books' %}
         <a style="text-decoration:none"
             href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
         - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a

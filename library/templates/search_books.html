@@ -13,7 +13,7 @@ Search Title
         {% endfor %}
     </div>
     <div>
-        {% set ttl='titles' if books|count > 1 or books|count == 0 else 'title' %}
+        {% set ttl='titles' if books|count != 1 else 'title' %}
         {{ books|count }} {{ttl}} found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>

@@ -12,7 +12,7 @@ Search Publisher
         <span style="color: red">{{ err }}</span>
         {% endfor %}
     </div>
-    {% set publ='publishers' if publishers|count > 1 or publishers|count == 0 else 'publisher' %}
+    {% set publ='publishers' if publishers|count != 1 else 'publisher' %}
     <div>
         {{ publishers|count }} {{ publ }} found
         <div class="float-right">Query took {{duration}}ms</div>
@@ -37,16 +37,8 @@ Search Publisher
         <button class="btn btn-outline-danger btn-sm">
             <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}" style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        {% if publisher.authors|count < 2 %}
-        {% set auth='author' %}
-        {% else %}
-        {% set auth='authors' %}
-        {% endif %}
-        {% if publisher.books|count < 2 %}
-        {% set bks='book' %}
-        {% else %}
-        {% set bks='books' %}
-        {% endif %}
+        {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
+        {% set bks='book' if publisher.books|count == 1 else 'books' %}
         <a style="text-decoration:none"
             href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
         - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
