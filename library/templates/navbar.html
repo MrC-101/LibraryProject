@@ -2,17 +2,17 @@
     <div class="container-fluid">
         <a class="navbar-brand link-success link-offset-2 link-opacity-100-hover"
             style="font-size: x-large; font-weight: bold;"
-            href="{{ url_for('main.home', flag='publishers_list') }}">LIBRARY</a>
+            href="{{ url_for('main.home', flag='authors_list') }}">LIBRARY</a><a href="{{ url_for('main.home', flag='books_list') }}"> 🏛️ </a>&nbsp;
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <li class="nav-item active">
+                <!-- <li class="nav-item active">
                     <a class="nav-link" style="font-size: medium"
                         href="{{ url_for('main.home', flag='authors_list') }}">Home</a>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -93,7 +93,8 @@
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a class="dropdown-item" style="color: red; font-size: medium" href="{{ url_for('main.search_publishers') }}">Delete Publisher</a>
+                            <a class="dropdown-item" style="color: red; font-size: medium"
+                                href="{{ url_for('main.search_publishers') }}">Delete Publisher</a>
                         </li>
                     </ul>
                 </li>
@@ -114,31 +115,56 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.search_publishers', flag='publishers_list') }}">Search Publisher</a>
+                                href="{{ url_for('main.search_publishers', flag='publishers_list') }}">Search
+                                Publisher</a>
                         </li>
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.search_all') }}">Search
-                                All</a>
+                                href="{{ url_for('main.search_all') }}">Super Search
+                            </a>
                         </li>
                     </ul>
                 </li>
             </ul>
         </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-right float-right">
-                <li class="nav-item"></li>
-                <li class="nav-item">
-                    <a class="nav-link" style="font-size: medium"
-                        href="{{ url_for('main.home', flag='books_list') }}">User</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" style="font-size: medium; color: red" href="/init">⚙️</a>
+
+        <div>
+            <ul class="navbar-nav me-auto mb-2 mb-md-0 float-right">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        🔧 Maintenance
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark bg-dark">
+                        <li>
+                            <a class=" dropdown-item" style="font-size: medium" href="{{ url_for('main.init') }}">
+                                Init Commands</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.vacuum_anlz') }}">Vacuum
+                                Analyze</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="{{ url_for('main.vacuum_fl') }}">Vacuum
+                                Full</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                            <a class="dropdown-item" style="font-size: medium"
+                                href="#">Coming Soon...
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
+
         </div>
     </div>
 </nav>

@@ -4,7 +4,7 @@ from library.models import Book, Author, Publisher
 from library.forms import SearchAllItemsForm, SearchAuthorsForm, SearchBooksForm, SearchPublishersForm
 import operator, time
 from sqlalchemy import or_
-from library.maintenance import vacuum
+from library.maintenance import vacuum_analyze, vacuum_full
 
 main_bp = Blueprint('main',__name__)
 
@@ -34,6 +34,16 @@ def init():
     
     return redirect(url_for('main.home', flag='publishers_list'))
 
+@main_bp.route('/vacuum_analyze')
+def vacuum_anlz():
+    vacuum_analyze()
+    return redirect(url_for('main.home', flag='authors_list'))
+    
+@main_bp.route('/vacuum_full')
+def vacuum_fl():
+    vacuum_full()
+    return redirect(url_for('main.home', flag='publishers_list'))
+    
 @main_bp.route('/')
 def home():
     books_totals = db.session.query(Book).order_by('author', 'first_publish', 'title').limit(70).all()

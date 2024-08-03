@@ -3,7 +3,7 @@ from library.extensions import db
 from library.models import Author, Book, Publisher
 from library.forms import AddAuthorForm, EditAuthorForm
 import operator, select
-from library.maintenance import vacuum
+from library.maintenance import vacuum_analyze
 
 author_bp = Blueprint('author',__name__)
 
@@ -67,7 +67,7 @@ def add_author():
             db.session.commit()
             
             # DB VACUUM ANALYZE
-            vacuum()
+            vacuum_analyze()
             
             author=db.session.query(Author).filter_by(fullname=fullname, lname=lname, fname=fname, born=born).first()
             # return redirect(url_for('main.home', flag='authors_list'))
@@ -117,7 +117,7 @@ def edit_author():
             db.session.commit()
             
             # DB VACUUM ANALYZE
-            vacuum()
+            vacuum_analyze()
             
             return redirect(url_for('author.author_details', id=author.id))
 
@@ -139,7 +139,7 @@ def delete_author(id):
     db.session.commit()
     
     # DB VACUUM ANALYZE
-    vacuum()
+    vacuum_analyze()
 
     return redirect(url_for('main.home', flag='authors_list'))
 

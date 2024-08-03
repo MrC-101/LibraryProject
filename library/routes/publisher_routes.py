@@ -2,7 +2,7 @@ from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Book, Author, Publisher
 from library.forms import AddPublisherForm, EditPublisherForm
-from library.maintenance import vacuum
+from library.maintenance import vacuum_analyze
 import operator
 
 publisher_bp = Blueprint('publisher',__name__)
@@ -49,7 +49,7 @@ def add_publisher():
             db.session.commit()
             
             # DB VACUUM ANALYZE
-            vacuum()
+            vacuum_analyze()
         
             publisher=db.session.query(Publisher).filter_by(publ_name=publ_name_ret).first()
             return redirect(url_for('publisher.publisher_details', id=publisher.id))
@@ -77,7 +77,7 @@ def edit_publisher():
         db.session.commit()
             
         # DB VACUUM ANALYZE
-        vacuum()
+        vacuum_analyze()
             
         return redirect(url_for('publisher.publisher_details', id=publisher.id))
 
@@ -109,6 +109,6 @@ def delete_publisher(id):
     db.session.commit()
     
     # DB VACUUM ANALYZE
-    vacuum()
+    vacuum_analyze()
 
     return redirect(url_for('main.home', flag='publishers_list'))
