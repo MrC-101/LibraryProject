@@ -1,6 +1,6 @@
 venv
 .env
 __pycache__
-instance
+books-collection*
 %localappdata%/Malwarebytes/Logs/MBAMSI.log
 %localappdata%/Malwarebytes/Logs/MBAMSI.lock
