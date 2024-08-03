@@ -6,10 +6,14 @@ from library.routes.book_routes import book_bp
 from library.routes.main_routes import main_bp
 from library.routes.author_routes import author_bp
 from library.routes.publisher_routes import publisher_bp
+from pathlib import Path
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(os.path.join(basedir, '.env'))
+# basedir = os.path.abspath(os.path.dirname(__file__))
+# load_dotenv(os.path.join(basedir, '.env'))
+# dotenv_path = Path('/.env')
+load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL') #postgres
+print(DATABASE_URL)
 APP_SECR_KEY = os.getenv('APP_SECR_KEY')
 
 def create_app():

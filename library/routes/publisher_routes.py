@@ -49,7 +49,7 @@ def add_publisher():
             db.session.commit()
             
             # DB VACUUM ANALYZE
-            vacuum_analyze()
+            # vacuum_analyze()
         
             publisher=db.session.query(Publisher).filter_by(publ_name=publ_name_ret).first()
             return redirect(url_for('publisher.publisher_details', id=publisher.id))
@@ -77,7 +77,7 @@ def edit_publisher():
         db.session.commit()
             
         # DB VACUUM ANALYZE
-        vacuum_analyze()
+        # vacuum_analyze()
             
         return redirect(url_for('publisher.publisher_details', id=publisher.id))
 
@@ -109,6 +109,6 @@ def delete_publisher(id):
     db.session.commit()
     
     # DB VACUUM ANALYZE
-    vacuum_analyze()
+    # vacuum_analyze()
 
     return redirect(url_for('main.home', flag='publishers_list'))

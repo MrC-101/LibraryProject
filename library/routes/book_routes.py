@@ -68,7 +68,7 @@ def add_title():
             db.session.commit()
             
             # DB VACUUM ANALYZE
-            vacuum_analyze()
+            # vacuum_analyze()
             
             return redirect(url_for('author.bibliography', author=author))
             # return redirect(url_for('main.home', flag='authors_list'))
@@ -139,7 +139,7 @@ def edit_title():
         db.session.commit()
         
         # DB VACUUM ANALYZE
-        vacuum_analyze()
+        # vacuum_analyze()
         
         return redirect(url_for('author.bibliography', author=book.author))
         # return redirect(url_for('main.home', flag='authors_list'))
@@ -153,7 +153,7 @@ def delete_title(id):
     db.session.commit()
     
     # DB VACUUM ANALYZE
-    vacuum_analyze()
+    # vacuum_analyze()
     
     return redirect(url_for('main.home'))
 

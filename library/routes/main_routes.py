@@ -3,8 +3,8 @@ from library.extensions import db
 from library.models import Book, Author, Publisher
 from library.forms import SearchAllItemsForm, SearchAuthorsForm, SearchBooksForm, SearchPublishersForm
 import operator, time
-from sqlalchemy import or_
-from library.maintenance import vacuum_analyze, vacuum_full
+from sqlalchemy import or_, collate, func
+from library.maintenance import vacuum_analyze, vacuum_full, vacuum_sqlite
 
 main_bp = Blueprint('main',__name__)
 
@@ -43,12 +43,17 @@ def vacuum_anlz():
 def vacuum_fl():
     vacuum_full()
     return redirect(url_for('main.home', flag='publishers_list'))
-    
+
+@main_bp.route('/vacuum_sqlite')
+def vacuum_sqlt():
+    vacuum_sqlite()
+    return redirect(url_for('main.home', flag='books_list'))
+
 @main_bp.route('/')
 def home():
-    books_totals = db.session.query(Book).order_by('author', 'first_publish', 'title').limit(70).all()
-    authors_totals = db.session.query(Author).order_by('fullname').limit(70).all()
-    publishers_totals = db.session.query(Publisher).order_by('publ_name').limit(70).all()
+    books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title), func.lower(Book.first_publish)).limit(70).all()
+    authors_totals = db.session.query(Author).order_by(func.lower(Author.fullname)).limit(70).all()
+    publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(70).all()
     flag = request.args.get('flag')
     authors = authors_totals
     publishers = publishers_totals

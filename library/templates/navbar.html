@@ -136,7 +136,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        🔧 Maintenance
+                        🔧 Maintenance ⚙️&ensp;&nbsp;
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark bg-dark">
                         <li>
@@ -144,13 +144,16 @@
                                 Init Commands</a>
                         </li>
                         <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.vacuum_anlz') }}">Vacuum
+                                href="{{ url_for('main.vacuum_anlz') }}">Postgres Vacuum
                                 Analyze</a>
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.vacuum_fl') }}">Vacuum
+                                href="{{ url_for('main.vacuum_fl') }}">Postgres Vacuum
                                 Full</a>
                         </li>
                         <li>
@@ -158,7 +161,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="#">Coming Soon...
+                                href="{{ url_for('main.vacuum_sqlt') }}">SQLite3 Vacuum
                             </a>
                         </li>
                     </ul>
