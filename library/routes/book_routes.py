@@ -182,4 +182,4 @@ def books_by_letter():
         books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by('title', 'author').all()
     else:
         books_by_letter = db.session.query(Book).order_by('author', 'title').all()
-    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers)
+    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)

@@ -100,7 +100,7 @@ def publishers_by_letter():
         publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by('publ_name').all()
     else:
         publishers_by_letter = db.session.query(Publisher).order_by('publ_name').all()
-    return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers)
+    return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)
 
 @publisher_bp.route('/delete_publisher/<int:id>', methods=['GET', 'POST'])
 def delete_publisher(id):

@@ -160,4 +160,4 @@ def authors_by_letter():
         authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by('lname').all()
     else:
         authors_by_letter = db.session.query(Author).order_by('fullname').all()
-    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers)
+    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)

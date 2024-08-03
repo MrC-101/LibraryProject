@@ -281,11 +281,11 @@ def search_all():
         all_items = form.all_items.data
         form.all_items.data = ''
         
-        authors = db.session.query(Author).filter(or_ (Author.fullname.icontains(all_items), Author.died.icontains(all_items), Author.born.icontains(all_items), Author.country.icontains(all_items), Author.city.icontains(all_items), Author.penname.icontains(all_items))).all()
+        authors = db.session.query(Author).filter(or_ (Author.fullname.icontains(all_items), Author.died.icontains(all_items), Author.born.icontains(all_items), Author.country.icontains(all_items), Author.city.icontains(all_items), Author.penname.icontains(all_items))).order_by('fullname').all()
         
-        books = db.session.query(Book).filter(or_ (Book.title.icontains(all_items), Book.summary.icontains(all_items), Book.genre.icontains(all_items), Book.first_publish.icontains(all_items))).all()
+        books = db.session.query(Book).filter(or_ (Book.title.icontains(all_items), Book.summary.icontains(all_items), Book.genre.icontains(all_items), Book.first_publish.icontains(all_items))).order_by('title', 'author').all()
         
-        publishers = db.session.query(Publisher).filter(or_ (Publisher.publ_name.icontains(all_items), Publisher.publ_founder.icontains(all_items), Publisher.publ_est.icontains(all_items), Publisher.publ_country.icontains(all_items), Publisher.publ_parent.icontains(all_items))).all()
+        publishers = db.session.query(Publisher).filter(or_ (Publisher.publ_name.icontains(all_items), Publisher.publ_est.icontains(all_items), Publisher.publ_country.icontains(all_items), Publisher.publ_parent.icontains(all_items))).order_by('publ_name').all()
         
         end = time.perf_counter_ns()
         duration = str((end - start)/1000000)[:4]

@@ -1,6 +1,16 @@
 {% extends "layout.html" %}
 {% block headline %}
 {{ publisher.publ_name }}
+<br><button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}" style="text-decoration: none; color: white">Edit</a>
+</button>
+<button class="btn btn-danger btn-sm">
+    <a href="{{ url_for('publisher.delete_publisher', id=publisher.id) }}" style="text-decoration: none; color: white">Delete</a>
+</button>
+<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('main.home', flag='publishers_list') }}" style="text-decoration: none; color: white">Back to
+        Publishers</a>
+</button>
 {% endblock %}
 
 {%block content %}
@@ -16,16 +26,6 @@
 &ensp;<label>Website:&emsp;{{ publisher.publ_website }}</label>
 <br />
 <br />
-&ensp;<button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}" style="text-decoration: none; color: white">Edit</a>
-</button>
-<button class="btn btn-danger btn-sm">
-    <a href="{{ url_for('publisher.delete_publisher', id=publisher.id) }}" style="text-decoration: none; color: white">Delete</a>
-</button>
-<button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('main.home', flag='publishers_list') }}" style="text-decoration: none; color: white">Back to
-        Publishers</a>
-</button>
 <hr />
 <br />
 &ensp; {% endblock %}

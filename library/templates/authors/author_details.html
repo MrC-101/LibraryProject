@@ -1,7 +1,17 @@
 {% extends "layout.html" %}
 
 {% block headline %}
-Author Details
+{{author.fullname}}
+&emsp;<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('author.edit_author', id=author.id) }}" style="text-decoration: none; color: white">Edit</a>
+</button>
+<button class="btn btn-danger btn-sm">
+    <a href="{{ url_for('author.delete_author', id=author.id) }}" style="text-decoration: none; color: white">Delete</a>
+</button>
+<button class="btn btn-secondary btn-sm">
+    <a href="{{ url_for('main.home', flag='authors_list') }}" style="text-decoration: none; color: white">Back to
+        Authors</a>
+</button>
 {% endblock %}
 
 {%block content %}
@@ -33,18 +43,14 @@ Author Details
     {% endfor %}
     {% endif %}
 </label><br />
+{% if author.bio is not none and author.bio != "None" and author.bio != '' %}
+&ensp;<label>Bio:&emsp;&emsp;&ensp;&nbsp;</label><br />
+<div class="jumbotron" style="margin-top:0">
+    <div class="container">
+        {{ author.bio }}
+    </div>
+</div>
+{% endif %}
 <br />
-<br />
-&ensp;<button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('author.edit_author', id=author.id) }}" style="text-decoration: none; color: white">Edit</a>
-</button>
-<button class="btn btn-danger btn-sm">
-    <a href="{{ url_for('author.delete_author', id=author.id) }}" style="text-decoration: none; color: white">Delete</a>
-</button>
-<button class="btn btn-secondary btn-sm">
-    <a href="{{ url_for('main.home', flag='authors_list') }}" style="text-decoration: none; color: white">Back to
-        Authors</a>
-</button>
-<hr />
 <br />
 &ensp; {% endblock %}

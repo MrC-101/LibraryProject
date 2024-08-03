@@ -5,14 +5,14 @@
 <a class="float-right" href="{{ url_for('main.search_books', flag='books_list') }}" style="text-decoration:none"> 🔍
 </a>
 <a href="{{ url_for('main.home', flag='authors_list')}}" style="text-decoration:none; color:black">Books</a>
-<a style="text-decoration:none" href="{{ url_for('book.add_title') }}"> +</a>
+<a style="text-decoration:none; color:rgb(9, 145, 9)" href="{{ url_for('book.add_title') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_books') }}">-</a>
 
 {% elif flag == 'authors_list' or flag == 'authors_by_letter' %}
 <a class="float-right" href="{{ url_for('main.search_authors', flag='authors_list') }}" style="text-decoration:none"> 🔍
 </a>
 <a href="{{ url_for('main.home', flag='publishers_list')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Authors</a>
-<a style="text-decoration:none" href="{{ url_for('author.add_author') }}"> +</a>
+<a style="text-decoration:none; color:rgb(9, 145, 9)" href="{{ url_for('author.add_author') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_authors', flag='authors_list') }}">-</a>
 
 {% elif flag == 'publishers_list' or flag == 'publishers_by_letter' %}
@@ -20,7 +20,7 @@
     style="text-decoration:none"> 🔍
 </a>
 <a href="{{ url_for('main.home', flag='books_list')}}" style="text-decoration:none; color:rgb(0, 0, 0)">Publishers</a>
-<a style="text-decoration:none" href="{{ url_for('publisher.add_publisher') }}"> +</a>
+<a style="text-decoration:none; color:rgb(9, 145, 9)" href="{{ url_for('publisher.add_publisher') }}"> +</a>
 <a style="color: red; text-decoration:none" href="{{ url_for('main.search_publishers', flag='publishers_list') }}">-</a>
 {% endif %}
 {% endblock %}
@@ -38,7 +38,9 @@
 {% elif flag == 'publishers_by_letter' or flag == 'publishers_list' %}
 {% set url = 'publisher.publishers_by_letter' %}
 {% endif %}
-{% include 'a_z.html' %}
+{% with letter=letter %}
+    {% include 'a_z.html' %}
+{% endwith %}
 {% endblock a_z %}
 
 {%block content %}
