@@ -4,6 +4,7 @@ from library.models import Book, Author, Publisher
 from library.forms import AddPublisherForm, EditPublisherForm
 from library.maintenance import vacuum_analyze
 import operator
+from sqlalchemy import func
 
 publisher_bp = Blueprint('publisher',__name__)
 
@@ -97,9 +98,9 @@ def publishers_by_letter():
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
     if letter != '*':
-        publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by('publ_name').all()
+        publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).all()
     else:
-        publishers_by_letter = db.session.query(Publisher).order_by('publ_name').all()
+        publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
     return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)
 
 @publisher_bp.route('/delete_publisher/<int:id>', methods=['GET', 'POST'])

@@ -3,6 +3,7 @@ from library.extensions import db
 from library.models import Book, Author, Publisher, AuthorPublisher
 from library.forms import AddForm, UpdateForm
 from library.maintenance import vacuum_analyze, vacuum_full
+from sqlalchemy import func
 
 book_bp = Blueprint('book',__name__)
 
@@ -179,7 +180,7 @@ def books_by_letter():
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
     if letter != '*':
-        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by('title', 'author').all()
+        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.title), func.lower(Book.author)).all()
     else:
-        books_by_letter = db.session.query(Book).order_by('author', 'title').all()
+        books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).all()
     return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)
