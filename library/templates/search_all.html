@@ -19,7 +19,7 @@ Super Search
         {% set ttl='titles' if books_count != 1 else 'title' %}
         {% set publ='publishers' if publishers_count != 1 else 'publisher' %}
 
-        {{ authors_count }} {{auth}}, {{publishers_count}} {{publ}} and {{ books_count }} {{ ttl }} in the Library.
+        {{ authors_count }} {{auth}}, {{ books_count }} {{ ttl }} and {{publishers_count}} {{publ}} in the Library.
         Total:
         {{ books_count + authors_count + publishers_count }}
 

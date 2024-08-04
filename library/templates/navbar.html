@@ -1,18 +1,16 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark border-bottom border-body" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand link-success link-offset-2 link-opacity-100-hover"
-            style="font-size: x-large; font-weight: bold;"
-            href="{{ url_for('main.home', flag='authors_list') }}">LIBRARY</a><a href="{{ url_for('main.home', flag='books_list') }}"> 🏛️ </a>&nbsp;
+            style="font-size: x-large; font-weight: bold;" href="#">LIBRARY</a>
+
+        <a href="{{ url_for('main.home', flag='books_list') }}"> 🏛️ </a>&nbsp;
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                <!-- <li class="nav-item active">
-                    <a class="nav-link" style="font-size: medium"
-                        href="{{ url_for('main.home', flag='authors_list') }}">Home</a>
-                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -101,7 +99,7 @@
                 <li class="nav-item dropdown">
                     <a style="color: white; font-size: medium" class="nav-link dropdown-toggle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        Search 🔍
+                        🔍
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark bg-dark">
                         <li>
@@ -134,13 +132,14 @@
         <div>
             <ul class="navbar-nav me-auto mb-2 mb-md-0 float-right">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         🔧 Maintenance ⚙️&ensp;&nbsp;
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark bg-dark">
                         <li>
-                            <a class=" dropdown-item" style="font-size: medium" href="{{ url_for('main.init') }}">
+                            <a class=" dropdown-item" style="font-size: medium"
+                                href="{{ url_for('maintenance.init') }}">
                                 Init Commands</a>
                         </li>
                         <li>
@@ -148,12 +147,12 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.vacuum_anlz') }}">Postgres Vacuum
+                                href="{{ url_for('maintenance.vacuum_anlz') }}">Postgres Vacuum
                                 Analyze</a>
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.vacuum_fl') }}">Postgres Vacuum
+                                href="{{ url_for('maintenance.vacuum_fl') }}">Postgres Vacuum
                                 Full</a>
                         </li>
                         <li>
@@ -161,7 +160,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" style="font-size: medium"
-                                href="{{ url_for('main.vacuum_sqlt') }}">SQLite3 Vacuum
+                                href="{{ url_for('maintenance.vacm') }}">SQLite3 Vacuum
                             </a>
                         </li>
                     </ul>

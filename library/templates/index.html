@@ -27,7 +27,24 @@
 
 {%block subhead %}
 <hr />
-&nbsp;{{ total }} <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='books_list') }}">books</a> - {{ total_auth }} <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='authors_list') }}">authors</a> - {{ total_publishers }} <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='publishers_list') }}">publishers</a> in Total
+
+&nbsp;{{ total }} <a style="text-decoration:none; color:cadetblue"
+    href="{{ url_for('main.home', flag='books_list') }}">books</a> - {{ total_auth }} <a
+    style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='authors_list') }}">authors</a> -
+{{ total_publishers }} <a style="text-decoration:none; color:cadetblue"
+    href="{{ url_for('main.home', flag='publishers_list') }}">publishers</a> in Total
+
+
+<div class="float-right">
+<form  method="POST" " novalidate>  
+    {{ form.csrf_token }}
+
+    {{ form.limit(size=1, length=5, class="align-middle mt0") }}
+    {{ form.submit(class="btn btn-warning btn-sm align-middle mt0", style="color:black; --bs-btn-font-size: .8rem") }}
+
+</form>
+</div>
+
 {% endblock subhead %}
 
 {% block a_z %}
@@ -39,7 +56,7 @@
 {% set url = 'publisher.publishers_by_letter' %}
 {% endif %}
 {% with letter=letter %}
-    {% include 'a_z.html' %}
+{% include 'a_z.html' %}
 {% endwith %}
 {% endblock a_z %}
 
@@ -67,13 +84,18 @@
         {% for author in book.authors %}
         {% if author.fullname != book.author %}
         <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-            {{ '|' if loop.first else ''}} {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
+            {{ '|' }} {{ author.fullname }} {{ ''}}</a>
         {% endif %}
         {% endfor %}
 
         <a style="font-weight:bolder; text-decoration:none"
-            href="{{ url_for('author.bibliography', author=book.authors[0].fullname) }}">
-            - {{book.authors[0].books|count}} books</a> in collection
+            href="{{ url_for('author.bibliography', author=book.author) }}"> -
+            {% for author in book.authors %}
+            {% if author.fullname == book.author %}
+            {{author.books|count}}
+            {% endif %}
+            {% endfor %}
+            books</a> in collection
     </li>
     {% endfor %}
     {% endif %}
@@ -101,8 +123,8 @@
         - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} -
         <a style="text-decoration:none"
             href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a>
-            in
-            collection
+        in
+        collection
     </li>
     {% endfor %}
     {% endif %}
@@ -128,7 +150,7 @@
         <a style="text-decoration:none"
             href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
         - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
-        href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
+            href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
         collection
     </li>
     {% endfor %}
@@ -220,7 +242,7 @@
             <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
                 style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
-        
+
         {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
         {% set bks='book' if publisher.books|count == 1 else 'books' %}
         <a style="text-decoration:none"

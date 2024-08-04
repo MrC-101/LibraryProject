@@ -1,8 +1,8 @@
 from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Book, Author, Publisher
-from library.forms import AddPublisherForm, EditPublisherForm
-from library.maintenance import vacuum_analyze
+from library.forms import AddPublisherForm, EditPublisherForm, LimitForm
+from library.maintenance import vacuum
 import operator
 from sqlalchemy import func
 
@@ -49,8 +49,8 @@ def add_publisher():
             db.session.add(new_publisher)
             db.session.commit()
             
-            # DB VACUUM ANALYZE
-            # vacuum_analyze()
+            # DB VACUUM
+            vacuum()
         
             publisher=db.session.query(Publisher).filter_by(publ_name=publ_name_ret).first()
             return redirect(url_for('publisher.publisher_details', id=publisher.id))
@@ -77,8 +77,8 @@ def edit_publisher():
         publisher.publ_website = request.form['publwebsite']
         db.session.commit()
             
-        # DB VACUUM ANALYZE
-        # vacuum_analyze()
+        # DB VACUUM
+        vacuum()
             
         return redirect(url_for('publisher.publisher_details', id=publisher.id))
 
@@ -89,19 +89,27 @@ def publisher_details(id):
     publisher = db.session.query(Publisher).get(id)
     return render_template('publishers/publisher_details.html', publisher=publisher)
 
-@publisher_bp.route('/publishers_by_letter')
+@publisher_bp.route('/publishers_by_letter', methods=['GET', 'POST'])
 def publishers_by_letter():
+    form = LimitForm()
     letter=request.args.get('letter')
     authors = db.session.query(Author).all()
     total_auth = len(authors)
     books = db.session.query(Book).all()
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
-    if letter != '*':
-        publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).all()
+    lim=form.limit.data
+    if lim != None and lim != 'None' and lim != '' and lim != '0':
+        if letter != '*':
+            publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
+        else:
+            publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
     else:
-        publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
-    return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)
+        if letter != '*':
+            publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).all()
+        else:
+            publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
+    return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form)
 
 @publisher_bp.route('/delete_publisher/<int:id>', methods=['GET', 'POST'])
 def delete_publisher(id):
@@ -109,7 +117,7 @@ def delete_publisher(id):
     db.session.delete(publisher)
     db.session.commit()
     
-    # DB VACUUM ANALYZE
-    # vacuum_analyze()
+    # DB VACUUM
+    vacuum()
 
     return redirect(url_for('main.home', flag='publishers_list'))

@@ -1,10 +1,11 @@
 from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Author, Book, Publisher
-from library.forms import AddAuthorForm, EditAuthorForm
+from library.forms import AddAuthorForm, EditAuthorForm, LimitForm
 import operator, select
-from library.maintenance import vacuum_analyze
+from library.maintenance import vacuum
 from sqlalchemy import func
+
 
 author_bp = Blueprint('author',__name__)
 
@@ -13,7 +14,6 @@ def bibliography():
     author = request.args.get('author')
     author_obj = Author.query.filter_by(fullname=author).first()
     author_id = int(author_obj.id)
-    # books = Book.query.filter_by(author=author).order_by('first_publish', 'title').all()
     author = db.session.query(Author).filter_by(fullname=author).first()
     
     books = author.books
@@ -67,11 +67,11 @@ def add_author():
             db.session.add(new_author)
             db.session.commit()
             
-            # DB VACUUM ANALYZE
-            # vacuum_analyze()
+            # DB VACUUM
+            vacuum()
             
             author=db.session.query(Author).filter_by(fullname=fullname, lname=lname, fname=fname, born=born).first()
-            # return redirect(url_for('main.home', flag='authors_list'))
+
             return redirect(url_for('author.author_details', id=author.id))
         else:
             flash('This author is already in the library.')
@@ -117,8 +117,8 @@ def edit_author():
         
             db.session.commit()
             
-            # DB VACUUM ANALYZE
-            # vacuum_analyze()
+            # DB VACUUM
+            vacuum()
             
             return redirect(url_for('author.author_details', id=author.id))
 
@@ -139,8 +139,8 @@ def delete_author(id):
     db.session.delete(author)
     db.session.commit()
     
-    # DB VACUUM ANALYZE
-    # vacuum_analyze()
+    # DB VACUUM
+    vacuum()
 
     return redirect(url_for('main.home', flag='authors_list'))
 
@@ -149,16 +149,24 @@ def author_details(id):
     author = db.session.query(Author).get(id)
     return render_template('authors/author_details.html', author=author)
 
-@author_bp.route('/authors_by_leter')
+@author_bp.route('/authors_by_leter', methods=['GET', 'POST'])
 def authors_by_letter():
+    form = LimitForm()
     letter=request.args.get('letter')
     authors = db.session.query(Author).all()
     total_auth = len(authors)
     books = db.session.query(Book).all()
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
-    if letter != '*':
-        authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).all()
+    lim=form.limit.data
+    if lim != None and lim != 'None' and lim != '' and lim != '0':
+        if letter != '*':
+            authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).limit(lim).all()
+        else:
+            authors_by_letter = db.session.query(Author).order_by(func.lower(Author.fullname)).limit(lim).all()
     else:
-        authors_by_letter = db.session.query(Author).order_by(func.lower(Author.fullname)).all()
-    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)
+        if letter != '*':
+            authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).all()
+        else:
+            authors_by_letter = db.session.query(Author).order_by(func.lower(Author.fullname)).all()
+    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form)

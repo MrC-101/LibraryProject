@@ -1,8 +1,8 @@
 from flask import redirect, url_for, request, render_template, flash, Blueprint
 from library.extensions import db
 from library.models import Book, Author, Publisher, AuthorPublisher
-from library.forms import AddForm, UpdateForm
-from library.maintenance import vacuum_analyze, vacuum_full
+from library.forms import AddForm, UpdateForm, LimitForm
+from library.maintenance import vacuum
 from sqlalchemy import func
 
 book_bp = Blueprint('book',__name__)
@@ -68,8 +68,8 @@ def add_title():
                 form.plusauthor.data = ''
             db.session.commit()
             
-            # DB VACUUM ANALYZE
-            # vacuum_analyze()
+            # DB VACUUM
+            vacuum()
             
             return redirect(url_for('author.bibliography', author=author))
             # return redirect(url_for('main.home', flag='authors_list'))
@@ -139,8 +139,8 @@ def edit_title():
         book.summary = request.form['summary']
         db.session.commit()
         
-        # DB VACUUM ANALYZE
-        # vacuum_analyze()
+        # DB VACUUM
+        vacuum()
         
         return redirect(url_for('author.bibliography', author=book.author))
         # return redirect(url_for('main.home', flag='authors_list'))
@@ -153,8 +153,8 @@ def delete_title(id):
     db.session.delete(book)
     db.session.commit()
     
-    # DB VACUUM ANALYZE
-    # vacuum_analyze()
+    # DB VACUUM
+    vacuum()
     
     return redirect(url_for('main.home'))
 
@@ -171,16 +171,24 @@ def book_details(id):
         publparent = None
     return render_template('books/book_details.html', book=book, publparent=publparent, publname=publname)
 
-@book_bp.route('/books_by_leter')
+@book_bp.route('/books_by_leter', methods=['GET', 'POST'])
 def books_by_letter():
+    form=LimitForm()
     letter=request.args.get('letter')
     authors = db.session.query(Author).all()
     total_auth = len(authors)
     books = db.session.query(Book).all()
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
-    if letter != '*':
-        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.title), func.lower(Book.author)).all()
+    lim=form.limit.data
+    if lim != None and lim != 'None' and lim != '' and lim != '0':
+        if letter != '*':
+            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.title), func.lower(Book.author)).limit(lim).all()
+        else:
+            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).limit(lim).all()
     else:
-        books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).all()
-    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter)
+        if letter != '*':
+            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.title), func.lower(Book.author)).all()
+        else:
+            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).all()
+    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form)

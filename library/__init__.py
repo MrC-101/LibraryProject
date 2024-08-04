@@ -6,6 +6,7 @@ from library.routes.book_routes import book_bp
 from library.routes.main_routes import main_bp
 from library.routes.author_routes import author_bp
 from library.routes.publisher_routes import publisher_bp
+from library.routes.maintenance_routes import maintenance_bp
 from pathlib import Path
 
 # basedir = os.path.abspath(os.path.dirname(__file__))
@@ -30,5 +31,6 @@ def create_app():
     app.register_blueprint(book_bp)
     app.register_blueprint(author_bp)
     app.register_blueprint(publisher_bp)
+    app.register_blueprint(maintenance_bp)
     
     return app

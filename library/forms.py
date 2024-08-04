@@ -3,6 +3,10 @@ from wtforms import StringField, SubmitField, IntegerField, FloatField, TextArea
 from wtforms.validators import DataRequired, ValidationError, Optional
 from wtforms_alchemy import QuerySelectMultipleField
 
+class LimitForm(FlaskForm):
+    limit = StringField(label='Limit')
+    submit = SubmitField(label='Limit')
+    
 class SearchForm(FlaskForm):
     title = StringField(label='title', validators=[Optional()])
     author = StringField(label='author', validators=[Optional()])
