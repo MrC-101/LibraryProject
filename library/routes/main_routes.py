@@ -6,7 +6,6 @@ import operator, time
 from sqlalchemy import or_, func
 
 
-
 main_bp = Blueprint('main',__name__)
 
 @main_bp.route('/', methods=['GET', 'POST'])
@@ -14,16 +13,15 @@ def home():
     form=LimitForm()
     if form.validate_on_submit():
         lim=form.limit.data
-        if lim != '' and lim != 'None' and lim != None and lim != '0':
-            lim = int(form.limit.data)
-
+        if lim != None and lim != 'None' and lim != '' and lim != '0':
             books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title), func.lower(Book.first_publish)).limit(lim).all()
             authors_totals = db.session.query(Author).order_by(func.lower(Author.fullname)).limit(lim).all()
             publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
         else:
-            books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title), func.lower(Book.first_publish)).limit(lim).all()
+            books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title), func.lower(Book.first_publish)).all()
             authors_totals = db.session.query(Author).order_by(func.lower(Author.fullname)).all()
             publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
+            
         flag = request.args.get('flag')
         authors = authors_totals
         publishers = publishers_totals
@@ -40,10 +38,7 @@ def home():
         total_books = len(db.session.query(Book).all())
         total_auth = len(db.session.query(Author).all())
         total_publishers = len(db.session.query(Publisher).all())
-    
-        
-        
-        
+            
     # # books=[]
     # # for author in authors:
     # #     for book in author.books:
@@ -51,11 +46,9 @@ def home():
     # books=[book for author in authors for book in author.books]
     # books.sort(key=operator.attrgetter('author', 'first_publish', 'title'))
     books = books_totals
-    # if flag == 'authors_list':
     
     return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, total_publishers=total_publishers, form=form)
-    # else: 
-        # return render_template('index.html', books=books, total=total, total_auth=total_auth)
+
 
 @main_bp.route('/search_books', methods=['GET', 'POST'])
 def search_books():
@@ -141,11 +134,13 @@ def search_authors():
                     return redirect(url_for('author.author_details', author=author_returned, id=authors[0].id))
                         
             elif db.session.query(Author).filter(Author.fullname.icontains(author_returned)).all():
-
+                
+                #Lists creation
                 authors=[]
                 authors1=[]
                 authors2=[]
                 authors3=[]
+                
                 duration1=0
                 duration2=0
                 duration3=0

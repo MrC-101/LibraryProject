@@ -27,23 +27,17 @@
 
 {%block subhead %}
 <hr />
-
 &nbsp;{{ total }} <a style="text-decoration:none; color:cadetblue"
     href="{{ url_for('main.home', flag='books_list') }}">books</a> - {{ total_auth }} <a
     style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='authors_list') }}">authors</a> -
 {{ total_publishers }} <a style="text-decoration:none; color:cadetblue"
     href="{{ url_for('main.home', flag='publishers_list') }}">publishers</a> in Total
 
-
-<div class="float-right">
-<form  method="POST" " novalidate>  
+<form class="float-right" method="POST" " novalidate>  
     {{ form.csrf_token }}
-
     {{ form.limit(size=1, length=5, class="align-middle mt0") }}
     {{ form.submit(class="btn btn-warning btn-sm align-middle mt0", style="color:black; --bs-btn-font-size: .8rem") }}
-
 </form>
-</div>
 
 {% endblock subhead %}
 
@@ -84,7 +78,7 @@
         {% for author in book.authors %}
         {% if author.fullname != book.author %}
         <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-            {{ '|' }} {{ author.fullname }} {{ ''}}</a>
+            {{ '|' }} {{ author.fullname }} {{ '' }}</a>
         {% endif %}
         {% endfor %}
 
