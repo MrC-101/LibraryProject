@@ -27,3 +27,5 @@ Some screenshots
 ![2024-08-05_123818](https://github.com/user-attachments/assets/1d389ced-0e4b-4d12-a13b-ff8dc369b998)
 
 ![2024-08-05_123449](https://github.com/user-attachments/assets/4538a653-7aaa-4d24-b833-8d83123ce3bc)
+
+![2024-08-05_123400](https://github.com/user-attachments/assets/a0b1c325-f33e-46ca-956b-0053c8c2abf0)
