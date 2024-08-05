@@ -106,7 +106,7 @@
     <br />
     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{ form.submit(class="btn btn-success btn-sm") }}
     <button class="btn btn-secondary btn-sm">
-        <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+        <a href="{{ url_for('main.home', flag='books_list') }}" style="text-decoration: none; color: white">Cancel</a>
     </button>
     <button class="btn btn-danger btn-sm">
         <a href="{{ url_for('book.book_details', id=book.id) }}" style="text-decoration: none; color: white">Delete</a>

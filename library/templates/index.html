@@ -174,14 +174,17 @@
             href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
         {% for author in book.authors %}
         {% if author.fullname != book.author %}
-        {{ '|' }}
         <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-            {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
+            {{ '|' }} {{ author.fullname }} {{ '' }}</a>
         {% endif %}
         {% endfor %}
         <a style="font-weight:bolder; text-decoration:none"
-            href="{{ url_for('author.bibliography', author=book.authors[0].fullname) }}">
-            - {{book.authors[0].books|count}} books in collection</a>
+            href="{{ url_for('author.bibliography', author=book.author) }}">
+            - {% for author in book.authors %}
+            {% if author.fullname == book.author %}
+            {{author.books|count}}
+            {% endif %}
+            {% endfor %} books</a> in collection
     </li>
     {% endfor %}
     {% endif %}

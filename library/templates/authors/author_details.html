@@ -2,7 +2,9 @@
 
 {% block headline %}
 {{author.fullname}}
-&emsp;<button class="btn btn-secondary btn-sm">
+<br>
+
+<button class="btn btn-secondary btn-sm">
     <a href="{{ url_for('author.edit_author', id=author.id) }}" style="text-decoration: none; color: white">Edit</a>
 </button>
 <button class="btn btn-danger btn-sm">
