@@ -37,8 +37,8 @@ def add_title():
         genre = request.form['genre']
         isbn10 = form.isbn10.data
         isbn13 = form.isbn13.data
-        book_publisher = form.publisher.data
-        if book_publisher != '' or book_publisher != None or book_publisher != 'Null':
+        book_publisher = request.form['publisher']
+        if book_publisher != '' and book_publisher != None and book_publisher != 'Null':
             if db.session.query(Publisher).filter_by(publ_name=book_publisher).first():
                 book_publ=db.session.query(Publisher).filter_by(publ_name=book_publisher).first()
                 publisher_id = book_publ.id
@@ -51,15 +51,25 @@ def add_title():
         summary = request.form['summary']
         provisional_author = db.session.query(Author).filter_by(fullname=request.form['plusauthor']).first()        
         if not Book.query.filter_by(title=title, author=author, isbn10=isbn10, isbn13=isbn13).first():
-            if provisional_author:
+            if provisional_author and publisher_id != None:
                 co_author = provisional_author.fullname
                 new_book = Book(title=title, author=author, co_author=co_author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, publisher_id=publisher_id, rating=rating, pages=pages, genre=genre, summary=summary, authors=[author_obj])
                 db.session.add(new_book)
                 if provisional_author not in book_publ.authors:
                     book_publ.authors.append(provisional_author)
-            else:
-                new_book = Book(title=title, author=author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, publisher_id=publisher_id, rating=rating, pages=pages, genre=genre, summary=summary, authors=[author_obj])
+            elif not provisional_author and publisher_id == None:
+                new_book = Book(title=title, author=author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, rating=rating, pages=pages, genre=genre, summary=summary, authors=[author_obj])
                 db.session.add(new_book)
+            elif not provisional_author and publisher_id != None:
+                new_book = Book(title=title, author=author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, rating=rating, publisher_id=publisher_id, pages=pages, genre=genre, summary=summary, authors=[author_obj])
+                db.session.add(new_book)
+            elif provisional_author and publisher_id == None:
+                co_author = provisional_author.fullname
+                new_book = Book(title=title, author=author, co_author=co_author, first_publish=first_publish, isbn10=isbn10, isbn13=isbn13, rating=rating, pages=pages, genre=genre, summary=summary, authors=[author_obj])
+                db.session.add(new_book)
+                if provisional_author not in book_publ.authors:
+                    book_publ.authors.append(provisional_author)
+            
             if provisional_author:
                 if provisional_author not in new_book.authors:
                     new_book.authors.append(provisional_author)
@@ -117,7 +127,7 @@ def edit_title():
         book.isbn10 = request.form['isbn10']
         book.isbn13 = request.form['isbn13']
         book_publisher = request.form['publisher']
-        if book_publisher != '':
+        if book_publisher != '' and book_publisher != None and book_publisher != 'None':
             if db.session.query(Publisher).filter_by(publ_name=book_publisher).first():
                 book_publ=db.session.query(Publisher).filter_by(publ_name=book_publisher).first()
                 book.publisher_id = book_publ.id
@@ -156,7 +166,7 @@ def delete_title(id):
     # DB VACUUM
     vacuum()
     
-    return redirect(url_for('main.home'))
+    return redirect(url_for('main.home', flag='books_list'))
 
 @book_bp.route('/book_details/<int:id>')
 def book_details(id):

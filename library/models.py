@@ -1,6 +1,3 @@
-
-# from sqlalchemy.orm import relationship
-# from sqlalchemy import Table,Index, func, cast, text
 from library.extensions import db
 
 
