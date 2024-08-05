@@ -24,7 +24,7 @@ Some screenshots
 
 ![2024-08-05_123716](https://github.com/user-attachments/assets/ef0de9d2-63cc-4f97-9078-bc68953d9570)
 
-![2024-08-05_123818](https://github.com/user-attachments/assets/1d389ced-0e4b-4d12-a13b-ff8dc369b998)
+![355055332-1d389ced-0e4b-4d12-a13b-ff8dc369b998](https://github.com/user-attachments/assets/891312a3-7ae2-4d3e-a49f-a91af9183bcc)
 
 ![2024-08-05_123449](https://github.com/user-attachments/assets/4538a653-7aaa-4d24-b833-8d83123ce3bc)
 
