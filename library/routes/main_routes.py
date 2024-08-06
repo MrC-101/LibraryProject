@@ -38,7 +38,7 @@ def home():
         total_books = len(db.session.query(Book).all())
         total_auth = len(db.session.query(Author).all())
         total_publishers = len(db.session.query(Publisher).all())
-            
+           
     # # books=[]
     # # for author in authors:
     # #     for book in author.books:
@@ -46,7 +46,12 @@ def home():
     # books=[book for author in authors for book in author.books]
     # books.sort(key=operator.attrgetter('author', 'first_publish', 'title'))
     books = books_totals
-    
+    if flag == None:
+        flag = 'books_list'
+        info = "Flag was set to None. Auto switched to 'books_list'"
+        print('\n'+'=' * len(info))
+        print(info)
+        print('=' * len(info)+'\n')
     return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, total_publishers=total_publishers, form=form)
 
 

@@ -15,11 +15,13 @@ def vacuum_analyze():
         session.execute(text(f'VACUUM ANALYZE;'))
     session.close()
     engine.dispose()
-    print('\n'+'=' * 50)
+    info = "ANALYZE Vacuum Completed Successfuly"
+    length = max(len(info), len(DATABASE_URL))
+    print('\n'+'=' * length)
     print(DATABASE_URL)
-    print('ANALYZE Vacuum Completed Successfuly')
-    print('=' * 50+'\n')
-
+    print(info)
+    print('=' * length+'\n')
+    
 def vacuum_full():
     load_dotenv()
     DATABASE_URL = os.getenv('DATABASE_URL')
@@ -29,10 +31,12 @@ def vacuum_full():
         session.execute(text(f'VACUUM FULL;'))
     session.close()
     engine.dispose()
-    print('\n'+'=' * 50)
+    info = "FULL Vacuum Completed Successfuly"
+    length = max(len(info), len(DATABASE_URL))
+    print('\n'+'=' * length)
     print(DATABASE_URL)
-    print('FULL Vacuum Completed Successfuly')
-    print('=' * 50+'\n')
+    print(info)
+    print('=' * length+'\n')
     
 def vacuum():
     load_dotenv()
@@ -43,7 +47,9 @@ def vacuum():
         session.execute(text(f'VACUUM;'))
     session.close()
     engine.dispose()
-    print('\n'+'=' * 50)
+    info = "Vacuum Completed Successfuly"
+    length = max(len(info), len(DATABASE_URL))
+    print('\n'+'=' * length)
     print(DATABASE_URL)
-    print('Vacuum Completed Successfuly')
-    print('=' * 50+'\n')
+    print(info)
+    print('=' * length+'\n')
