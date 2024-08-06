@@ -7,8 +7,8 @@ Super Search
 {% block subhead %}
 <form method="POST" action="{{ url_for('main.search_all', authors=authors, books=books) }}" novalidate>
     {{ form.csrf_token }}
-    <div>
-        {{ form.all_items(size=88, placeholder='will search all databases. you can enter anything') }}
+    <div >
+        {{ form.all_items(class="placeholder bg-light col-12", placeholder='will search all databases. you can enter anything', style="cursor:default") }}
         {% for err in form.all_items.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}

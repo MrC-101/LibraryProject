@@ -7,7 +7,7 @@ Search Title
 <form method="POST" action="{{ url_for('main.search_books') }}" novalidate>
     {{ form.csrf_token }}
     <div>
-        {{ form.title(size=88, placeholder='enter full or partial book title') }}
+        {{ form.title(class="placeholder bg-light col-12", size=88, placeholder='enter full or partial book title', style="cursor:default") }}
         {% for err in form.title.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}

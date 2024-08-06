@@ -8,7 +8,7 @@ Search Author
 <form method="POST" action="{{ url_for('main.search_authors') }}" novalidate>
     {{ form.csrf_token }}
     <div>
-        {{ form.author(size=88, placeholder='search through first, last and middle author names. enter full or partial author name') }}
+        {{ form.author(class="placeholder bg-light col-12", size=88, placeholder='search through first, last and middle author names. enter full or partial author name', style="cursor:default") }}
         {% for err in form.author.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
