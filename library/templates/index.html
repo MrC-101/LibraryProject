@@ -163,7 +163,7 @@
         {% else %}
 
         {% set ttl='books' if books_by_letter|count != 1 else 'book' %}
-        <h6>{{ books_by_letter|length }} {{ ttl }} found</h6>
+        <h6>{{ books_by_letter|length }} {{ ttl }} by {{ authors_count }} authors found</h6>
 
         {% for book in books_by_letter %}
         <li>

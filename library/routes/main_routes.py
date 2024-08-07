@@ -79,7 +79,8 @@ def search_books():
                 duration = str((end - start)/1000000)[:4]
                 if len(books) > 1:
                     form = SearchBooksForm()
-                    return render_template('search_books.html', flag='books_list', form=form, books=books, duration=duration)
+                    authors_count = len(set([book.author for book in books]))
+                    return render_template('search_books.html', flag='books_list', form=form, books=books, duration=duration, authors_count=authors_count)
                 else:
                     book = Book.query.filter_by(title=title_returned).first()
                     return redirect(url_for('book.edit_title', author=book.author, id=book.id, total=total, total_auth=total_auth))  
@@ -92,8 +93,9 @@ def search_books():
                 duration = str((end - start)/1000000)[:4]
 
                 if len(books) > 1:
+                    authors_count = len(set([book.author for book in books]))
                     form = SearchBooksForm()
-                    return render_template('search_books.html', form=form, books=books, duration=duration)
+                    return render_template('search_books.html', form=form, books=books, duration=duration, authors_count=authors_count)
                 else:
                     book = books[0]
                     return redirect(url_for('book.book_details', author=book.author, id=book.id, total=total, total_auth=total_auth)) 

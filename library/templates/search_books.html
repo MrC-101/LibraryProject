@@ -15,7 +15,7 @@
     <div>
         {% set ttl='books' if books|count != 1 else 'book' %}
         {{ books|count }} 
-        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='books_list') }}">{{ttl}}</a> found
+        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='books_list') }}">{{ttl}}</a> by {{ authors_count }} authors found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>
 <br>
