@@ -1,6 +1,6 @@
 {% extends 'layout.html' %} 
 {% block headline %} 
-Search Title
+<a style="text-decoration:none; color:rgb(57, 57, 57)" href="{{ url_for('main.home', flag='books_list') }}">Search Title</a>
 {% endblock headline %}
 
 {% block subhead %}
@@ -13,8 +13,9 @@ Search Title
         {% endfor %}
     </div>
     <div>
-        {% set ttl='titles' if books|count != 1 else 'title' %}
-        {{ books|count }} {{ttl}} found
+        {% set ttl='books' if books|count != 1 else 'book' %}
+        {{ books|count }} 
+        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='books_list') }}">{{ttl}}</a> found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>
 <br>

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block headline %}
-Search Publisher
+<a style="text-decoration:none; color:rgb(57, 57, 57)" href="{{ url_for('main.home', flag='publishers_list') }}">Search Publisher</a>
 {% endblock headline %}
 
 {% block subhead %}
@@ -14,7 +14,8 @@ Search Publisher
     </div>
     {% set publ='publishers' if publishers|count != 1 else 'publisher' %}
     <div>
-        {{ publishers|count }} {{ publ }} found
+        {{ publishers|count }} 
+        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='publishers_list') }}">{{ publ }}</a> found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>
     <br>

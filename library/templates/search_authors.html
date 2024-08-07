@@ -1,21 +1,22 @@
 {% extends 'layout.html' %}
 
 {% block headline %}
-Search Author
+<a style="text-decoration:none; color:rgb(57, 57, 57)" href="{{ url_for('main.home', flag='authors_list') }}">Search Author</a>
 {% endblock headline %}
 
 {% block subhead %}
 <form method="POST" action="{{ url_for('main.search_authors') }}" novalidate>
     {{ form.csrf_token }}
     <div>
-        {{ form.author(class="placeholder bg-light col-12", size=88, placeholder='search through first, last and middle author names. enter full or partial author name', style="cursor:default") }}
+        {{ form.author(class="placeholder bg-light col-12", size=88, placeholder='search through first, last and middle author names. enter full or partial author name', style="cursor:auto") }}
         {% for err in form.author.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
     </div>
     <div>
         {% set auth='authors' if authors|count != 1 else 'author' %}
-        {{ authors|count }} {{auth}} found
+        {{ authors|count }} 
+        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='authors_list') }}">{{auth}}</a> found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>
     <br>
