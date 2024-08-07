@@ -65,6 +65,7 @@ def search_books():
     
     form = SearchBooksForm()
     flag = request.args.get('flag')
+    authors_count = len(set(authors))    
     
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -109,7 +110,7 @@ def search_books():
                 form = SearchBooksForm()
                 return render_template('search_books.html', form=form, books=books, duration=duration)
     else:
-        return render_template('search_books.html', form=form, books=books, total_auth=total_auth, total=total, flag=flag)
+        return render_template('search_books.html', form=form, books=books, total_auth=total_auth, total=total, flag=flag, authors_count=authors_count)
     
 @main_bp.route('/search_authors', methods=['GET', 'POST'])
 def search_authors():
