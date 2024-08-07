@@ -29,6 +29,9 @@
     {% if books|count == 0 %}
     <h4 style="color:red">Library is empty</h4>
     {% else %}
+
+    <h3 class="mb-3" style="color:red">{{ msg }} </h3>
+
     {% for book in books %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">

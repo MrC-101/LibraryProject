@@ -62,7 +62,7 @@ def search_books():
     authors = Author.query.all()
     total_auth = len(authors)
     total = len(books)
-    
+    msg = 'No Book found. Check your spelling.'
     form = SearchBooksForm()
     flag = request.args.get('flag')
     authors_count = len(set(authors)) 
@@ -102,13 +102,13 @@ def search_books():
                     return redirect(url_for('book.book_details', author=book.author, id=book.id, total=total, total_auth=total_auth)) 
                        
             else:
-                flash('Nothing found in the Database')
+                # flash('Nothing found in the Database')
                 start = time.perf_counter_ns()
                 books = Book.query.order_by(func.lower(Book.author), func.lower(Book.title), func.lower(Book.first_publish)).all()
                 end = time.perf_counter_ns()
                 duration = str((end - start)/1000000)[:4]
                 form = SearchBooksForm()
-                return render_template('search_books.html', form=form, books=books, duration=duration)
+                return render_template('search_books.html', form=form, books=books, duration=duration, msg=msg)
     else:
         return render_template('search_books.html', form=form, books=books, total_auth=total_auth, total=total, flag=flag, authors_count=authors_count)
     
@@ -119,6 +119,7 @@ def search_authors():
     total_auth = len(authors)
     total = len(books)
     duration = 0
+    msg='No Authors found. Check your spelling.'
     form = SearchAuthorsForm()
     flag = 'authors_list'
     # flag = request.args.get('flag')
@@ -187,12 +188,12 @@ def search_authors():
                     authors = authors3
                 else:
                     start = time.perf_counter_ns()
-                    flash('Nothing found in the Database. Check your spelling or try a different Name')
+                    # flash('Nothing found in the Database. Check your spelling or try a different Name')
                     authors = Author.query.order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
                     end = time.perf_counter_ns()
                     duration = str((end - start)/1000000)[:4]
                     form = SearchAuthorsForm()
-                    return render_template('search_authors.html', form=form, authors=authors, flag=flag, total=total, total_auth=total_auth, duration=duration)
+                    return render_template('search_authors.html', form=form, authors=authors, flag=flag, total=total, total_auth=total_auth, duration=duration, msg=msg)
                     
                 duration = str(duration1+duration2+duration3)[:4]
                 
@@ -205,12 +206,13 @@ def search_authors():
      
             else:
                 start = time.perf_counter_ns()
-                flash('Nothing found in the Database. Check your spelling or try a different Name')
+                # flash('Nothing found in the Database. Check your spelling or try a different Name')          
                 authors = Author.query.order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
                 end = time.perf_counter_ns()
                 duration = str((end - start)/1000000)[:4]
                 form = SearchAuthorsForm()
-                return render_template('search_authors.html', flag=flag, form=form, authors=authors, total=total, total_auth=total_auth, duration=duration)
+                return render_template('search_authors.html', flag=flag, form=form, authors=authors, total=total, total_auth=total_auth, duration=duration, msg = msg)
+                # return '<h3>Nothihg found</h3>'
     else:
         return render_template('search_authors.html', form=form, authors=authors, total_auth=total_auth, total=total, flag=flag)
 
@@ -218,6 +220,7 @@ def search_authors():
 def search_publishers():
     publishers = Publisher.query.order_by('publ_name').all()
     duration = 0
+    msg='No Publishers found. Check your spelling.'
     form = SearchPublishersForm()
     flag = request.args.get('flag')
     if request.method == 'POST':
@@ -244,13 +247,14 @@ def search_publishers():
                         publisher = publishers[0]
                         return redirect(url_for('publisher.publisher_details', form=form, publisher=publisher, id=publisher.id))      
             else:
-                flash('Nothing found in the Database. Check your spelling or try a different Name')
+                # flash('Nothing found in the Database. Check your spelling or try a different Name')
+                
                 start = time.perf_counter_ns()
                 publishers = Publisher.query.order_by(func.lower(Publisher.publ_name)).all()
                 end = time.perf_counter_ns()
                 duration = str((end - start)/1000000)[:4]
                 form = SearchPublishersForm()
-                return render_template('search_publishers.html', form=form, publishers=publishers, duration=duration)
+                return render_template('search_publishers.html', form=form, publishers=publishers, duration=duration, msg=msg)
                      
     else:
         return render_template('search_publishers.html', form=form, publishers=publishers, flag=flag)
@@ -266,6 +270,7 @@ def search_all():
     publishers_count = len(Publisher.query.all())
     end = time.perf_counter_ns()
     duration = str((end - start)/1000000)[:4]
+    msg = 'Nothing found. Check your spelling.'
     form = SearchAllItemsForm()
     if form.validate_on_submit():
 
@@ -288,7 +293,6 @@ def search_all():
         books_count = len(books)
         authors_count = len(authors)
         publishers_count = len(publishers)
-        print(publishers_count)
         if authors and books and publishers:            
             return render_template('search_all.html', form=SearchAllItemsForm(), authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)
         elif authors and books:
@@ -303,8 +307,6 @@ def search_all():
             return render_template('search_all.html', form=SearchAllItemsForm(), books=books, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)
         elif publishers:
             return render_template('search_all.html', form=SearchAllItemsForm(), publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)
-        else:
-            flash('Nothing found in the database')
-                
+         
     return render_template('search_all.html', form=form, authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)        
               

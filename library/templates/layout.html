@@ -13,11 +13,25 @@
 
 </head>
 
-<body>
+<body  style="overflow-y: scroll">
 <div class = "fixed-top">
     {% include 'navbar.html' %}
 
     <div class="jumbotron mb-1 p-5">
+
+
+        <!-- <div class="p-0 container">
+            {% for message in get_flashed_messages() %}
+            <div class="alert-danger d-flex justify-items-left justify-content-left align-items-center" role="alert">
+                <svg class="bi flex-shrink-0" role="img" aria-label="Danger:">
+                    <use xlink:href="#exclamation-triangle-fill" />
+                </svg>
+                <div>{{ message }}</div>
+            </div>
+            {% endfor %}
+        </div> -->
+
+
         <div class="container">
             <h1 class="display-12">
 
@@ -30,16 +44,6 @@
     </div>
 </div>
 
-    <div class="container">
-        {% for message in get_flashed_messages() %}
-        <div class="alert-danger d-flex justify-items-left justify-content-left align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
-                <use xlink:href="#exclamation-triangle-fill" />
-            </svg>
-            <div>{{ message }}</div>
-        </div>
-        {% endfor %}
-    </div>
 
     <div>{% block content %}{% endblock %}</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

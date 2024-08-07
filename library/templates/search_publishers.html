@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block headline %}
-<a style="text-decoration:none; color:rgb(57, 57, 57)" href="{{ url_for('main.home', flag='publishers_list') }}">Search Publisher</a>
+<a style="text-decoration:none; color:rgb(57, 57, 57)" href="{{ url_for('main.home', flag='publishers_list') }}">Search
+    Publisher</a>
 {% endblock headline %}
 
 {% block subhead %}
@@ -14,8 +15,9 @@
     </div>
     {% set publ='publishers' if publishers|count != 1 else 'publisher' %}
     <div>
-        {{ publishers|count }} 
-        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='publishers_list') }}">{{ publ }}</a> found
+        {{ publishers|count }}
+        <a style="text-decoration:none; color:cadetblue"
+            href="{{ url_for('main.home', flag='publishers_list') }}">{{ publ }}</a> found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>
     <br>
@@ -25,11 +27,13 @@
 
 {% block content %}
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-{% if publishers|count == 0 %}
-<h4 style="color:red">Library is empty</h4>
-{% else %}
 <ul>
-    {% if publishers %}
+    {% if publishers|count == 0 %}
+    <h4 style="color:red">Library is empty</h4>
+    {% else %}
+
+    <h3 class="mb-3" style="color:red">{{ msg }} </h3>
+
     {% for publisher in publishers %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
@@ -37,7 +41,8 @@
                 style="text-decoration: none; color: darkgray">Edit</a>
         </button>
         <button class="btn btn-outline-danger btn-sm">
-            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}" style="text-decoration: none; color: orangered">Delete</a>
+            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
+                style="text-decoration: none; color: orangered">Delete</a>
         </button>&ensp;▫️
         {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
         {% set bks='book' if publisher.books|count == 1 else 'books' %}
@@ -52,7 +57,6 @@
         in total
     </li>
     {% endfor %}
-    {% endif %}
 </ul>
 {% endif %}
 {% endblock content %}

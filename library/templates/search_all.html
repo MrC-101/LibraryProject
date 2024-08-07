@@ -31,6 +31,7 @@ Super Search
 {% block content %}
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <ul>
+    <h3 class="mb-3" style="color:red">{{ msg }} </h3>
     {% if publishers %}
     {% set publ='Publishers' if publishers|count != 1 else 'Publisher' %}
     <h5>{{ publishers|count }} {{publ}} related to your search</h5>
