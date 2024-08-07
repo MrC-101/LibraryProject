@@ -17,6 +17,7 @@
 {% endblock %}
 
 {% block content %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <form method="POST" action="{{ url_for('book.edit_title', id=book.id) }}" novalidate>
     {{ form.csrf_token }}
 

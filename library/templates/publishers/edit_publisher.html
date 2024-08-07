@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block content %}
+<br><br><br><br><br><br><br><br><br><br>
 <form method="POST" action="{{ url_for('publisher.edit_publisher', id=publisher.id) }}" novalidate>
     {{ form.csrf_token }}
     &emsp;&emsp;&ensp;Name: {{ form.publname(size=70, value=publisher.publ_name) }}

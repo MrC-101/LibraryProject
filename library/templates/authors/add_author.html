@@ -13,6 +13,7 @@ Add Author
 {% endblock %}
 
 {% block content %}
+<br><br><br><br><br><br><br><br><br><br>
 <form method="POST" action="{{ url_for('author.add_author') }}" novalidate>
     {{ form.csrf_token }}
     &emsp;&nbsp;Pen Name: {{ form.penname(size=70) }}

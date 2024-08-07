@@ -19,6 +19,7 @@
 {% endblock %}
 
 {% block content %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
 <form method="POST" action="{{ url_for('author.edit_author', id=id) }}" novalidate>
     {{ form.csrf_token }}
     {% if author.penname == 'None' or author.penname == none %}

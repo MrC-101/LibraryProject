@@ -13,6 +13,7 @@ Add Publisher
 {% endblock %}
 
 {% block content %}
+<br><br><br><br><br><br><br><br><br><br>
 <form method="POST" action="{{ url_for('publisher.add_publisher') }}" novalidate>
     {{ form.csrf_token }}
     &emsp;&emsp;&ensp;Name: {{ form.publname(size=70) }}

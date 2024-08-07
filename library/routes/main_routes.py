@@ -65,8 +65,8 @@ def search_books():
     
     form = SearchBooksForm()
     flag = request.args.get('flag')
-    authors_count = len(set(authors))    
-    
+    authors_count = len(set(authors)) 
+       
     if request.method == 'POST':
         if form.validate_on_submit():
             books = db.session.query(Book).all()

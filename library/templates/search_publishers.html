@@ -7,7 +7,7 @@
 <form method="POST" action="{{ url_for('main.search_publishers') }}" novalidate>
     {{ form.csrf_token }}
     <div>
-        {{ form.publisher(class="placeholder bg-light col-12", size=88, placeholder='search through first, last and middle author names. enter full or partial author name', style="cursor:default") }}
+        {{ form.publisher(class="placeholder bg-light col-12", size=88, placeholder='search through first, last and middle author names. enter full or partial author name', style="cursor:auto") }}
         {% for err in form.publisher.errors %}
         <span style="color: red">{{ err }}</span>
         {% endfor %}
@@ -24,6 +24,7 @@
 {% endblock subhead %}
 
 {% block content %}
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% if publishers|count == 0 %}
 <h4 style="color:red">Library is empty</h4>
 {% else %}

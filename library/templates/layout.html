@@ -14,11 +14,10 @@
 </head>
 
 <body>
-
+<div class = "fixed-top">
     {% include 'navbar.html' %}
-    <br>
-    <br>
-    <div class="jumbotron">
+
+    <div class="jumbotron mb-1 p-5">
         <div class="container">
             <h1 class="display-12">
 
@@ -29,6 +28,7 @@
         </div>
         {% block a_z %}{% endblock %}
     </div>
+</div>
 
     <div class="container">
         {% for message in get_flashed_messages() %}
