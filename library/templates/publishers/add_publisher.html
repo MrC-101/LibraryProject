@@ -14,6 +14,7 @@ Add Publisher
 
 {% block content %}
 <br><br><br><br><br><br><br><br><br><br>
+<h3 class="mb-4" style="color:red">&ensp;&emsp;{{ msg }} </h3>
 <form method="POST" action="{{ url_for('publisher.add_publisher') }}" novalidate>
     {{ form.csrf_token }}
     &emsp;&emsp;&ensp;Name: {{ form.publname(size=70) }}

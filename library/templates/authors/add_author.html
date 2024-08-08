@@ -4,20 +4,22 @@ Add Author
 {% endblock %}
 
 {% block subhead %}
-{% for message in get_flashed_messages() %}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ message }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endfor %}
+
 {% endblock %}
 
 {% block content %}
 <br><br><br><br><br><br><br><br><br><br>
+<h3 class="mb-4" style="color:red">&ensp;&nbsp;{{ msg }} </h3>
 <form method="POST" action="{{ url_for('author.add_author') }}" novalidate>
     {{ form.csrf_token }}
     &emsp;&nbsp;Pen Name: {{ form.penname(size=70) }}
     {% for err in form.penname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    &emsp;&ensp;Known as: {{ form.knownas(size=70) }}
+    {% for err in form.knownas.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />

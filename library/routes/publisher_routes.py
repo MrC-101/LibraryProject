@@ -55,7 +55,8 @@ def add_publisher():
             publisher=db.session.query(Publisher).filter_by(publ_name=publ_name_ret).first()
             return redirect(url_for('publisher.publisher_details', id=publisher.id))
         else:
-            flash('This publisher is already in the library.')
+            msg='Publisher already exists in the database'
+            return render_template('publishers/add_publisher.html', form=form, msg=msg)
     else:
         return render_template('publishers/add_publisher.html', form=form)
 

@@ -63,6 +63,8 @@
     <h4 style=" color:red">Library is empty</h4>
     {% else %}
     {% for book in books %}
+    {% for author in authors %}
+    {% if book.author == author.fullname %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
             <a href="{{ url_for('book.edit_title', id=book.id) }}"
@@ -76,16 +78,15 @@
         {{book.first_publish}} -
 
         <a style="text-decoration:none"
-            href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
+            href="{{ url_for('author.author_details', id=author.id) }}">{{ author.knownas }}</a>
         {% for author in book.authors %}
-        {% if author.fullname != book.author %}
+        {% if author.fullname != book.author and book.author != author.knownas %}
         <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
             {{ '|' }} {{ author.fullname }} {{ '' }}</a>
         {% endif %}
         {% endfor %}
-
-        <a style="font-weight:bolder; text-decoration:none"
-            href="{{ url_for('author.bibliography', author=book.author) }}"> -
+         -<a style="text-decoration:none"
+         href="{{ url_for('author.bibliography', author=book.author) }}">
             {% for author in book.authors %}
             {% if author.fullname == book.author %}
             {{author.books|count}}
@@ -93,6 +94,8 @@
             {% endfor %}
             books</a> in collection
     </li>
+    {% endif %}
+    {% endfor %}
     {% endfor %}
     {% endif %}
     </ul>
@@ -148,6 +151,7 @@
                 <a href="{{ url_for('author.author_details', id=author.id) }}"
                     style="text-decoration: none; color: orangered">Delete</a>
             </button>&ensp;▫️
+            
             <a style="text-decoration:none"
                 href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
             - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
@@ -168,6 +172,8 @@
         <h6>{{ books_by_letter|length }} {{ ttl }} by {{ authors_count }} authors found</h6>
 
         {% for book in books_by_letter %}
+        {% for author in authors %}
+        {% if book.author == author.fullname %}
         <li>
             <button class="btn btn-outline-secondary btn-sm">
                 <a href="{{ url_for('book.edit_title', id=book.id) }}"
@@ -179,23 +185,25 @@
             </button>&ensp;▫️
             <a style="text-decoration:none" href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a> -
             {{book.first_publish}} -
-
+            
             <a style="text-decoration:none"
-                href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
+            href="{{ url_for('author.author_details', id=author.id) }}">{{ author.knownas }}</a>
+            
             {% for author in book.authors %}
             {% if author.fullname != book.author %}
             <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
                 {{ '|' }} {{ author.fullname }} {{ '' }}</a>
             {% endif %}
             {% endfor %}
-            <a style="font-weight:bolder; text-decoration:none"
-                href="{{ url_for('author.bibliography', author=book.author) }}">
+            
                 - {% for author in book.authors %}
                 {% if author.fullname == book.author %}
                 {{author.books|count}}
                 {% endif %}
-                {% endfor %} books</a> in collection
+                {% endfor %} books in collection
         </li>
+        {% endif %}
+        {% endfor %}
         {% endfor %}
         {% endif %}
     </ul>

@@ -53,9 +53,6 @@
             {{ '|' if loop.first else ''}} {{ author.fullname }} {{ '|' if not loop.last else ''}}</a>
         {% endif %}
         {% endfor %}
-
-        <a style="font-weight:bolder; text-decoration:none"
-            href="{{ url_for('author.bibliography', author=book.authors[0].fullname) }}">
             - {{book.authors[0].books|count}} books in collection</a>
     </li>
     {% endfor %}

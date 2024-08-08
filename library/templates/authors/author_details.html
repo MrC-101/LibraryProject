@@ -23,6 +23,9 @@
 {% if author.penname is not none and author.penname != "None" and author.penname != '' %}
 &ensp;<label>Pen Name:&ensp;{{ author.penname }}</label><br>
 {% endif %}
+{% if author.knownas is not none and author.knownas != "None" and author.knownas != '' %}
+&ensp;<label class="pr-1">Known As:&ensp;{{ author.knownas }}</label><br>
+{% endif %}
 &ensp;<label>Gender:&emsp;&ensp;&nbsp;{{ author.gender }}</label><br>
 {% if author.country is not none and author.country != "None" and author.country != '' %}
 &ensp;<label>Country:&emsp;&ensp;{{ author.country }}</label><br />

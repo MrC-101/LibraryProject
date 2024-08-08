@@ -27,6 +27,7 @@ def add_author():
     form = AddAuthorForm()
     if form.validate_on_submit():
         penname = request.form['penname']
+        knownas = form.knownas.data
         name_pref = form.name_pref.data
         fname = request.form['fname']
         midname = request.form['midname']
@@ -37,6 +38,7 @@ def add_author():
             gender = 'Male'
         elif gender == 2 or gender == '2':
             gender = 'Female'
+        
         if midname != '' and midname != None and midname != 'None':
             if fname != '' and fname != None:
                 fullname = fname + ' ' + midname + ' ' + lname
@@ -47,14 +49,25 @@ def add_author():
                 fullname = fname + ' ' + lname
             else: 
                 fullname = fname
-        if penname == '' or penname == None or penname == 'None':
+        
+        if penname == '' and penname == None and penname == 'None':
             if fname != '' and fname != None and fname != 'None':
                 if midname != '' and midname != None and midname != 'None':
                     penname = fname + ' ' + midname + ' ' + lname
                 else:
-                    penname = penname = fname + ' ' + lname
+                    penname = fname + ' ' + lname
             else:
-                penname = lname        
+                penname = lname  
+                   
+        if knownas == '' and knownas == None and knownas == 'None':
+            if fname != '' and fname != None and fname != 'None':
+                if midname != '' and midname != None and midname != 'None':
+                    knownas = fname + ' ' + midname + ' ' + lname
+                else:
+                    knownas = fname + ' ' + lname
+            else:
+                knownas = lname
+                  
         country = request.form['country']
         city = request.form['city']
         born = request.form['born']
@@ -62,7 +75,7 @@ def add_author():
         email = form.email.data
         bio = form.bio.data
         if not Author.query.filter_by(lname=lname, fname=fname, country=country, born=born).first():
-            new_author = Author(penname=penname, name_pref=name_pref, fname=fname, midname=midname, lname=lname, name_suf=name_suf, gender=gender, fullname=fullname, country=country, city=city, born=born, died=died, email=email, bio=bio)
+            new_author = Author(penname=penname,knownas=knownas, name_pref=name_pref, fname=fname, midname=midname, lname=lname, name_suf=name_suf, gender=gender, fullname=fullname, country=country, city=city, born=born, died=died, email=email, bio=bio)
             
             db.session.add(new_author)
             db.session.commit()
@@ -74,7 +87,8 @@ def add_author():
 
             return redirect(url_for('author.author_details', id=author.id))
         else:
-            flash('This author is already in the library.')
+            msg = 'Author exists already in the database'
+            return render_template('authors/add_author.html', form=form, msg=msg)
     else:
         return render_template('authors/add_author.html', form=form)
     
@@ -87,6 +101,7 @@ def edit_author():
     if form.validate_on_submit():
         if author:
             author.penname = form.penname.data
+            author.knownas = form.knownas.data
             author.name_pref = form.name_pref.data
             author.fname = form.fname.data
             author.midname = form.midname.data
@@ -103,11 +118,19 @@ def edit_author():
                     author.fullname = author.fname + ' ' + author.lname
                 else:
                     author.fullname = author.lname
+                    
             if author.penname == '' or author.penname == None or author.penname == 'None':
                 if author.fname != '' and author.fname != None and author.fname != 'None':
                     author.penname = author.fname + ' ' + author.lname
                 else:
                     author.penname = author.lname
+                    
+            if author.knownas == '' or author.knownas == None or author.knownas == 'None':
+                if author.fname != '' and author.fname != None and author.fname != 'None':
+                    author.knownas = author.fname + ' ' + author.lname
+                else:
+                    author.knownas = author.lname
+                
             author.country = form.country.data
             author.city = form.city.data
             author.born = form.born.data

@@ -59,6 +59,7 @@ class Author(db.Model):
     __tablename__ = 'authors'
     id = db.Column(db.Integer, primary_key=True)
     penname = db.Column(db.String, nullable=True)
+    knownas = db.Column(db.String, nullable=True)
     fname = db.Column(db.String, nullable=True)
     lname = db.Column(db.String, nullable=True)
     midname = db.Column(db.String, nullable=True)

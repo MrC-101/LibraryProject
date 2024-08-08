@@ -62,6 +62,7 @@ class AddForm(FlaskForm):
 
 class AddAuthorForm(FlaskForm):
     penname = StringField(label='Pen Name')
+    knownas = StringField(label='Known As')
     name_pref = StringField(label='Name Prefix')
     fname = StringField(label='First Name')
     midname = StringField(label='Middle Name')
@@ -79,6 +80,7 @@ class AddAuthorForm(FlaskForm):
     
 class EditAuthorForm(FlaskForm):
     penname = StringField(label='Pen Name')
+    knownas = StringField(label='Known As')
     name_pref = StringField(label='Name Prefix')
     fname = StringField(label='First Name')
     midname = StringField(label='Middle Name')

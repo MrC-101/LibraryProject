@@ -2,12 +2,26 @@ from flask import redirect, url_for, render_template, flash, Blueprint
 import operator, time
 from sqlalchemy import or_,  func
 from library.maintenance import vacuum_analyze, vacuum_full, vacuum
+from library.models import Author, Book, Publisher
+from library.extensions import db
 
 maintenance_bp = Blueprint('maintenance',__name__)
 
 @maintenance_bp.route('/init')
 def init():
-    vacuum()
+    
+    # auths=Author.query.all()
+    # authors = [author.fullname for author in auths]
+    # books = Book.query.all()
+    # book_auths=[book.author for book in books]
+    # print(set(authors)-set(book_auths))
+    
+        # print (author.fullname, author.knownas)
+    # for book in books:
+    #     for author in authors:
+    #         if book.author == author.fullname:
+    #             print(book.title, author.knownas)
+    # vacuum()
     # # db.create_all()
     
     # from sqlalchemy.dialects import postgresql

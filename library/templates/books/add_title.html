@@ -8,6 +8,7 @@ Add Title
 
 {% block content %}
 <br><br><br><br><br><br><br><br><br><br>
+<h3 class="mb-4" style="color:red">&ensp;&nbsp;{{ msg }} </h3>
 <form method="POST" action="{{ url_for('book.add_title') }}" novalidate>
     {{ form.csrf_token }}
     &emsp;&emsp;&emsp;&ensp;Title: {{form.title(size=70) }}

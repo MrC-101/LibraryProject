@@ -204,6 +204,30 @@ def search_authors():
                         author = authors[0]
                         return redirect(url_for('author.author_details', author=author, id=author.id, total=total, flag=flag, total_auth=total_auth))                    
      
+            elif db.session.query(Author).filter(Author.knownas.icontains(author_returned)).all():
+                start = time.perf_counter_ns()
+                authors = db.session.query(Author).filter(Author.knownas.icontains(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()                    
+                end = time.perf_counter_ns()
+                duration = (end - start)/1000000
+                if authors:
+                    if len(authors) > 1:
+                        return render_template('search_authors.html', form=form, authors=authors, flag=flag, duration=duration)
+                    else:
+                        author = authors[0]
+                        return redirect(url_for('author.author_details', author=author, id=author.id, total=total, flag=flag, total_auth=total_auth))
+                       
+            elif db.session.query(Author).filter(Author.penname.icontains(author_returned)).all():
+                start = time.perf_counter_ns()
+                authors = db.session.query(Author).filter(Author.penname.icontains(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()                    
+                end = time.perf_counter_ns()
+                duration = (end - start)/1000000
+                if authors:
+                    if len(authors) > 1:
+                        return render_template('search_authors.html', form=form, authors=authors, flag=flag, duration=duration)
+                    else:
+                        author = authors[0]
+                        return redirect(url_for('author.author_details', author=author, id=author.id, total=total, flag=flag, total_auth=total_auth)) 
+                        
             else:
                 start = time.perf_counter_ns()
                 # flash('Nothing found in the Database. Check your spelling or try a different Name')          

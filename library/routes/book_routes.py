@@ -84,7 +84,8 @@ def add_title():
             return redirect(url_for('author.bibliography', author=author))
             # return redirect(url_for('main.home', flag='authors_list'))
         else:
-            flash('That book is already in the library.')
+            msg = 'Book is already in the database'
+            return render_template('books/add_title.html', form=form, total=total, total_auth=total_auth, msg=msg)
     else:
         return render_template('books/add_title.html', form=form, total=total, total_auth=total_auth)
 
@@ -208,4 +209,4 @@ def books_by_letter():
             authors_to_count.append(author.fullname) if author.fullname not in authors_to_count else exit
     authors_count = len(set(authors_to_count))
     
-    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form, authors_count=authors_count)
+    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, authors=authors, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form, authors_count=authors_count)

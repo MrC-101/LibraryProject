@@ -22,12 +22,22 @@
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 <form method="POST" action="{{ url_for('author.edit_author', id=id) }}" novalidate>
     {{ form.csrf_token }}
-    {% if author.penname == 'None' or author.penname == none %}
+    {% if author.penname == 'None' or author.penname == none or author.penname == '' %}
     &emsp;&nbsp;Pen Name: {{ form.penname(size=70) }}
     {% else %}
     &emsp;&nbsp;Pen Name: {{ form.penname(size=70, value=author.penname) }}
-    {% endif %}    
+    {% endif %}
     {% for err in form.penname.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+    {% if author.knownas == 'None' or author.knownas == none or author.knownas == '' %}
+    &emsp;&ensp;Known as: {{ form.knownas(size=70) }}
+    {% else %}
+    &emsp;&ensp;Known as: {{ form.knownas(size=70, value=author.knownas) }}
+    {% endif %}
+    {% for err in form.knownas.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br />
