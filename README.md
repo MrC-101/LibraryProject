@@ -17,7 +17,7 @@ DATABASE_URL = 'sqlite:///library_db'
 APP_SECR_KEY="tUBswo%s3!Vp#ux$dX#BQKCtPi9HtNviZngCmkroB9YAVqNjm5pyV"</code>
 
 Also before you add a book title, you'll need to add the author if he/she is not already in the database. Same goes for publisher if you want to add a publisher to the title (not mandatory). 
-An instance of a sample SQLite database with 700+ books, 70+ authors and 60 publishers is provided, to get you started.
+An instance of a sample SQLite database with 750+ books, 80+ authors and 70+ publishers is provided, to get you started.
 
 Some screenshots
 ![2024-08-05_123530](https://github.com/user-attachments/assets/2a1f3ea7-9a62-457f-9392-3e6fdc19023e)
