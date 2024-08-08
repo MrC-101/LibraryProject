@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request, render_template, flash, Blueprint
+from flask import redirect, url_for, request, render_template, Blueprint
 from library.extensions import db
 from library.models import Author, Book, Publisher
 from library.forms import AddAuthorForm, EditAuthorForm, LimitForm
@@ -87,7 +87,7 @@ def add_author():
 
             return redirect(url_for('author.author_details', id=author.id))
         else:
-            msg = 'Author exists already in the database'
+            msg = 'Author is already in the database'
             return render_template('authors/add_author.html', form=form, msg=msg)
     else:
         return render_template('authors/add_author.html', form=form)

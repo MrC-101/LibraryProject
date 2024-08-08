@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request, render_template, flash, Blueprint
+from flask import redirect, url_for, request, render_template, Blueprint
 from library.extensions import db
 from library.models import Book, Author, Publisher, AuthorPublisher
 from library.forms import AddForm, UpdateForm, LimitForm
@@ -25,8 +25,8 @@ def add_title():
                 if author in pname.penname:
                     author = pname.fullname
             else:
-                flash('Author not found. Check Author Name.')
-                return render_template('books/add_title.html', form=form, total=total, total_auth=total_auth)
+                msg='Author not found. Check your spelling.'
+                return render_template('books/add_title.html', form=form, total=total, total_auth=total_auth, msg=msg)
                 
         author_obj = Author.query.filter_by(fullname=author).first()
         rating = request.form['rating']
@@ -45,7 +45,7 @@ def add_title():
                 if author_obj not in book_publ.authors:
                     book_publ.authors.append(author_obj)
             else:
-                flash('Publisher does not exist. Check your spelling or add them to the database first.')
+                publisher_id = None
         else:
             publisher_id = None
         summary = request.form['summary']
@@ -109,10 +109,13 @@ def edit_title():
         if not db.session.query(Author).filter_by(fullname=book.author).first():
             pname = db.session.query(Author).filter(Author.penname.icontains(book.author)).first()
             # pname = db.session.query(Author).filter_by(penname=book.author).first()
+            if not pname:
+                pname = None
+                msg='Author not found. Check your spelling'
+                return render_template('books/edit_title.html', form=form, book=book, total=total, total_auth=total_auth, msg=msg)
             if book.author in pname.penname:
                 book.author = pname.fullname
-            else:
-                flash('Author not found')
+                
         provisional_author = db.session.query(Author).filter_by(fullname=request.form['plusauthor']).first()
         if provisional_author:
             book.authors.append(provisional_author)
@@ -139,7 +142,8 @@ def edit_title():
                 if book_author not in book_publ.authors:
                     book_publ.authors.append(book_author)
             else:
-                flash('Publisher does not exist. Check your spelling or add them to the database first.')
+                msg='Publisher not found. Check your spelling.'
+                return render_template('books/edit_title.html', form=form, book=book, total=total, total_auth=total_auth, msg=msg)
         else:
             book.publisher_id = None
         book.first_publish = request.form['first_publish']

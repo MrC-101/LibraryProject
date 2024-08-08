@@ -1,4 +1,4 @@
-from flask import redirect, url_for, render_template, flash, Blueprint
+from flask import redirect, url_for, render_template, Blueprint
 import operator, time
 from sqlalchemy import or_,  func
 from library.maintenance import vacuum_analyze, vacuum_full, vacuum
@@ -16,12 +16,6 @@ def init():
     # book_auths=[book.author for book in books]
     # print(set(authors)-set(book_auths))
     
-        # print (author.fullname, author.knownas)
-    # for book in books:
-    #     for author in authors:
-    #         if book.author == author.fullname:
-    #             print(book.title, author.knownas)
-    # vacuum()
     # # db.create_all()
     
     # from sqlalchemy.dialects import postgresql

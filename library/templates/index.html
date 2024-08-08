@@ -195,12 +195,12 @@
                 {{ '|' }} {{ author.fullname }} {{ '' }}</a>
             {% endif %}
             {% endfor %}
-            
+            <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=book.author) }}">
                 - {% for author in book.authors %}
                 {% if author.fullname == book.author %}
                 {{author.books|count}}
                 {% endif %}
-                {% endfor %} books in collection
+                {% endfor %} books</a> in collection
         </li>
         {% endif %}
         {% endfor %}

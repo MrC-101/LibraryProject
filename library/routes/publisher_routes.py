@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request, render_template, flash, Blueprint
+from flask import redirect, url_for, request, render_template, Blueprint
 from library.extensions import db
 from library.models import Book, Author, Publisher
 from library.forms import AddPublisherForm, EditPublisherForm, LimitForm
@@ -55,7 +55,7 @@ def add_publisher():
             publisher=db.session.query(Publisher).filter_by(publ_name=publ_name_ret).first()
             return redirect(url_for('publisher.publisher_details', id=publisher.id))
         else:
-            msg='Publisher already exists in the database'
+            msg='Publisher is already in the database'
             return render_template('publishers/add_publisher.html', form=form, msg=msg)
     else:
         return render_template('publishers/add_publisher.html', form=form)

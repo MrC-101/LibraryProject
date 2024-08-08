@@ -18,7 +18,7 @@
 
 {%block content %}
 <br><br><br><br><br><br><br><br><br><br><br><br>
-&ensp;<label>Author:&emsp;&emsp;<a style="text-decoration:none"
+&ensp;<label class="pt-0 mt-0">Author:&emsp;&emsp;<a style="text-decoration:none"
         href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname }}</a></label><br />
 {% if author.penname is not none and author.penname != "None" and author.penname != '' %}
 &ensp;<label>Pen Name:&ensp;{{ author.penname }}</label><br>

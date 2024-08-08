@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request, render_template, flash, Blueprint
+from flask import redirect, url_for, request, render_template, Blueprint
 from library.extensions import db
 from library.models import Book, Author, Publisher
 from library.forms import SearchAllItemsForm, SearchAuthorsForm, SearchBooksForm, LimitForm, SearchPublishersForm
@@ -102,7 +102,6 @@ def search_books():
                     return redirect(url_for('book.book_details', author=book.author, id=book.id, total=total, total_auth=total_auth)) 
                        
             else:
-                # flash('Nothing found in the Database')
                 start = time.perf_counter_ns()
                 books = Book.query.order_by(func.lower(Book.author), func.lower(Book.title), func.lower(Book.first_publish)).all()
                 end = time.perf_counter_ns()
@@ -188,7 +187,6 @@ def search_authors():
                     authors = authors3
                 else:
                     start = time.perf_counter_ns()
-                    # flash('Nothing found in the Database. Check your spelling or try a different Name')
                     authors = Author.query.order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
                     end = time.perf_counter_ns()
                     duration = str((end - start)/1000000)[:4]
@@ -229,8 +227,7 @@ def search_authors():
                         return redirect(url_for('author.author_details', author=author, id=author.id, total=total, flag=flag, total_auth=total_auth)) 
                         
             else:
-                start = time.perf_counter_ns()
-                # flash('Nothing found in the Database. Check your spelling or try a different Name')          
+                start = time.perf_counter_ns()      
                 authors = Author.query.order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
                 end = time.perf_counter_ns()
                 duration = str((end - start)/1000000)[:4]
@@ -271,8 +268,6 @@ def search_publishers():
                         publisher = publishers[0]
                         return redirect(url_for('publisher.publisher_details', form=form, publisher=publisher, id=publisher.id))      
             else:
-                # flash('Nothing found in the Database. Check your spelling or try a different Name')
-                
                 start = time.perf_counter_ns()
                 publishers = Publisher.query.order_by(func.lower(Publisher.publ_name)).all()
                 end = time.perf_counter_ns()
@@ -317,6 +312,7 @@ def search_all():
         books_count = len(books)
         authors_count = len(authors)
         publishers_count = len(publishers)
+        
         if authors and books and publishers:            
             return render_template('search_all.html', form=SearchAllItemsForm(), authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)
         elif authors and books:
