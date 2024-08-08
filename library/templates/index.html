@@ -2,6 +2,7 @@
 
 {% block headline %}
 {% if flag != 'authors_list' and flag != 'authors_by_letter' and flag!= 'publishers_list'  and flag != 'publishers_by_letter' %}
+
 <a class="float-right" href="{{ url_for('main.search_books', flag='books_list') }}" style="text-decoration:none"> 🔍
 </a>
 <a href="{{ url_for('main.home', flag='authors_list')}}" style="text-decoration:none; color:black">Books</a>

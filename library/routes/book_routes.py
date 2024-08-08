@@ -14,8 +14,8 @@ def add_title():
     authors = Author.query.all()
     total_auth = len(authors)
     form = AddForm()
-    if form.validate_on_submit():
-       
+    
+    if form.validate_on_submit():       
         title = request.form['title']
         author = request.form['author']
         if not db.session.query(Author).filter_by(fullname=author).first():
@@ -202,6 +202,10 @@ def books_by_letter():
         else:
             books_by_letter = db.session.query(Book).order_by(func.lower(Book.title), func.lower(Book.author)).all()
             
-    authors_count = len(set([book.author for book in books_by_letter]))
+    authors_to_count=[book.author for book in books_by_letter]       
+    for book in books_by_letter:
+        for author in book.authors:
+            authors_to_count.append(author.fullname) if author.fullname not in authors_to_count else exit
+    authors_count = len(set(authors_to_count))
     
     return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form, authors_count=authors_count)
