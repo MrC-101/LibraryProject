@@ -198,14 +198,14 @@ def books_by_letter():
     lim=form.limit.data
     if lim != None and lim != 'None' and lim != '' and lim != '0':
         if letter != '*':
-            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.title), func.lower(Book.author)).limit(lim).all()
+            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.title)).limit(lim).all()
         else:
-            books_by_letter = db.session.query(Book).order_by(func.lower(Book.title), func.lower(Book.author)).limit(lim).all()
+            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).limit(lim).all()
     else:
         if letter != '*':
-            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.title), func.lower(Book.author)).all()
+            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.title)).all()
         else:
-            books_by_letter = db.session.query(Book).order_by(func.lower(Book.title), func.lower(Book.author)).all()
+            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).all()
             
     authors_to_count=[book.author for book in books_by_letter]       
     for book in books_by_letter:

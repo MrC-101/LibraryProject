@@ -43,14 +43,14 @@ def add_author():
             if fname != '' and fname != None:
                 fullname = fname + ' ' + midname + ' ' + lname
             else:
-                fullname = fname
+                fullname = lname
         else:
             if fname != '' and fname != None and fname != 'None':
                 fullname = fname + ' ' + lname
             else: 
                 fullname = fname
         
-        if penname == '' and penname == None and penname == 'None':
+        if penname == '' or penname == None or penname == 'None':
             if fname != '' and fname != None and fname != 'None':
                 if midname != '' and midname != None and midname != 'None':
                     penname = fname + ' ' + midname + ' ' + lname
@@ -59,7 +59,7 @@ def add_author():
             else:
                 penname = lname  
                    
-        if knownas == '' and knownas == None and knownas == 'None':
+        if knownas == '' or knownas == None or knownas == 'None':
             if fname != '' and fname != None and fname != 'None':
                 if midname != '' and midname != None and midname != 'None':
                     knownas = fname + ' ' + midname + ' ' + lname
