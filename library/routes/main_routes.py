@@ -159,21 +159,21 @@ def search_authors():
                 duration2=0
                 duration3=0
                    
-                if db.session.query(Author).filter(Author.lname.istartswith(author_returned)).all():
+                if db.session.query(Author).filter(Author.lname.icontains(author_returned)).all():
                     start = time.perf_counter_ns()
-                    authors1 = db.session.query(Author).filter(Author.lname.istartswith(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()                    
+                    authors1 = db.session.query(Author).filter(Author.lname.icontains(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()                    
                     end = time.perf_counter_ns()
                     duration1 = (end - start)/1000000
-                    
-                if db.session.query(Author).filter(Author.fname.istartswith(author_returned)).all():
+
+                if db.session.query(Author).filter(Author.fname.icontains(author_returned)).all():
                     start = time.perf_counter_ns()
-                    authors2 = db.session.query(Author).filter(Author.fname.istartswith(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
+                    authors2 = db.session.query(Author).filter(Author.fname.icontains(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
                     end = time.perf_counter_ns()
-                    duration2 = (end - start)/1000000
-                    
-                if db.session.query(Author).filter(Author.midname.istartswith(author_returned)).all():
+                    duration2 = (end - start)/1000000    
+
+                if db.session.query(Author).filter(Author.midname.icontains(author_returned)).all():
                     start = time.perf_counter_ns()
-                    authors3= db.session.query(Author).filter(Author.midname.istartswith(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
+                    authors3= db.session.query(Author).filter(Author.midname.icontains(author_returned)).order_by(func.lower(Author.fullname), func.lower(Author.lname)).all()
                     end = time.perf_counter_ns()
                     duration3 = (end - start)/1000000
 
@@ -264,10 +264,22 @@ def search_publishers():
                 end = time.perf_counter_ns()
                 duration = str((end - start)/1000000)[:4]
                 return redirect(url_for('publisher.publisher_details', publisher=publisher, id=publisher.id))
-                        
+            
             elif db.session.query(Publisher).filter(Publisher.publ_name.istartswith(publisher_returned)).all():
                 start = time.perf_counter_ns()
                 publishers = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(publisher_returned)).order_by(func.lower(Publisher.publ_name)).all()                    
+                end = time.perf_counter_ns()
+                duration = str((end - start)/1000000)[:4]
+                if publishers:
+                    if len(publishers) > 1:
+                        return render_template('search_publishers.html', form=form, publishers=publishers, duration=duration)
+                    else:
+                        publisher = publishers[0]
+                        return redirect(url_for('publisher.publisher_details', form=form, publisher=publisher, id=publisher.id))      
+                                
+            elif db.session.query(Publisher).filter(Publisher.publ_name.icontains(publisher_returned)).all():
+                start = time.perf_counter_ns()
+                publishers = db.session.query(Publisher).filter(Publisher.publ_name.icontains(publisher_returned)).order_by(func.lower(Publisher.publ_name)).all()                    
                 end = time.perf_counter_ns()
                 duration = str((end - start)/1000000)[:4]
                 if publishers:
@@ -310,9 +322,11 @@ def search_all():
         if all_items == '' or all_items == None:
             msg = 'Please enter something to search for...' 
             return render_template('search_all.html', form=form, authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count, msg=msg) 
+        
+        ''''''
         start = time.perf_counter_ns()
         
-        authors = db.session.query(Author).filter(or_ (Author.fullname.icontains(all_items), Author.died.icontains(all_items), Author.born.icontains(all_items), Author.country.icontains(all_items), Author.city.icontains(all_items), Author.penname.icontains(all_items), Author.knownas.icontains(all_items))).order_by(func.lower(Author.fullname)).all()
+        authors = db.session.query(Author).filter(or_ (Author.fullname.icontains(all_items), Author.died.icontains(all_items), Author.born.icontains(all_items), Author.country.icontains(all_items), Author.penname.icontains(all_items), Author.knownas.icontains(all_items))).order_by(func.lower(Author.fullname)).all()
         
         books = db.session.query(Book).filter(or_ (Book.title.icontains(all_items), Book.first_publish.icontains(all_items))).order_by(func.lower(Book.title), func.lower(Book.author)).all()
         
@@ -320,6 +334,7 @@ def search_all():
         
         end = time.perf_counter_ns()
         duration = str((end - start)/1000000)[:4]
+        ''''''
         
         books_count = len(books)
         authors_count = len(authors)
