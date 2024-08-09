@@ -186,7 +186,7 @@ def book_details(id):
         publparent = None
     return render_template('books/book_details.html', book=book, publparent=publparent, publname=publname)
 
-@book_bp.route('/books_by_leter', methods=['GET', 'POST'])
+@book_bp.route('/books_by_letter', methods=['GET', 'POST'])
 def books_by_letter():
     form=LimitForm()
     letter=request.args.get('letter')
@@ -198,14 +198,14 @@ def books_by_letter():
     lim=form.limit.data
     if lim != None and lim != 'None' and lim != '' and lim != '0':
         if letter != '*':
-            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.title)).limit(lim).all()
+            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
         else:
-            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).limit(lim).all()
+            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
     else:
         if letter != '*':
-            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.title)).all()
+            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
         else:
-            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.title)).all()
+            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
             
     authors_to_count=[book.author for book in books_by_letter]       
     for book in books_by_letter:

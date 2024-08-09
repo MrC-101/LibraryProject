@@ -172,7 +172,7 @@ def author_details(id):
     author = db.session.query(Author).get(id)
     return render_template('authors/author_details.html', author=author)
 
-@author_bp.route('/authors_by_leter', methods=['GET', 'POST'])
+@author_bp.route('/authors_by_letter', methods=['GET', 'POST'])
 def authors_by_letter():
     form = LimitForm()
     letter=request.args.get('letter')
