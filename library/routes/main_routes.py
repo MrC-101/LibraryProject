@@ -72,6 +72,9 @@ def search_books():
             books = db.session.query(Book).all()
             total = len(books)
             title_returned = form.title.data
+            if title_returned == '' or title_returned == None:
+                msg = 'Please enter a book title or part of it, to search for...'
+                return render_template('search_books.html', form=form, books=books, total_auth=total_auth, total=total, flag=flag, authors_count=authors_count, msg=msg)
             
             if Book.query.filter_by(title=title_returned).first():
                 start = time.perf_counter_ns()
@@ -129,6 +132,9 @@ def search_authors():
             total = len(books)
             
             author_returned = form.author.data
+            if author_returned == '' or author_returned == None:
+                msg = 'Please enter an author name or part of it, to search for...'
+                return render_template('search_authors.html', form=form, authors=authors, total_auth=total_auth, total=total, flag=flag, msg=msg)
             
             if Author.query.filter_by(fullname=author_returned).first():
                 start = time.perf_counter_ns()
@@ -232,7 +238,7 @@ def search_authors():
                 end = time.perf_counter_ns()
                 duration = str((end - start)/1000000)[:4]
                 form = SearchAuthorsForm()
-                return render_template('search_authors.html', flag=flag, form=form, authors=authors, total=total, total_auth=total_auth, duration=duration, msg = msg)
+                return render_template('search_authors.html', flag=flag, form=form, authors=authors, total=total, total_auth=total_auth, duration=duration, msg=msg)
                 # return '<h3>Nothihg found</h3>'
     else:
         return render_template('search_authors.html', form=form, authors=authors, total_auth=total_auth, total=total, flag=flag)
@@ -248,6 +254,9 @@ def search_publishers():
         if form.validate_on_submit():
             
             publisher_returned = form.publisher.data
+            if publisher_returned == '' or publisher_returned == None:
+                msg = 'Please enter a publisher name or part of it, to search for...'
+                return render_template('search_publishers.html', form=form, publishers=publishers, flag=flag, msg=msg)
             
             if Publisher.query.filter_by(publ_name=publisher_returned).first():
                 start = time.perf_counter_ns()
@@ -293,16 +302,19 @@ def search_all():
     form = SearchAllItemsForm()
     if form.validate_on_submit():
 
-        authors.clear()
-        books.clear()
-        publishers.clear()
+        # authors.clear()
+        # books.clear()
+        # publishers.clear()
         all_items = form.all_items.data
         form.all_items.data = ''
+        if all_items == '' or all_items == None:
+            msg = 'Please enter something to search for...' 
+            return render_template('search_all.html', form=form, authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count, msg=msg) 
         start = time.perf_counter_ns()
         
-        authors = db.session.query(Author).filter(or_ (Author.fullname.icontains(all_items), Author.died.icontains(all_items), Author.born.icontains(all_items), Author.country.icontains(all_items), Author.city.icontains(all_items), Author.penname.icontains(all_items))).order_by(func.lower(Author.fullname)).all()
+        authors = db.session.query(Author).filter(or_ (Author.fullname.icontains(all_items), Author.died.icontains(all_items), Author.born.icontains(all_items), Author.country.icontains(all_items), Author.city.icontains(all_items), Author.penname.icontains(all_items), Author.knownas.icontains(all_items))).order_by(func.lower(Author.fullname)).all()
         
-        books = db.session.query(Book).filter(or_ (Book.title.icontains(all_items), Book.summary.icontains(all_items), Book.genre.icontains(all_items), Book.first_publish.icontains(all_items))).order_by(func.lower(Book.title), func.lower(Book.author)).all()
+        books = db.session.query(Book).filter(or_ (Book.title.icontains(all_items), Book.first_publish.icontains(all_items))).order_by(func.lower(Book.title), func.lower(Book.author)).all()
         
         publishers = db.session.query(Publisher).filter(or_ (Publisher.publ_name.icontains(all_items), Publisher.publ_est.icontains(all_items), Publisher.publ_country.icontains(all_items), Publisher.publ_parent.icontains(all_items))).order_by(func.lower(Publisher.publ_name)).all()
         
@@ -327,6 +339,8 @@ def search_all():
             return render_template('search_all.html', form=SearchAllItemsForm(), books=books, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)
         elif publishers:
             return render_template('search_all.html', form=SearchAllItemsForm(), publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)
-         
+        else:
+            msg = 'Nothing relevant found in the database.'
+            return render_template('search_all.html', form=form, authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count, msg=msg)  
     return render_template('search_all.html', form=form, authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)        
               
