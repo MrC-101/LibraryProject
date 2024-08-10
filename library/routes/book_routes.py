@@ -82,7 +82,7 @@ def add_title():
             vacuum()
             
             return redirect(url_for('author.bibliography', author=author))
-            # return redirect(url_for('main.home', flag='authors_list'))
+            
         else:
             msg = 'Book is already in the database'
             return render_template('books/add_title.html', form=form, total=total, total_auth=total_auth, msg=msg)
@@ -207,7 +207,7 @@ def books_by_letter():
         else:
             books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
             
-    authors_to_count=[book.author for book in books_by_letter]       
+    authors_to_count=[book.author for book in books_by_letter]
     for book in books_by_letter:
         for author in book.authors:
             authors_to_count.append(author.fullname) if author.fullname not in authors_to_count else exit

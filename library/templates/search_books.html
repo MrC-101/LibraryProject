@@ -14,8 +14,9 @@
     </div>
     <div>
         {% set ttl='books' if books|count != 1 else 'book' %}
+        {% set auth='authors' if authors|count != 1 else 'author' %}
         {{ books|count }} 
-        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='books_list') }}">{{ttl}}</a> by {{ authors_count }} authors found
+        <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='books_list') }}">{{ttl}}</a> by {{ authors_count }} <a style="text-decoration:none; color:cadetblue" href="{{ url_for('main.home', flag='authors_list') }}">{{auth}}</a> found
         <div class="float-right">Query took {{duration}}ms</div>
     </div>
 <br>
@@ -32,7 +33,13 @@
 
     <h3 class="mb-3" style="color:red">{{ msg }} </h3>
 
+    {% set ns = namespace(author_name='') %}
     {% for book in books %}
+    {% for author in authors %}
+    {% if author.fullname == book.author %}
+    {% set ns.author_name = author.knownas %}
+    {% endif %}
+    {% endfor %}
     <li>
         <button class="btn btn-outline-secondary btn-sm">
             <a href="{{ url_for('book.edit_title', id=book.id) }}"
@@ -46,7 +53,7 @@
         - {{book.first_publish}} -
 
         <a style="text-decoration:none"
-            href="{{ url_for('author.bibliography', author=book.author) }}">{{ book.author }}</a>
+            href="{{ url_for('author.bibliography', author=book.author) }}">{{ ns.author_name }}</a>
         {% for author in book.authors %}
         {% if author.fullname != book.author %}
         <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">

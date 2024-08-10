@@ -1,6 +1,7 @@
-venv
+.venv
 .env
 __pycache__
 books-collection*
 %localappdata%/Malwarebytes/Logs/MBAMSI.log
 %localappdata%/Malwarebytes/Logs/MBAMSI.lock
+.vscode
