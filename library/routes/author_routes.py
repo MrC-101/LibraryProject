@@ -58,7 +58,7 @@ def add_author():
                     penname = fname + ' ' + lname
             else:
                 penname = lname  
-                   
+
         if knownas == '' or knownas == None or knownas == 'None':
             if fname != '' and fname != None and fname != 'None':
                 if midname != '' and midname != None and midname != 'None':
@@ -67,7 +67,7 @@ def add_author():
                     knownas = fname + ' ' + lname
             else:
                 knownas = lname
-                  
+
         country = request.form['country']
         city = request.form['city']
         born = request.form['born']
@@ -191,5 +191,5 @@ def authors_by_letter():
         if letter != '*':
             authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).all()
         else:
-            authors_by_letter = db.session.query(Author).order_by(func.lower(Author.fullname)).all()
+            authors_by_letter = db.session.query(Author).order_by(func.lower(Author.lname)).all()
     return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form)

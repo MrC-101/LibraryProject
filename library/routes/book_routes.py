@@ -15,7 +15,7 @@ def add_title():
     total_auth = len(authors)
     form = AddForm()
     
-    if form.validate_on_submit():       
+    if form.validate_on_submit():
         title = request.form['title']
         author = request.form['author']
         if not db.session.query(Author).filter_by(fullname=author).first():

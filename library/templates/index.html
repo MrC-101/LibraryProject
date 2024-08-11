@@ -180,8 +180,10 @@
         <h4 style="color:red">Library is empty</h4>
 
         {% else %}
-
+        {% for letter in letters %}
+        <h6 style="color:black; font-weight:bold">{{ letter }}</h6>
         {% for author in authors %}
+        {% if author.lname.startswith(letter) %}
         <li>
             <button class="btn btn-outline-secondary btn-sm">
                 <a href="{{ url_for('author.edit_author', id=author.id) }}"
@@ -192,13 +194,16 @@
                     style="text-decoration: none; color: orangered">Delete</a>
             </button>&ensp;▫️
             <a style="text-decoration:none"
-                href="{{ url_for('author.author_details', id=author.id) }}">{{ author.fullname}}</a>
+                href="{{ url_for('author.author_details', id=author.id) }}">{{ author.knownas}}</a>
             - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} -
             <a style="text-decoration:none"
                 href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a>
             in
             collection
         </li>
+        {% endif %}
+        {% endfor %}
+        <br>
         {% endfor %}
         {% endif %}
     </ul>
