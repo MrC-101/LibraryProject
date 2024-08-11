@@ -308,7 +308,7 @@
         {% set ns.publisher_number=ns.publisher_number+1 %}
         {% endif %}
         {% endfor %}
-        {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
+        {% set publ='publishers' if ns.publisher_number != 1 else 'publisher' %}
         <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
 
         {# List Publishers for current letter #}
@@ -363,7 +363,7 @@
         {% set ns.publisher_number=ns.publisher_number+1 %}
         {% endif %}
         {% endfor %}
-        {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
+        {% set publ='publishers' if ns.publisher_number != 1 else 'publisher' %}
         <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
 
         {# List Publishers for current letter if letter IS '*' #}
