@@ -38,13 +38,15 @@ def add_publisher():
         publ_founder = request.form['publfounder']
         publ_parent = request.form['publparent']
         publ_est = request.form['publest']
+        publ_closed = request.form['publclosed']
         publ_country = request.form['publcountry']
         publ_city = request.form['publcity']
         publ_address = request.form['publaddress']
         publ_email = request.form['publemail']
         publ_website = request.form['publwebsite']
+        publ_summary = request.form['publsummary']
         if not Publisher.query.filter_by(publ_name=publ_name).first():
-            new_publisher = Publisher(publ_name=publ_name, publ_founder=publ_founder, publ_parent=publ_parent, publ_est=publ_est, publ_country=publ_country, publ_city=publ_city, publ_address=publ_address, publ_email=publ_email, publ_website=publ_website)
+            new_publisher = Publisher(publ_name=publ_name, publ_founder=publ_founder, publ_parent=publ_parent, publ_est=publ_est, publ_closed=publ_closed, publ_country=publ_country, publ_city=publ_city, publ_address=publ_address, publ_email=publ_email, publ_website=publ_website, publ_summary=publ_summary)
         
             db.session.add(new_publisher)
             db.session.commit()
@@ -64,18 +66,20 @@ def add_publisher():
 def edit_publisher():
     id = request.args.get('id')
     publisher = Publisher.query.get(id)
-    form = EditPublisherForm()
+    form = EditPublisherForm(publsummary=publisher.publ_summary)
 
     if form.validate_on_submit():
         publisher.publ_name = request.form['publname']
         publisher.publ_founder = request.form['publfounder']
         publisher.publ_parent = request.form['publparent']
         publisher.publ_est = request.form['publest']
+        publisher.publ_closed = request.form['publclosed']
         publisher.publ_country = request.form['publcountry']
         publisher.publ_city = request.form['publcity']
         publisher.publ_address = request.form['publaddress']
         publisher.publ_email = request.form['publemail']
         publisher.publ_website = request.form['publwebsite']
+        publisher.publ_summary = request.form['publsummary']
         db.session.commit()
             
         # DB VACUUM
@@ -92,6 +96,7 @@ def publisher_details(id):
 
 @publisher_bp.route('/publishers_by_letter', methods=['GET', 'POST'])
 def publishers_by_letter():
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     form = LimitForm()
     letter=request.args.get('letter')
     authors = db.session.query(Author).all()
@@ -110,7 +115,7 @@ def publishers_by_letter():
             publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).all()
         else:
             publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
-    return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form)
+    return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, letters=letters, form=form)
 
 @publisher_bp.route('/delete_publisher/<int:id>', methods=['GET', 'POST'])
 def delete_publisher(id):

@@ -52,6 +52,18 @@
     {% endfor %}
     <br />
     <br />
+    
+    {% if publisher.publ_closed == 'None' %}
+    &emsp;&emsp;Closed: {{ form.publclosed(size=4) }}
+    {% else %}
+    &emsp;&emsp;Closed: {{ form.publclosed(size=4, value=publisher.publ_closed) }}
+    {% endif %}
+    {% for err in form.publclosed.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+
     {% if publisher.publ_country == 'None' %}
     &emsp;&ensp;Country: {{ form.publcountry(size=70) }}
     {% else %}
@@ -102,6 +114,18 @@
     {% endfor %}
     <br />
     <br />
+
+    {% if publisher.publ_summary == 'None' %}
+    &emsp;Summary: {{ form.publsummary(cols="73", rows="7") }}
+    {% else %}
+    &emsp;Summary: {{ form.publsummary(cols="73", rows="7", default=publisher.publ_summary) }}
+    {% endif %}
+    {% for err in form.publsummary.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
+
     &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;{{ form.submit(class="btn
     btn-success btn-sm") }}
     <button class="btn btn-secondary btn-sm">

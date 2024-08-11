@@ -10,6 +10,22 @@ maintenance_bp = Blueprint('maintenance',__name__)
 @maintenance_bp.route('/init')
 def init():
     
+    # publishers = Publisher.query.all()
+    # letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    # publets=[]
+    # for letter in letters:
+    #     for publisher in publishers:
+    #         publets.append((publisher.publ_name) if publisher.publ_name.startswith(letter) else None)
+    # publs = [publisher.publ_name for publisher in publishers]
+    # print(set(publs)-set(publets))
+    
+    # publs = Publisher.query.all()
+    # publishers = [publ.publ_name for publ in publs]
+    # publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
+    # publs_by_letter = [publ.publ_name for publ in publishers_by_letter]
+    # print(len(publs), len(publishers), len(publs_by_letter))
+    # print(set(publishers)-set(publs_by_letter))
+    
     # auths=Author.query.all()
     # authors = [author.fullname for author in auths]
     # books = Book.query.all()

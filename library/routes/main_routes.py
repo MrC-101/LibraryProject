@@ -274,7 +274,7 @@ def search_publishers():
                         publisher = publishers[0]
                         return redirect(url_for('publisher.publisher_details', form=form, publisher=publisher, id=publisher.id))
                                 
-        elif db.session.query(Publisher).filter(Publisher.publ_name.icontains(publisher_returned)).all():
+            elif db.session.query(Publisher).filter(Publisher.publ_name.icontains(publisher_returned)).all():
                 start = time.perf_counter_ns()
                 publishers = db.session.query(Publisher).filter(Publisher.publ_name.icontains(publisher_returned)).order_by(func.lower(Publisher.publ_name)).all()                    
                 end = time.perf_counter_ns()
@@ -358,4 +358,3 @@ def search_all():
             return render_template('search_all.html', form=form, authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count, msg=msg)
         
     return render_template('search_all.html', form=form, authors=authors, books=books, publishers=publishers, duration=duration, books_count=books_count, authors_count=authors_count, publishers_count=publishers_count)
-

@@ -178,10 +178,21 @@
     <ul>
         {% if authors|count == 0 %}
         <h4 style="color:red">Library is empty</h4>
-
         {% else %}
+
         {% for letter in letters %}
-        <h6 style="color:black; font-weight:bold">{{ letter }}</h6>
+
+        {# Calculating Number of Authors for current letter #}
+        {% set ns=namespace(author_number=0) %}
+        {% for author in authors %}
+        {% if author.lname.startswith(letter) %}
+        {% set ns.author_number=ns.author_number+1 %}
+        {% endif %}
+        {% endfor %}
+        {% set auth='authors' if ns.author_number != 1 else 'author' %}
+        <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.author_number}} {{ auth }} found</h6>
+
+        {# List Authors for current letter #}
         {% for author in authors %}
         {% if author.lname.startswith(letter) %}
         <li>
@@ -215,11 +226,24 @@
 
         {% else %}
 
+        {# Calculating Number of Authors for current letter if letter IS NOT '*' #}
         {% set auth='authors' if authors_by_letter|count != 1 else 'author' %}
         <h6>{{ authors_by_letter|length }} {{ auth }} found</h6>
+        
         {% if letter == '*' %}
         {% for letter in letters %}
-        <h6 style="color:black; font-weight:bold">{{ letter }}</h6>
+
+        {# Calculating Number of Authors for current letter if letter IS '*' #}
+        {% set ns=namespace(author_number=0) %}
+        {% for author in authors_by_letter %}
+        {% if author.lname.startswith(letter) %}
+        {% set ns.author_number=ns.author_number+1 %}
+        {% endif %}
+        {% endfor %}
+        {% set auth='authors' if ns.author_number != 1 else 'author' %}
+        <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.author_number}} {{ auth }} found</h6>
+        
+        {# List Authors for current letter if letter IS '*' #}
         {% for author in authors_by_letter %}
         {% if author.lname.startswith(letter) %}
         <li>
@@ -233,15 +257,18 @@
             </button>&ensp;▫️
 
             <a style="text-decoration:none"
-                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
+                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.knownas}}</a>
             - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
                 href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
-            collection
+            collection<br>
         </li>
         {% endif %}
         {% endfor %}
+        <br>
         {% endfor %}
         {% endif %}
+
+        {# List Authors for current letter if letter IS NOT '*' #}
         {% if letter != '*' %}
         {% for author in authors_by_letter %}
         <li>
@@ -255,7 +282,7 @@
             </button>&ensp;▫️
 
             <a style="text-decoration:none"
-                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
+                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.knownas}}</a>
             - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
                 href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
             collection
@@ -272,7 +299,21 @@
 
         {% else %}
 
+        {% for letter in letters %}
+
+        {# Calculating Number of Publishers for current letter #}
+        {% set ns=namespace(publisher_number=0) %}
         {% for publisher in publishers %}
+        {% if publisher.publ_name.startswith(letter) %}
+        {% set ns.publisher_number=ns.publisher_number+1 %}
+        {% endif %}
+        {% endfor %}
+        {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
+        <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
+
+        {# List Publishers for current letter #}
+        {% for publisher in publishers %}
+        {% if publisher.publ_name.startswith(letter) %}
         <li>
             <button class="btn btn-outline-secondary btn-sm">
                 <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
@@ -295,6 +336,9 @@
                 {{ bks }}</a>
             in total
         </li>
+        {% endif %}
+        {% endfor %}
+        <br/>
         {% endfor %}
         {% endif %}
     </ul>
@@ -305,9 +349,56 @@
 
         {% else %}
 
+        {# Calculating Number of Publishers for current letter if letter IS NOT '*' #}
         {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
         <h6>{{ publishers_by_letter|length }} {{ publ }} found</h6>
 
+        {% if letter == '*' %}
+        {% for letter in letters %}
+
+        {# Calculating Number of Publishers for current letter #}
+        {% set ns=namespace(publisher_number=0) %}
+        {% for publisher in publishers_by_letter %}
+        {% if publisher.publ_name.startswith(letter) %}
+        {% set ns.publisher_number=ns.publisher_number+1 %}
+        {% endif %}
+        {% endfor %}
+        {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
+        <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
+
+        {# List Publishers for current letter if letter IS '*' #}
+        {% for publisher in publishers_by_letter %}
+        {% if publisher.publ_name.startswith(letter) %}
+        <li>
+            <button class="btn btn-outline-secondary btn-sm">
+                <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
+                    style="text-decoration: none; color: darkgray">Edit</a>
+            </button>
+            <button class="btn btn-outline-danger btn-sm">
+                <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
+                    style="text-decoration: none; color: orangered">Delete</a>
+            </button>&ensp;▫️
+
+            {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
+            {% set bks='book' if publisher.books|count == 1 else 'books' %}
+            <a style="text-decoration:none"
+                href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
+            - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
+                style="text-decoration:none"
+                href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
+                {{ auth }}</a> and <a style="text-decoration:none"
+                href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
+                {{ bks }}</a>
+            in total
+        </li>
+        {% endif %}
+        {% endfor %}
+        <br/>
+        {% endfor %}
+        {% endif %}
+
+        {# List Publishers for current letter if letter IS NOT '*' #}
+        {% if letter != '*' %}
         {% for publisher in publishers_by_letter %}
         <li>
             <button class="btn btn-outline-secondary btn-sm">
@@ -332,6 +423,7 @@
             in total
         </li>
         {% endfor %}
+        {% endif %}
         {% endif %}
     </ul>
     {% endif %}

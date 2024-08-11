@@ -22,11 +22,13 @@ class Publisher(db.Model):
     publ_founder = db.Column(db.String, nullable=True)
     publ_parent = db.Column(db.String, nullable=True)
     publ_est = db.Column(db.String, nullable=True)
+    publ_closed = db.Column(db.String, nullable=True)
     publ_country = db.Column(db.String, nullable=True)
     publ_city = db.Column(db.String, nullable = True)
     publ_address = db.Column(db.String, nullable=True)
     publ_email = db.Column(db.String, nullable=True)
     publ_website = db.Column(db.String, nullable=True)
+    publ_summary = db.Column(db.Text, nullable=True)
     books = db.relationship('Book', back_populates='publisher')
     authors = db.relationship('Author', secondary='author_publisher', back_populates='publishers')
     

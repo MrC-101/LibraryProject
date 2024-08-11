@@ -41,6 +41,12 @@ Add Publisher
     {% endfor %}
     <br />
     <br />
+    &emsp;&emsp;Closed: {{ form.publclosed(size=4) }}
+    {% for err in form.publclosed.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br />
+    <br />
     &emsp;&ensp;Country: {{ form.publcountry(size=70) }}
     {% for err in form.publcountry.errors %}
     <span style="color: red">{{ err }}</span>
@@ -66,6 +72,11 @@ Add Publisher
     <br /><br />
     &emsp;&emsp;&ensp;&nbsp;Email: {{ form.publemail(size=70) }}
     {% for err in form.publemail.errors %}
+    <span style="color: red">{{ err }}</span>
+    {% endfor %}
+    <br /><br />
+    &emsp;Summary: {{ form.publsummary(cols="73", rows="7") }}
+    {% for err in form.publsummary.errors %}
     <span style="color: red">{{ err }}</span>
     {% endfor %}
     <br /><br />
