@@ -285,13 +285,13 @@ def search_publishers():
                     else:
                         publisher = publishers[0]
                         return redirect(url_for('publisher.publisher_details', form=form, publisher=publisher, id=publisher.id))      
-                else:
-                    start = time.perf_counter_ns()
-                    publishers = Publisher.query.order_by(func.lower(Publisher.publ_name)).all()
-                    end = time.perf_counter_ns()
-                    duration = str((end - start)/1000000)[:4]
-                    form = SearchPublishersForm()
-                    return render_template('search_publishers.html', form=form, publishers=publishers, duration=duration, msg=msg)
+            else:
+                start = time.perf_counter_ns()
+                publishers = Publisher.query.order_by(func.lower(Publisher.publ_name)).all()
+                end = time.perf_counter_ns()
+                duration = str((end - start)/1000000)[:4]
+                form = SearchPublishersForm()
+                return render_template('search_publishers.html', form=form, publishers=publishers, duration=duration, msg=msg)
 
     else:
         return render_template('search_publishers.html', form=form, publishers=publishers, flag=flag)
