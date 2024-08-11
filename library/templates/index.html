@@ -217,7 +217,32 @@
 
         {% set auth='authors' if authors_by_letter|count != 1 else 'author' %}
         <h6>{{ authors_by_letter|length }} {{ auth }} found</h6>
+        {% if letter == '*' %}
+        {% for letter in letters %}
+        <h6 style="color:black; font-weight:bold">{{ letter }}</h6>
+        {% for author in authors_by_letter %}
+        {% if author.lname.startswith(letter) %}
+        <li>
+            <button class="btn btn-outline-secondary btn-sm">
+                <a href="{{ url_for('author.edit_author', id=author.id) }}"
+                    style="text-decoration: none; color: darkgray">Edit</a>
+            </button>
+            <button class="btn btn-outline-danger btn-sm">
+                <a href="{{ url_for('author.author_details', id=author.id) }}"
+                    style="text-decoration: none; color: orangered">Delete</a>
+            </button>&ensp;▫️
 
+            <a style="text-decoration:none"
+                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.fullname}}</a>
+            - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
+                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
+            collection
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+        {% if letter != '*' %}
         {% for author in authors_by_letter %}
         <li>
             <button class="btn btn-outline-secondary btn-sm">
@@ -236,6 +261,7 @@
             collection
         </li>
         {% endfor %}
+        {% endif %}
         {% endif %}
     </ul>
 

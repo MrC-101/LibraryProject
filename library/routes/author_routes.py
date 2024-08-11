@@ -81,7 +81,7 @@ def add_author():
             db.session.commit()
             
             # DB VACUUM
-            vacuum()
+            # vacuum()
             
             author=db.session.query(Author).filter_by(fullname=fullname, lname=lname, fname=fname, born=born).first()
 
@@ -174,6 +174,7 @@ def author_details(id):
 
 @author_bp.route('/authors_by_letter', methods=['GET', 'POST'])
 def authors_by_letter():
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     form = LimitForm()
     letter=request.args.get('letter')
     authors = db.session.query(Author).all()
@@ -192,4 +193,4 @@ def authors_by_letter():
             authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).all()
         else:
             authors_by_letter = db.session.query(Author).order_by(func.lower(Author.lname)).all()
-    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form)
+    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, letters=letters, form=form)
