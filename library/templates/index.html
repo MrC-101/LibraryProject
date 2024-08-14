@@ -66,7 +66,7 @@
     {% elif books|count != 0 %}
         {% for letter in letters %}
             {% set ttl='books' if books_by_letter|count != 1 else 'book' %}
-            {% set ns=namespace(author_number=0, book_number=0) %}
+            {% set ns=namespace(author_number=0, book_number=0, book_number_nolimit=0) %}
             {% for author in authors %}
                 {% if author.lname.startswith(letter) %}
                     {% for book in author.books %}
@@ -95,21 +95,21 @@
                         {{ ns.book_number }}
                         books</a> in collection</h6>
                 {% endif %}
-
-                    {# List the books of the author #}  
-                    {% for book in author.books %}
-                        {% if book.title.startswith(letter) %}
-                            {% if ns.book_number < limit and limit != 0 %}
-                                {% set ns.book_number = ns.book_number + 1 %}
-                            {% include 'books/list_author_books.html' %}
-                            {% elif limit == 0 %}
-                            {% include 'books/list_author_books.html' %}
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    {% if ns.book_number > 0 %}
+                {# List the books of the author #}  
+                {% set ns.book_number = 0 %}                    
+                {% for book in author.books %}
+                    {% if book.title.startswith(letter) %}
+                        {% set ns.book_number = ns.book_number + 1 %}
+                        {% if ns.book_number <= limit and limit != 0 %}                            
+                        {% include 'books/list_author_books.html' %}
+                        {% elif limit == 0 %}
+                        {% include 'books/list_author_books.html' %}
+                        {% endif %}                            
+                    {% endif %}                        
+                {% endfor %}
+                {% if ns.book_number > 0 %}
                     <br/>
-                    {% endif %}               
+                {% endif %}               
             {% endfor %}
             <br/>
         {% endfor %}
