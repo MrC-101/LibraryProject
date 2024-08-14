@@ -20,22 +20,6 @@ def home():
             limit = 0
     else:
         limit = 0
-    #     if lim != None and lim != 'None' and lim != '' and lim != '0':
-    #         books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
-    #         authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).limit(lim).all()
-    #         publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
-    #     else:
-        #     books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
-        #     authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).all()
-        #     publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
-            
-        # flag = request.args.get('flag')
-        # authors = authors_totals
-        # publishers = publishers_totals
-        # total_books = len(db.session.query(Book).all())
-        # total_auth = len(db.session.query(Author).all())
-        # total_publishers = len(db.session.query(Publisher).all())
-    # else:
     books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
     authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).all()
     publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()

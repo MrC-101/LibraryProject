@@ -20,7 +20,7 @@ def add_title():
         author = request.form['author']
         if not db.session.query(Author).filter_by(fullname=author).first():
             pname = db.session.query(Author).filter(Author.penname.icontains(author)).first()
-            # pname = db.session.query(Author).filter_by(penname=author).first()
+
             if pname:
                 if author in pname.penname:
                     author = pname.fullname
@@ -197,20 +197,6 @@ def books_by_letter():
     total_publishers = len(db.session.query(Publisher).all())
     letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     
-    # if lim != None and lim != 'None' and lim != '' and lim != '0':
-    #     if letter != '*':
-    #         books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
-    #     else:
-    #         books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
-    # else:
-    # if form.validate_on_submit():
-    #     limit = request.form.get('limit')
-    #     if limit != '':
-    #         limit = int(limit)
-    #     else:
-    #         limit = 0
-    # else:
-    #     limit = 0
     if letter != '*':
         books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
     else:

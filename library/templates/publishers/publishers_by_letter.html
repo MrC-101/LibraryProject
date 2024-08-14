@@ -1,0 +1,22 @@
+<li>
+    <button class="btn btn-outline-secondary btn-sm">
+        <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
+            style="text-decoration: none; color: darkgray">Edit</a>
+    </button>
+    <button class="btn btn-outline-danger btn-sm">
+        <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
+            style="text-decoration: none; color: orangered">Delete</a>
+    </button>&ensp;▫️
+
+    {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
+    {% set bks='book' if publisher.books|count == 1 else 'books' %}
+    <a style="text-decoration:none"
+        href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
+    - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
+        style="text-decoration:none"
+        href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
+        {{ auth }}</a> and <a style="text-decoration:none"
+        href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
+        {{ bks }}</a>
+    in total
+</li>

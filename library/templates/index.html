@@ -95,67 +95,15 @@
                         {{ ns.book_number }}
                         books</a> in collection</h6>
                 {% endif %}
-                
-                
+
                     {# List the books of the author #}  
                     {% for book in author.books %}
-                        {% if book.title.startswith(letter) %}            
+                        {% if book.title.startswith(letter) %}
                             {% if ns.book_number < limit and limit != 0 %}
-                                {% set ns.book_number = ns.book_number + 1 %}                    
-                                <li>
-                                    <button class="btn btn-outline-secondary btn-sm">
-                                        <a href="{{ url_for('book.edit_title', id=book.id) }}"
-                                            style="text-decoration: none; color: darkgray">Edit</a>
-                                    </button>
-                                    <button class="btn btn-outline-danger btn-sm">
-                                        <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
-                                            style="text-decoration: none; color: orangered">Delete</a>
-                                    </button>&nbsp;
-                                    ▫️
-                                    <a href="{{ url_for('author.author_details', id=author.id) }}"
-                                            style="text-decoration: none; color: darkgray">{{author.knownas}}
-                                    ▫️
-                                    {{book.first_publish}} -
-                                    <a style="text-decoration:none" href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a>
-
-                                    {% if book.authors|length > 1 %}
-                                        <a style="font-weight:strong; color:orange"> - Co-author(s):</a>
-                                        {% for author in book.authors %}
-                                            {% if author.fullname != book.author %}
-                                                <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-                                                    {{ author.fullname }} &nbsp;</a>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                    
-                                </li>
+                                {% set ns.book_number = ns.book_number + 1 %}
+                            {% include 'books/list_author_books.html' %}
                             {% elif limit == 0 %}
-                            <li>
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <a href="{{ url_for('book.edit_title', id=book.id) }}"
-                                        style="text-decoration: none; color: darkgray">Edit</a>
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm">
-                                    <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
-                                        style="text-decoration: none; color: orangered">Delete</a>
-                                </button>&nbsp;
-                                ▫️
-                                <a href="{{ url_for('author.author_details', id=author.id) }}"
-                                        style="text-decoration: none; color: darkgray">{{author.knownas}}
-                                ▫️
-                                {{book.first_publish}} -
-                                <a style="text-decoration:none" href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a>
-
-                                {% if book.authors|length > 1 %}
-                                    <a style="font-weight:strong; color:orange"> - Co-author(s):</a>
-                                    {% for author in book.authors %}
-                                        {% if author.fullname != book.author %}
-                                            <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-                                                {{ author.fullname }} &nbsp;</a>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endif %}                    
-                            </li>
+                            {% include 'books/list_author_books.html' %}
                             {% endif %}
                         {% endif %}
                     {% endfor %}
@@ -166,9 +114,7 @@
             <br/>
         {% endfor %}
     {% endif %}
-
     </ul>
-
     {% elif flag == 'books_by_letter' %}
     <ul>
         {% if books_by_letter|count == 0 %}
@@ -198,62 +144,10 @@
                             
                         {% for book in author.books %}
                             {% if book.title.startswith(letter) %}
-                            <li>
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <a href="{{ url_for('book.edit_title', id=book.id) }}"
-                                        style="text-decoration: none; color: darkgray">Edit</a>
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm">
-                                    <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
-                                        style="text-decoration: none; color: orangered">Delete</a>
-                                </button>&nbsp;
-                                ▫️
-                                <a href="{{ url_for('author.author_details', id=author.id) }}"
-                                        style="text-decoration: none; color: darkgray">{{author.knownas}}
-                                ▫️
-                                {{book.first_publish}} -
-                                <a style="text-decoration:none" href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a>
-
-                                {% if book.authors|length > 1 %}
-                                <a style="font-weight:strong; color:orange"> - Co-author(s):</a>
-                                {% for author in book.authors %}
-                                {% if author.fullname != book.author %}
-
-                                <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-                                    {{ author.fullname }} &nbsp;</a>
-                                {% endif %}
-                                {% endfor %}
-                                {% endif %}
-                            </li>
+                            {% include 'books/list_author_books.html' %}
                             {% endif %}
                             {% if letter == '*' %}
-                                <li>
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <a href="{{ url_for('book.edit_title', id=book.id) }}"
-                                        style="text-decoration: none; color: darkgray">Edit</a>
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm">
-                                    <a href="{{ url_for('book.book_details', id=book.id, book=book) }}"
-                                        style="text-decoration: none; color: orangered">Delete</a>
-                                </button>&nbsp;
-                                ▫️
-                                <a href="{{ url_for('author.author_details', id=author.id) }}"
-                                        style="text-decoration: none; color: darkgray">{{author.knownas}}
-                                ▫️
-                                {{book.first_publish}} -
-                                <a style="text-decoration:none" href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a>
-
-                                {% if book.authors|length > 1 %}
-                                <a style="font-weight:strong; color:orange"> - Co-author(s):</a>
-                                {% for author in book.authors %}
-                                {% if author.fullname != book.author %}
-
-                                <a style="text-decoration:none" href="{{ url_for('author.bibliography', author=author.fullname) }}">
-                                    {{ author.fullname }} &nbsp;</a>
-                                {% endif %}
-                                {% endfor %}
-                                {% endif %}
-                            </li>
+                                {% include 'books/list_author_books.html' %}
                             {% endif %}
                         {% endfor %}
                         {% if ns.book_number > 0 %}
@@ -292,47 +186,15 @@
                     {% if author.lname.startswith(letter) %}
                         {% if ns.author_limit_number < limit and limit != 0 %}
                             {% set ns.author_limit_number = ns.author_limit_number + 1 %}
-                            <li>
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <a href="{{ url_for('author.edit_author', id=author.id) }}"
-                                        style="text-decoration: none; color: darkgray">Edit</a>
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm">
-                                    <a href="{{ url_for('author.author_details', id=author.id) }}"
-                                        style="text-decoration: none; color: orangered">Delete</a>
-                                </button>&ensp;▫️
-                                <a style="text-decoration:none"
-                                    href="{{ url_for('author.author_details', id=author.id) }}">{{ author.knownas}}</a>
-                                - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} -
-                                <a style="text-decoration:none"
-                                    href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a>
-                                in
-                                collection
-                            </li>
+                            {% include 'authors/list_authors_per_letter.html' %}
                         {% elif limit == 0 %}
-                            <li>
-                                <button class="btn btn-outline-secondary btn-sm">
-                                    <a href="{{ url_for('author.edit_author', id=author.id) }}"
-                                        style="text-decoration: none; color: darkgray">Edit</a>
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm">
-                                    <a href="{{ url_for('author.author_details', id=author.id) }}"
-                                        style="text-decoration: none; color: orangered">Delete</a>
-                                </button>&ensp;▫️
-                                <a style="text-decoration:none"
-                                    href="{{ url_for('author.author_details', id=author.id) }}">{{ author.knownas}}</a>
-                                - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} -
-                                <a style="text-decoration:none"
-                                    href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a>
-                                in
-                                collection
-                            </li>
-                        {% endif %} {# limit checks #}
-                    {% endif %} {# if author name starts with letter #}
-                {% endfor %} {# for author in authors #}
+                            {% include 'authors/list_authors_per_letter.html' %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
                 <br>
-            {% endfor %} {# fpr letter in letters #}
-        {% endif %} {# authors not 0 #}
+            {% endfor %}
+        {% endif %}
     </ul>
 
     {% elif flag == 'authors_by_letter' %}
@@ -362,22 +224,7 @@
         {# List Authors for current letter if letter IS '*' #}
         {% for author in authors_by_letter %}
         {% if author.lname.startswith(letter) %}
-        <li>
-            <button class="btn btn-outline-secondary btn-sm">
-                <a href="{{ url_for('author.edit_author', id=author.id) }}"
-                    style="text-decoration: none; color: darkgray">Edit</a>
-            </button>
-            <button class="btn btn-outline-danger btn-sm">
-                <a href="{{ url_for('author.author_details', id=author.id) }}"
-                    style="text-decoration: none; color: orangered">Delete</a>
-            </button>&ensp;▫️
-
-            <a style="text-decoration:none"
-                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.knownas}}</a>
-            - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
-                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
-            collection<br>
-        </li>
+        {% include 'authors/list_authors_per_asterisk.html' %}
         {% endif %}
         {% endfor %}
         <br>
@@ -387,22 +234,7 @@
         {# List Authors for current letter if letter IS NOT '*' #}
         {% if letter != '*' %}
         {% for author in authors_by_letter %}
-        <li>
-            <button class="btn btn-outline-secondary btn-sm">
-                <a href="{{ url_for('author.edit_author', id=author.id) }}"
-                    style="text-decoration: none; color: darkgray">Edit</a>
-            </button>
-            <button class="btn btn-outline-danger btn-sm">
-                <a href="{{ url_for('author.author_details', id=author.id) }}"
-                    style="text-decoration: none; color: orangered">Delete</a>
-            </button>&ensp;▫️
-
-            <a style="text-decoration:none"
-                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{ author.knownas}}</a>
-            - {{author.born}}-{{author.died}} - {{author.country}} - {{author.city}} - <a style="text-decoration:none"
-                href="{{ url_for('author.bibliography', author=author.fullname) }}">{{author.books|count}} books</a> in
-            collection
-        </li>
+        {% include 'authors/list_authors_per_asterisk.html' %}
         {% endfor %}
         {% endif %}
         {% endif %}
@@ -430,28 +262,9 @@
         {# List Publishers for current letter #}
         {% for publisher in publishers %}
         {% if publisher.publ_name.startswith(letter) %}
-        <li>
-            <button class="btn btn-outline-secondary btn-sm">
-                <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
-                    style="text-decoration: none; color: darkgray">Edit</a>
-            </button>
-            <button class="btn btn-outline-danger btn-sm">
-                <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
-                    style="text-decoration: none; color: orangered">Delete</a>
-            </button>&ensp;▫️
-
-            {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
-            {% set bks='book' if publisher.books|count == 1 else 'books' %}
-            <a style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
-            - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
-                style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
-                {{ auth }}</a> and <a style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
-                {{ bks }}</a>
-            in total
-        </li>
+        
+        {% include 'publishers/publishers_by_letter.html' %}
+        
         {% endif %}
         {% endfor %}
         <br/>
@@ -485,28 +298,9 @@
         {# List Publishers for current letter if letter IS '*' #}
         {% for publisher in publishers_by_letter %}
         {% if publisher.publ_name.startswith(letter) %}
-        <li>
-            <button class="btn btn-outline-secondary btn-sm">
-                <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
-                    style="text-decoration: none; color: darkgray">Edit</a>
-            </button>
-            <button class="btn btn-outline-danger btn-sm">
-                <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
-                    style="text-decoration: none; color: orangered">Delete</a>
-            </button>&ensp;▫️
-
-            {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
-            {% set bks='book' if publisher.books|count == 1 else 'books' %}
-            <a style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
-            - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
-                style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
-                {{ auth }}</a> and <a style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
-                {{ bks }}</a>
-            in total
-        </li>
+        
+        {% include 'publishers/publishers_by_letter.html' %}
+        
         {% endif %}
         {% endfor %}
         <br/>
@@ -516,28 +310,9 @@
         {# List Publishers for current letter if letter IS NOT '*' #}
         {% if letter != '*' %}
         {% for publisher in publishers_by_letter %}
-        <li>
-            <button class="btn btn-outline-secondary btn-sm">
-                <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
-                    style="text-decoration: none; color: darkgray">Edit</a>
-            </button>
-            <button class="btn btn-outline-danger btn-sm">
-                <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
-                    style="text-decoration: none; color: orangered">Delete</a>
-            </button>&ensp;▫️
 
-            {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
-            {% set bks='book' if publisher.books|count == 1 else 'books' %}
-            <a style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
-            - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
-                style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
-                {{ auth }}</a> and <a style="text-decoration:none"
-                href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
-                {{ bks }}</a>
-            in total
-        </li>
+        {% include 'publishers/publishers_by_letter.html' %}
+        
         {% endfor %}
         {% endif %}
         {% endif %}

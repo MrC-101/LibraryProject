@@ -20,9 +20,6 @@ def publisher_authors():
 def publisher_bibliography():
     publisher = request.args.get('publisher')
     publisher = Publisher.query.filter_by(publ_name=publisher).first()
-    # books = Book.query.filter_by(author=author).order_by('first_publish', 'title').all()
-    # publisher = db.session.query(Publisher).filter_by(publ_name=publisher).first()
-    
     books = publisher.books
     books.sort(key=operator.attrgetter('author', 'title', 'first_publish')) 
     publisher_total = len(books)
