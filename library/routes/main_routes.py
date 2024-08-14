@@ -37,13 +37,17 @@ def home():
     # books=[book for author in authors for book in author.books]
     # books.sort(key=operator.attrgetter('author', 'first_publish', 'title'))
     books = books_totals
+    choice = publishers
     if flag == None:
         flag = 'books_list'
         info = "Flag was set to None. Auto switched to 'books_list'"
         print('\n'+'=' * len(info))
         print(info)
         print('=' * len(info)+'\n')
-    return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, limit=limit, total_publishers=total_publishers, form=form, letters=letters)
+        
+    not_show_limit=True if flag == 'publishers_list' or flag == 'publishers_by_letter' else False
+                
+    return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, limit=limit, total_publishers=total_publishers, form=form, letters=letters, choice=choice, not_show_limit=not_show_limit)
 
 @main_bp.route('/search_books', methods=['GET', 'POST'])
 def search_books():

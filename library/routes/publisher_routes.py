@@ -101,18 +101,22 @@ def publishers_by_letter():
     books = db.session.query(Book).all()
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
-    lim=form.limit.data
-    if lim != None and lim != 'None' and lim != '' and lim != '0':
-        if letter != '*':
-            publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
-        else:
-            publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
+    limit=form.limit.data
+    # if limit != None and limit != 'None' and limit != '' and limit != '0':
+    #     if letter != '*':
+    #         publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
+    #     else:
+    #         publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
+    # else:
+    if letter != '*':
+        publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).all()
     else:
-        if letter != '*':
-            publishers_by_letter = db.session.query(Publisher).filter(Publisher.publ_name.istartswith(letter)).order_by(func.lower(Publisher.publ_name)).all()
-        else:
-            publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
-    return render_template('index.html', flag='publishers_by_letter', publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, letters=letters, form=form)
+        publishers_by_letter = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
+            
+    flag='publishers_by_letter'
+    choice = publishers_by_letter
+    not_show_limit=True
+    return render_template('index.html', flag=flag, publishers_by_letter=publishers_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, letters=letters, form=form, choice=choice, not_show_limit=not_show_limit)
 
 @publisher_bp.route('/delete_publisher/<int:id>', methods=['GET', 'POST'])
 def delete_publisher(id):

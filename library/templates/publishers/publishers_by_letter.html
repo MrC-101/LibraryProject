@@ -1,3 +1,18 @@
+{# Calculating Number of Publishers for current letter #}
+{% set ns=namespace(publisher_number=0) %}
+{% for publisher in choice %}
+{% if publisher.publ_name.startswith(letter) %}
+{% set ns.publisher_number=ns.publisher_number+1 %}
+{% endif %}
+{% endfor %}
+{% set publ='publishers' if ns.publisher_number != 1 else 'publisher' %}
+<h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
+
+{# List Publishers for current letter if letter IS '*' #}
+{% for publisher in choice %}
+
+{% if publisher.publ_name.startswith(letter) %}  
+
 <li>
     <button class="btn btn-outline-secondary btn-sm">
         <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
@@ -20,3 +35,6 @@
         {{ bks }}</a>
     in total
 </li>
+
+{% endif %}
+{% endfor %}

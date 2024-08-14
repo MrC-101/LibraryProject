@@ -243,79 +243,45 @@
     {% elif flag == 'publishers_list' %}
     <ul>
         {% if publishers|count == 0 %}
-        <h4 style="color:red">Library is empty</h4>
+            <h4 style="color:red">Library is empty</h4>
 
-        {% else %}
-
-        {% for letter in letters %}
-
-        {# Calculating Number of Publishers for current letter #}
-        {% set ns=namespace(publisher_number=0) %}
-        {% for publisher in publishers %}
-        {% if publisher.publ_name.startswith(letter) %}
-        {% set ns.publisher_number=ns.publisher_number+1 %}
-        {% endif %}
-        {% endfor %}
-        {% set publ='publishers' if ns.publisher_number != 1 else 'publisher' %}
-        <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
-
-        {# List Publishers for current letter #}
-        {% for publisher in publishers %}
-        {% if publisher.publ_name.startswith(letter) %}
-        
-        {% include 'publishers/publishers_by_letter.html' %}
-        
-        {% endif %}
-        {% endfor %}
-        <br/>
-        {% endfor %}
+        {% else %}{% set publ='publishers' if publishers|count != 1 else 'publisher' %}
+            <h6 style="color:black; font-weight:bold">{{ publishers|length }} {{ publ }} found</h6>
+            {% for letter in letters %}
+                {% with choice=choice %}
+                {% include 'publishers/publishers_by_letter.html' %}
+                {% endwith %}
+            <br/>
+            {% endfor %}
         {% endif %}
     </ul>
     {% elif flag == 'publishers_by_letter' %}
     <ul>
         {% if publishers_by_letter|count == 0 %}
-        <h4 style="color:red">Library is empty</h4>
+            <h4 style="color:red">Library is empty</h4>
 
         {% else %}
+            {# Calculating Number of Publishers for current letter if letter IS NOT '*' #}
+            
 
-        {# Calculating Number of Publishers for current letter if letter IS NOT '*' #}
-        {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
-        <h6>{{ publishers_by_letter|length }} {{ publ }} found</h6>
+            {% if letter == '*' %}
+            {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
+            <h6 style="color:black; font-weight:bold">{{ publishers_by_letter|length }} {{ publ }} found</h6>
+                {% for letter in letters %}
+                    {% with choice=choice%}
+                    {% include 'publishers/publishers_by_letter.html' %}
+                    {% endwith %}
+                    <br/>
+                {% endfor %}
+            {% endif %}
 
-        {% if letter == '*' %}
-        {% for letter in letters %}
-
-        {# Calculating Number of Publishers for current letter #}
-        {% set ns=namespace(publisher_number=0) %}
-        {% for publisher in publishers_by_letter %}
-        {% if publisher.publ_name.startswith(letter) %}
-        {% set ns.publisher_number=ns.publisher_number+1 %}
-        {% endif %}
-        {% endfor %}
-        {% set publ='publishers' if ns.publisher_number != 1 else 'publisher' %}
-        <h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
-
-        {# List Publishers for current letter if letter IS '*' #}
-        {% for publisher in publishers_by_letter %}
-        {% if publisher.publ_name.startswith(letter) %}
-        
-        {% include 'publishers/publishers_by_letter.html' %}
-        
-        {% endif %}
-        {% endfor %}
-        <br/>
-        {% endfor %}
-        {% endif %}
-
-        {# List Publishers for current letter if letter IS NOT '*' #}
-        {% if letter != '*' %}
-        {% for publisher in publishers_by_letter %}
-
-        {% include 'publishers/publishers_by_letter.html' %}
-        
-        {% endfor %}
-        {% endif %}
+            {# List Publishers for current letter if letter IS NOT '*' #}
+            {% if letter != '*' %}
+                {% with choice=choice %}
+                {% include 'publishers/publishers_by_letter.html' %}
+                {% endwith %}
+            {% endif %}
         {% endif %}
     </ul>
-    {% endif %}
-    {% endblock %}
+{% endif %}
+{% endblock %}
