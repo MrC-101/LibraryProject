@@ -262,8 +262,6 @@
 
         {% else %}
             {# Calculating Number of Publishers for current letter if letter IS NOT '*' #}
-            
-
             {% if letter == '*' %}
             {% set publ='publishers' if publishers_by_letter|count != 1 else 'publisher' %}
             <h6 style="color:black; font-weight:bold">{{ publishers_by_letter|length }} {{ publ }} found</h6>
