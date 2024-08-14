@@ -190,22 +190,31 @@ def book_details(id):
 def books_by_letter():
     form=LimitForm()
     letter=request.args.get('letter')
-    authors = db.session.query(Author).all()
+    authors = db.session.query(Author).order_by(func.lower(Author.lname)).all()
     total_auth = len(authors)
     books = db.session.query(Book).all()
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
-    lim=form.limit.data
-    if lim != None and lim != 'None' and lim != '' and lim != '0':
-        if letter != '*':
-            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
-        else:
-            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    
+    # if lim != None and lim != 'None' and lim != '' and lim != '0':
+    #     if letter != '*':
+    #         books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
+    #     else:
+    #         books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
+    # else:
+    # if form.validate_on_submit():
+    #     limit = request.form.get('limit')
+    #     if limit != '':
+    #         limit = int(limit)
+    #     else:
+    #         limit = 0
+    # else:
+    #     limit = 0
+    if letter != '*':
+        books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
     else:
-        if letter != '*':
-            books_by_letter = db.session.query(Book).filter(Book.title.istartswith(letter)).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
-        else:
-            books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
+        books_by_letter = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
             
     authors_to_count=[book.author for book in books_by_letter]
     for book in books_by_letter:
@@ -213,4 +222,4 @@ def books_by_letter():
             authors_to_count.append(author.fullname) if author.fullname not in authors_to_count else exit
     authors_count = len(set(authors_to_count))
     
-    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, authors=authors, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form, authors_count=authors_count)
+    return render_template('index.html', flag='books_by_letter', books_by_letter=books_by_letter, authors=authors, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, form=form, authors_count=authors_count, letters=letters, not_show_limit=True)

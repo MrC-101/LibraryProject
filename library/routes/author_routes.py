@@ -182,15 +182,8 @@ def authors_by_letter():
     books = db.session.query(Book).all()
     total = len(books)
     total_publishers = len(db.session.query(Publisher).all())
-    lim=form.limit.data
-    if lim != None and lim != 'None' and lim != '' and lim != '0':
-        if letter != '*':
-            authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).limit(lim).all()
-        else:
-            authors_by_letter = db.session.query(Author).order_by(func.lower(Author.fullname)).limit(lim).all()
+    if letter != '*':
+        authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).all()
     else:
-        if letter != '*':
-            authors_by_letter = db.session.query(Author).filter(Author.lname.istartswith(letter)).order_by(func.lower(Author.lname)).all()
-        else:
-            authors_by_letter = db.session.query(Author).order_by(func.lower(Author.lname)).all()
-    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, letters=letters, form=form)
+        authors_by_letter = db.session.query(Author).order_by(func.lower(Author.lname)).all()
+    return render_template('index.html', flag='authors_by_letter', authors_by_letter=authors_by_letter, total=total, total_auth=total_auth, total_publishers=total_publishers, letter=letter, letters=letters, form=form, not_show_limit=True)

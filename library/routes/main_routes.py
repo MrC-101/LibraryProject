@@ -10,34 +10,41 @@ main_bp = Blueprint('main',__name__)
 @main_bp.route('/', methods=['GET', 'POST'])
 def home():
     form=LimitForm()
+    limit = 0
     letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     if form.validate_on_submit():
-        lim=form.limit.data
-        if lim != None and lim != 'None' and lim != '' and lim != '0':
-            books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
-            authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).limit(lim).all()
-            publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
+        limit = request.form.get('limit')
+        if limit != '' and limit != None:
+            limit = int(limit)
         else:
-            books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
-            authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).all()
-            publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
-            
-        flag = request.args.get('flag')
-        authors = authors_totals
-        publishers = publishers_totals
-        total_books = len(db.session.query(Book).all())
-        total_auth = len(db.session.query(Author).all())
-        total_publishers = len(db.session.query(Publisher).all())
+            limit = 0
     else:
-        books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(200).all()
-        authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).limit(200).all()
-        publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(200).all()
-        flag = request.args.get('flag')
-        authors = authors_totals
-        publishers = publishers_totals
-        total_books = len(db.session.query(Book).all())
-        total_auth = len(db.session.query(Author).all())
-        total_publishers = len(db.session.query(Publisher).all())
+        limit = 0
+    #     if lim != None and lim != 'None' and lim != '' and lim != '0':
+    #         books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).limit(lim).all()
+    #         authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).limit(lim).all()
+    #         publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).limit(lim).all()
+    #     else:
+        #     books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
+        #     authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).all()
+        #     publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
+            
+        # flag = request.args.get('flag')
+        # authors = authors_totals
+        # publishers = publishers_totals
+        # total_books = len(db.session.query(Book).all())
+        # total_auth = len(db.session.query(Author).all())
+        # total_publishers = len(db.session.query(Publisher).all())
+    # else:
+    books_totals = db.session.query(Book).order_by(func.lower(Book.author), func.lower(Book.first_publish), func.lower(Book.title)).all()
+    authors_totals = db.session.query(Author).order_by(func.lower(Author.lname)).all()
+    publishers_totals = db.session.query(Publisher).order_by(func.lower(Publisher.publ_name)).all()
+    flag = request.args.get('flag')
+    authors = authors_totals
+    publishers = publishers_totals
+    total_books = len(db.session.query(Book).all())
+    total_auth = len(db.session.query(Author).all())
+    total_publishers = len(db.session.query(Publisher).all())
 
     # # books=[]
     # # for author in authors:
@@ -52,7 +59,7 @@ def home():
         print('\n'+'=' * len(info))
         print(info)
         print('=' * len(info)+'\n')
-    return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, total_publishers=total_publishers, form=form, letters=letters)
+    return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, limit=limit, total_publishers=total_publishers, form=form, letters=letters)
 
 @main_bp.route('/search_books', methods=['GET', 'POST'])
 def search_books():
