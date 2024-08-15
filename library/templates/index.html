@@ -120,7 +120,11 @@
         {% if books_by_letter|count == 0 %}
         <h4 style="color:red">Library is empty</h4>
         {% else %}
-            <h6>{{ letter }} - 
+            <h6>{% if letter != '*' %}
+                    {{letter}}
+                {% else %}
+                    ✱
+                {%endif%} - 
             {% set ttl='books' if books_by_letter|count != 1 else 'book' %}
             {{ books_by_letter|length }} {{ ttl }} by {{ authors_count }} authors found</h6>
             <br/>

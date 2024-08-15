@@ -46,7 +46,7 @@ def home():
         print('=' * len(info)+'\n')
         
     not_show_limit=True if flag == 'publishers_list' or flag == 'publishers_by_letter' else False
-                
+
     return render_template('index.html', books=books, authors=authors, publishers=publishers, flag=flag, total=total_books, total_auth=total_auth, limit=limit, total_publishers=total_publishers, form=form, letters=letters, choice=choice, not_show_limit=not_show_limit)
 
 @main_bp.route('/search_books', methods=['GET', 'POST'])
