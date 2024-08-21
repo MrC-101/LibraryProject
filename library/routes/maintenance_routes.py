@@ -76,3 +76,4 @@ def vacuum_fl():
 def vacm():
     vacuum()
     return redirect(url_for('main.home', flag='books_list'))
+
