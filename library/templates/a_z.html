@@ -1,220 +1,223 @@
-<nav class="navbar navbar-expand-md" style="text-align:justify; justify-items:last baseline">
-    <div class="container-fluid">&ensp;
-
-        {% if letter == '*' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: normal; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='*') }}">✱</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: large; font-weight: normal; color:rgb(125, 125, 125)"
-            href="{{ url_for(url, letter='*') }}">✱</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'A' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='A') }}">A</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='A') }}">A</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'B' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='B') }}">B</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='B') }}">B</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'C' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='C') }}">C</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='C') }}">C</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'D' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='D') }}">D</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='D') }}">D</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'E' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='E') }}">E</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='E') }}">E</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'F' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='F') }}">F</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='F') }}">F</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'G' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='G') }}">G</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='G') }}">G</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'H' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='H') }}">H</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='H') }}">H</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'I' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='I') }}">I</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='I') }}">I</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'J' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='J') }}">J</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='J') }}">J</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'K' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='K') }}">K</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='K') }}">K</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'L' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='L') }}">L</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='L') }}">L</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'M' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='M') }}">M</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='M') }}">M</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'N' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='N') }}">N</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='N') }}">N</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'O' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='O') }}">O</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='O') }}">O</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'P' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='P') }}">P</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='P') }}">P</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'Q' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='Q') }}">Q</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='Q') }}">Q</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'R' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='R') }}">R</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='R') }}">R</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'S' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='S') }}">S</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='S') }}">S</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'T' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='T') }}">T</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='T') }}">T</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'U' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='U') }}">U</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='U') }}">U</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'V' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='V') }}">V</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='V') }}">V</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'W' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='W') }}">W</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='W') }}">W</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'X' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='X') }}">X</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='X') }}">X</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'Y' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='Y') }}">Y</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='Y') }}">Y</a>&nbsp;
-        {% endif %}
-
-        {% if letter == 'Z' %}
-        <a class="navbar-brand" style="font-size: large; font-weight: bold; color:rgb(24, 135, 82)"
-            href="{{ url_for(url, letter='Z') }}">Z</a>&nbsp;
-        {% else %}
-        <a class="navbar-brand" style="font-size: small; font-weight: normal"
-            href="{{ url_for(url, letter='Z') }}">Z</a>&nbsp;
-        {% endif %}
+<nav class="navbar navbar-expand-md az-nav">
+    <div class="container-fluid">
+        &ensp; {% if letter == '*' %}
+        <a
+            class="navbar-brand az-green-normal"
+            href="{{ url_for(url, letter='*') }}"
+            >✱</a
+        >&nbsp; {% else %}
+        <a
+            class="navbar-brand az-darkgrey-normal"
+            href="{{ url_for(url, letter='*') }}"
+            >✱</a
+        >&nbsp; {% endif %} {% if letter == 'A' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='A') }}"
+            >A</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='A') }}"
+            >A</a
+        >&nbsp; {% endif %} {% if letter == 'B' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='B') }}"
+            >B</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='B') }}"
+            >B</a
+        >&nbsp; {% endif %} {% if letter == 'C' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='C') }}"
+            >C</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='C') }}"
+            >C</a
+        >&nbsp; {% endif %} {% if letter == 'D' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='D') }}"
+            >D</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='D') }}"
+            >D</a
+        >&nbsp; {% endif %} {% if letter == 'E' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='E') }}"
+            >E</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='E') }}"
+            >E</a
+        >&nbsp; {% endif %} {% if letter == 'F' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='F') }}"
+            >F</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='F') }}"
+            >F</a
+        >&nbsp; {% endif %} {% if letter == 'G' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='G') }}"
+            >G</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='G') }}"
+            >G</a
+        >&nbsp; {% endif %} {% if letter == 'H' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='H') }}"
+            >H</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='H') }}"
+            >H</a
+        >&nbsp; {% endif %} {% if letter == 'I' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='I') }}"
+            >I</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='I') }}"
+            >I</a
+        >&nbsp; {% endif %} {% if letter == 'J' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='J') }}"
+            >J</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='J') }}"
+            >J</a
+        >&nbsp; {% endif %} {% if letter == 'K' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='K') }}"
+            >K</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='K') }}"
+            >K</a
+        >&nbsp; {% endif %} {% if letter == 'L' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='L') }}"
+            >L</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='L') }}"
+            >L</a
+        >&nbsp; {% endif %} {% if letter == 'M' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='M') }}"
+            >M</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='M') }}"
+            >M</a
+        >&nbsp; {% endif %} {% if letter == 'N' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='N') }}"
+            >N</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='N') }}"
+            >N</a
+        >&nbsp; {% endif %} {% if letter == 'O' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='O') }}"
+            >O</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='O') }}"
+            >O</a
+        >&nbsp; {% endif %} {% if letter == 'P' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='P') }}"
+            >P</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='P') }}"
+            >P</a
+        >&nbsp; {% endif %} {% if letter == 'Q' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='Q') }}"
+            >Q</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='Q') }}"
+            >Q</a
+        >&nbsp; {% endif %} {% if letter == 'R' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='R') }}"
+            >R</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='R') }}"
+            >R</a
+        >&nbsp; {% endif %} {% if letter == 'S' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='S') }}"
+            >S</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='S') }}"
+            >S</a
+        >&nbsp; {% endif %} {% if letter == 'T' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='T') }}"
+            >T</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='T') }}"
+            >T</a
+        >&nbsp; {% endif %} {% if letter == 'U' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='U') }}"
+            >U</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='U') }}"
+            >U</a
+        >&nbsp; {% endif %} {% if letter == 'V' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='V') }}"
+            >V</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='V') }}"
+            >V</a
+        >&nbsp; {% endif %} {% if letter == 'W' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='W') }}"
+            >W</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='W') }}"
+            >W</a
+        >&nbsp; {% endif %} {% if letter == 'X' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='X') }}"
+            >X</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='X') }}"
+            >X</a
+        >&nbsp; {% endif %} {% if letter == 'Y' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='Y') }}"
+            >Y</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='Y') }}"
+            >Y</a
+        >&nbsp; {% endif %} {% if letter == 'Z' %}
+        <a
+            class="navbar-brand az-green-bold"
+            href="{{ url_for(url, letter='Z') }}"
+            >Z</a
+        >&nbsp; {% else %}
+        <a class="navbar-brand az-normal" href="{{ url_for(url, letter='Z') }}"
+            >Z</a
+        >&nbsp; {% endif %}
     </div>
 </nav>

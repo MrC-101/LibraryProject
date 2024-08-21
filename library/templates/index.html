@@ -1,64 +1,58 @@
 {% extends "layout.html" %}
 {% block headline %}
+    
     {% if flag == 'books_list' or flag == 'books_by_letter' %}
         <a class="float-right"
            href="{{ url_for('main.search_books', flag='books_list') }}"
-           style="text-decoration:none">🔍</a>
-        <a href="{{ url_for('main.home', flag='authors_list') }}"
-           style="text-decoration:none;
-                  color:black">Books</a>
-        <a style="text-decoration:none;
-                  color:rgb(9, 145, 9)"
+           >🔍</a>
+        <a class="black" href="{{ url_for('main.home', flag='authors_list') }}"
+           >Books</a>
+        <a class="green" href="{{ url_for('main.home', flag='authors_list') }}"
            href="{{ url_for("book.add_title") }}">+</a>
-        <a style="color: red;
-                  text-decoration:none"
+        <a class="red"
            href="{{ url_for("main.search_books") }}">-</a>
     {% elif flag == 'authors_list' or flag == 'authors_by_letter' %}
         <a class="float-right"
            href="{{ url_for('main.search_authors', flag='authors_list') }}"
-           style="text-decoration:none">🔍</a>
-        <a href="{{ url_for('main.home', flag='publishers_list') }}"
-           style="text-decoration:none;
-                  color:rgb(0, 0, 0)">Authors</a>
-        <a style="text-decoration:none;
-                  color:rgb(9, 145, 9)"
+           >🔍</a>
+        <a class="black" href="{{ url_for('main.home', flag='publishers_list') }}"
+           >Authors</a>
+        <a class="green"
            href="{{ url_for("author.add_author") }}">+</a>
-        <a style="color: red;
-                  text-decoration:none"
+        <a class="red"
            href="{{ url_for('main.search_authors', flag='authors_list') }}">-</a>
     {% elif flag == 'publishers_list' or flag == 'publishers_by_letter' %}
         <a class="float-right"
            href="{{ url_for('main.search_publishers', flag='publishers_list') }}"
-           style="text-decoration:none">🔍</a>
-        <a href="{{ url_for('main.home', flag='books_list') }}"
-           style="text-decoration:none;
-                  color:rgb(0, 0, 0)">Publishers</a>
-        <a style="text-decoration:none;
-                  color:rgb(9, 145, 9)"
+           >🔍</a>
+        <a class="black" href="{{ url_for('main.home', flag='books_list') }}"
+           >Publishers</a>
+        <a class="green"
            href="{{ url_for("publisher.add_publisher") }}">+</a>
-        <a style="color: red;
-                  text-decoration:none"
+        <a class="red"
            href="{{ url_for('main.search_publishers', flag='publishers_list') }}">-</a>
     {% endif %}
 {% endblock %}
+
 {% block subhead %}
     <hr />
-    &nbsp;{{ total }} <a style="text-decoration:none;
-           color:cadetblue"
-    href="{{ url_for('main.home', flag='books_list') }}">books</a> - {{ total_auth }} <a style="text-decoration:none;
-           color:cadetblue"
+    &nbsp;{{ total }} 
+    <a class="cadetblue"
+    href="{{ url_for('main.home', flag='books_list') }}">books</a> - {{ total_auth }} 
+    <a class="cadetblue"
     href="{{ url_for('main.home', flag='authors_list') }}">authors</a> -
-    {{ total_publishers }} <a style="text-decoration:none;
-           color:cadetblue"
+    {{ total_publishers }} 
+    <a class="cadetblue"
     href="{{ url_for('main.home', flag='publishers_list') }}">publishers</a> in Total
     {% if not not_show_limit %}
-        <form class="float-right" method="POST" " novalidate>
+        <form class="float-right" method="post" novalidate>
             {{ form.csrf_token }}
             {{ form.limit(size=5, class="pb-0 align-middle mt0") }}
             {{ form.submit(class="btn btn-warning btn-sm align-middle mt0", style="color:black; --bs-btn-font-size: .75rem") }}
         </form>
     {% endif %}
 {% endblock subhead %}
+
 {% block a_z %}
     {% if flag == 'authors_by_letter' or flag == 'authors_list' %}
         {% set url = "author.authors_by_letter" %}
@@ -71,6 +65,7 @@
         {% include 'a_z.html' %}
     {% endwith %}
 {% endblock a_z %}
+
 {% block content %}
     <br>
     <br>
@@ -89,9 +84,9 @@
     {% if flag =='books_list' %}
         <ul>
             {% if books|count == 0 %}
-                <h4 style=" color:red">Library is empty</h4>
+                <h4 class="red">Library is empty</h4>
             {% elif books|count != 0 %}
-                <h6 style="color:rgb(57, 57, 57); font-weight:bold">
+                <h6 class="black-bold">
                     ✱ -
                     {# Calculating Number of Authors for current letter if letter IS NOT '*' #}
                     {% set bks = 'books' if books|count != 1 else 'bks' %}
@@ -151,7 +146,7 @@
     {% elif flag == 'books_by_letter' %}
         <ul>
             {% if books_by_letter|count == 0 %}
-                <h4 style="color:red">Library is empty</h4>
+                <h4 class="red">Library is empty</h4>
             {% else %}
                 <h6>
                     {% if letter != '*' %}
@@ -196,8 +191,8 @@
     </ul>
 {% elif flag == 'authors_list' %}
     <ul>
-        {% if authors|count == 0 %}<h4 style="color:red">Library is empty</h4>{% endif %}
-        <h6 style="color:rgb(57, 57, 57); font-weight:bold">
+        {% if authors|count == 0 %}<h4 class="red">Library is empty</h4>{% endif %}
+        <h6 class="black-bold">
             ✱ -
             {# Calculating Number of Authors for current letter if letter IS NOT '*' #}
             {% set auth = 'authors' if authors_by_letter|count != 1 else 'author' %}
@@ -214,7 +209,7 @@
                     {% endif %}
                 {% endfor %}
                 {% set auth = 'authors' if ns.author_number != 1 else 'author' %}
-                <h6 style="color:black; font-weight:bold">{{ letter }} - {{ ns.author_number }} {{ auth }} found</h6>
+                <h6 class="black-bold">{{ letter }} - {{ ns.author_number }} {{ auth }} found</h6>
                 {# List Authors for current letter #}
                 {% set ns.author_limit_number = 0 %}
                 {% for author in authors %}
@@ -234,9 +229,9 @@
 {% elif flag == 'authors_by_letter' %}
     <ul>
         {% if authors_by_letter|count == 0 %}
-            <h4 style="color:red">Library is empty</h4>
+            <h4 class="red">Library is empty</h4>
         {% else %}
-            <h6 style="color:rgb(57, 57, 57); font-weight:bold">
+            <h6 class="black-bold">
                 {% if letter != '*' %}
                     {{ letter }}
                 {% else %}
@@ -257,7 +252,7 @@
                         {% endif %}
                     {% endfor %}
                     {% set auth = 'authors' if ns.author_number != 1 else 'author' %}
-                    <h6 style="color:black; font-weight:bold">{{ letter }} - {{ ns.author_number }} {{ auth }} found</h6>
+                    <h6 class="black-bold">{{ letter }} - {{ ns.author_number }} {{ auth }} found</h6>
                     {# List Authors for current letter if letter IS '*' #}
                     {% for author in authors_by_letter %}
                         {% if author.lname.startswith(letter) %}
@@ -278,10 +273,10 @@
 {% elif flag == 'publishers_list' %}
     <ul>
         {% if publishers|count == 0 %}
-            <h4 style="color:red">Library is empty</h4>
+            <h4 class="red">Library is empty</h4>
         {% else %}
             {% set publ = 'publishers' if publishers|count != 1 else 'publisher' %}
-            <h6 style="color:rgb(57, 57, 57); font-weight:bold">✱ - {{ publishers|length }} {{ publ }} found</h6>
+            <h6 class="black-bold">✱ - {{ publishers|length }} {{ publ }} found</h6>
             <br />
             {% for letter in letters %}
                 {% with choice=choice %}
@@ -294,9 +289,9 @@
 {% elif flag == 'publishers_by_letter' %}
     <ul>
         {% if publishers_by_letter|count == 0 %}
-            <h4 style="color:red">Library is empty</h4>
+            <h4 class="red">Library is empty</h4>
         {% else %}
-            <h6 style="color:rgb(57, 57, 57); font-weight:bold">
+            <h6 class="black-bold">
                 {% if letter != '*' %}
                     {{ letter }}
                 {% else %}
