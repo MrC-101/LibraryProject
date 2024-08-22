@@ -1,103 +1,94 @@
-{% extends 'layout.html' %}
-{% block headline %}
-Add Author
-{% endblock %}
-
-{% block subhead %}
-
-{% endblock %}
-
-{% block content %}
-<br><br><br><br><br><br><br><br><br><br>
-<h3 class="mb-4" style="color:red">&ensp;&nbsp;{{ msg }} </h3>
-<form method="POST" action="{{ url_for('author.add_author') }}" novalidate>
-    {{ form.csrf_token }}
-    &emsp;&nbsp;Pen Name: {{ form.penname(size=70) }}
-    {% for err in form.penname.errors %}
-    <span style="color: red">{{ err }}</span>
+{% extends 'layout.html' %} {% block headline %} Add Author {% endblock %} {%
+block subhead %} {% endblock %} {% block content %}
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<h3 class="mb-4 red">&ensp;&nbsp;{{ msg }}</h3>
+<form method="post" action="{{ url_for('author.add_author') }}" novalidate>
+    {{ form.csrf_token }} &emsp;&nbsp;Pen Name: {{ form.penname(size=70) }} {%
+    for err in form.penname.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&ensp;Known as: {{ form.knownas(size=70) }}
-    {% for err in form.knownas.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&ensp;Known as: {{ form.knownas(size=70) }} {% for err in
+    form.knownas.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10) }}
-    {% for err in form.name_pref.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&emsp;&nbsp;Prefix: {{ form.name_pref(size=10) }} {% for err in
+    form.name_pref.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;First Name: {{ form.fname(size=70) }}
-    {% for err in form.fname.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;First Name: {{ form.fname(size=70) }} {% for err in form.fname.errors
+    %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;Mid Name: {{ form.midname(size=70) }}
-    {% for err in form.midname.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;Mid Name: {{ form.midname(size=70) }} {% for err in
+    form.midname.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;Last Name: {{ form.lname(size=70) }}
-    {% for err in form.lname.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;Last Name: {{ form.lname(size=70) }} {% for err in form.lname.errors
+    %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&emsp;&nbsp;Suffix: {{ form.name_suf(size=10) }}
-    {% for err in form.name_suf.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&emsp;&nbsp;Suffix: {{ form.name_suf(size=10) }} {% for err in
+    form.name_suf.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&ensp;Gender: {{ form.gender(size=1) }}
-    {% for err in form.gender.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&ensp;Gender: {{ form.gender(size=1) }} {% for err in
+    form.gender.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;Country: {{ form.country(size=70) }}
-    {% for err in form.country.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;Country: {{ form.country(size=70) }} {% for err in
+    form.country.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&emsp;&ensp;&nbsp;City: {{ form.city(size=70) }}
-    {% for err in form.city.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&emsp;&ensp;&nbsp;City: {{ form.city(size=70) }} {% for err in
+    form.city.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&emsp;&ensp;Born: {{ form.born(size=4) }}
-    {% for err in form.born.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&emsp;&ensp;Born: {{ form.born(size=4) }} {% for err in
+    form.born.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
-    &emsp;&emsp;&emsp;&ensp;Died: {{ form.died(size=4) }}
-    {% for err in form.died.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&emsp;&ensp;Died: {{ form.died(size=4) }} {% for err in
+    form.died.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br /><br />
-    &emsp;&emsp;&emsp;&nbsp;Email: {{ form.email(size=70) }}
-    {% for err in form.email.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&emsp;&nbsp;Email: {{ form.email(size=70) }} {% for err in
+    form.email.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br /><br />
-    &emsp;&emsp;&emsp;&emsp;&nbsp;Bio: {{ form.bio(cols="73", rows="7") }}
-    {% for err in form.bio.errors %}
-    <span style="color: red">{{ err }}</span>
+    &emsp;&emsp;&emsp;&emsp;&nbsp;Bio: {{ form.bio(cols="73", rows="7") }} {%
+    for err in form.bio.errors %}
+    <span class="red">{{ err }}</span>
     {% endfor %}
     <br />
     <br />
     &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;{{ form.submit(class="btn
     btn-success btn-sm") }}
     <button class="btn btn-secondary btn-sm">
-        <a href="{{ url_for('main.home') }}" style="text-decoration: none; color: white">Cancel</a>
+        <a class="white inherit" href="{{ url_for('main.home') }}">Cancel</a>
     </button>
 </form>
 <hr />
