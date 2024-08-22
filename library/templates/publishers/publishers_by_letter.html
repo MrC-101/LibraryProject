@@ -1,40 +1,40 @@
 {# Calculating Number of Publishers for current letter #}
-{% set ns=namespace(publisher_number=0) %}
+{% set ns = namespace(publisher_number=0) %}
 {% for publisher in choice %}
-{% if publisher.publ_name.startswith(letter) %}
-{% set ns.publisher_number=ns.publisher_number+1 %}
-{% endif %}
+ 
+    {% if publisher.publ_name.startswith(letter) %}
+ 
+{% set ns.publisher_number = ns.publisher_number+1 %}
+    {% endif %}
+ 
 {% endfor %}
-{% set publ='publishers' if ns.publisher_number != 1 else 'publisher' %}
-<h6 style="color:black; font-weight:bold">{{ letter }} - {{ns.publisher_number}} {{ publ }} found</h6>
-
+ 
+{% set publ = 'publishers' if ns.publisher_number != 1 else 'publisher' %}
+<h6 class="black-bold">
+    {{ letter }} - {{ ns.publisher_number }} {{ publ }} found
+</h6>
 {# List Publishers for current letter if letter IS '*' #}
 {% for publisher in choice %}
-
-{% if publisher.publ_name.startswith(letter) %}  
-
-<li>
-    <button class="btn btn-outline-secondary btn-sm">
-        <a href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}"
-            style="text-decoration: none; color: darkgray">Edit</a>
-    </button>
-    <button class="btn btn-outline-danger btn-sm">
-        <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}"
-            style="text-decoration: none; color: orangered">Delete</a>
-    </button>&ensp;▫️
-
-    {% set auth='author' if publisher.authors|count == 1 else 'authors' %}
-    {% set bks='book' if publisher.books|count == 1 else 'books' %}
-    <a style="text-decoration:none"
-        href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name}}</a>
-    - {{publisher.publ_est}} - {{publisher.publ_country}} - {{publisher.publ_city}} - <a
-        style="text-decoration:none"
-        href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }}
-        {{ auth }}</a> and <a style="text-decoration:none"
-        href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name)}}">{{ publisher.books|count }}
-        {{ bks }}</a>
-    in total
-</li>
-
-{% endif %}
+    {% if publisher.publ_name.startswith(letter) %}
+        <li>
+            <button class="btn btn-outline-secondary btn-sm">
+                <a class="darkgrey"
+                   href="{{ url_for('publisher.edit_publisher', id=publisher.id) }}">Edit</a>
+            </button>
+            <button class="btn btn-outline-danger btn-sm">
+                <a class="orangered"
+                   href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">Delete</a>
+            </button>
+            &ensp;▫️
+{% set auth = 'author' if publisher.authors|count == 1 else 'authors' %}
+{% set bks = 'book' if publisher.books|count == 1 else 'books' %}
+            <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name }}</a>
+            - {{ publisher.publ_est }} - {{ publisher.publ_country }} -
+            {{ publisher.publ_city }} -
+            <a href="{{ url_for('publisher.publisher_authors', publisher=publisher.publ_name) }}">{{ publisher.authors|count }} {{ auth }}</a>
+            and
+            <a href="{{ url_for('publisher.publisher_bibliography', publisher=publisher.publ_name) }}">{{ publisher.books|count }} {{ bks }}</a>
+            in total
+        </li>
+    {% endif %}
 {% endfor %}
