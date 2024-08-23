@@ -1,8 +1,7 @@
 {% extends "layout.html" %}
 {% block headline %}
- 
     {% if flag == 'books_list' or
-flag == 'books_by_letter' %}
+        flag == 'books_by_letter' %}
         <a class="float-right"
            href="{{ url_for('main.search_books', flag='books_list') }}">🔍</a>
         <a class="grey" href="{{ url_for('main.home', flag='authors_list') }}">Books</a>
@@ -25,51 +24,43 @@ flag == 'books_by_letter' %}
         <a class="red inherit-bold"
            href="{{ url_for('main.search_publishers', flag='publishers_list') }}">-</a>
     {% endif %}
- 
 {% endblock %}
- 
 {% block subhead %}
     <hr />
-&nbsp;{{ total }}
+    &nbsp;{{ total }}
     <a class="cadetblue"
        href="{{ url_for('main.home', flag='books_list') }}">books</a>
-- {{ total_auth }}
+    - {{ total_auth }}
     <a class="cadetblue"
        href="{{ url_for('main.home', flag='authors_list') }}">authors</a>
-- {{ total_publishers }}
+    - {{ total_publishers }}
     <a class="cadetblue"
        href="{{ url_for('main.home', flag='publishers_list') }}">publishers</a>
-in Total
+    in Total
     {% if not not_show_limit %}
         <form class="float-right" method="post" novalidate>
-    {{ form.csrf_token }} {{ form.limit(size=5, class="pb-0 align-middle mt0") 
-    }} {{ form.submit(class="btn btn-warning btn-sm align-middle mt0 limit-btn") 
-    }}
+            {{ form.csrf_token }} {{ form.limit(size=5, class="pb-0 align-middle mt0") 
+            }} {{ form.submit(class="btn btn-warning btn-sm align-middle mt0 limit-btn") 
+            }}
         </form>
     {% endif %}
- 
 {% endblock subhead %}
- 
 {% block a_z %}
- 
     {% if flag ==
-'authors_by_letter' or flag == 'authors_list' %}
-{% set url = "author.authors_by_letter" %}
+        'authors_by_letter' or flag == 'authors_list' %}
+        {% set url = "author.authors_by_letter" %}
     {% elif flag == 'books_by_letter' or flag ==
-'books_list' %}
-{% set url = "book.books_by_letter" %}
+        'books_list' %}
+        {% set url = "book.books_by_letter" %}
     {% elif flag ==
-'publishers_by_letter' or flag == 'publishers_list' %}
-{% set url = "publisher.publishers_by_letter" %}
+        'publishers_by_letter' or flag == 'publishers_list' %}
+        {% set url = "publisher.publishers_by_letter" %}
     {% endif %}
- 
     {% with letter=letter %}
-{%
-include 'a_z.html' %}
+        {%
+        include 'a_z.html' %}
     {% endwith %}
- 
 {% endblock a_z %}
- 
 {% block content %}
     <br />
     <br />
@@ -88,217 +79,161 @@ include 'a_z.html' %}
     {% if flag =='books_list' %}
         <ul>
             {% if books|count == 0 %}
-                <h4 class="red">
-Library is empty
-                </h4>
+                <h4 class="red">Library is empty</h4>
             {% elif books|count != 0 %}
                 <h6 class="black-bold">
-                                                                                                                                ✱ - {# Calculating Number of Authors for current letter if letter IS NOT
-        '*' #} {% set bks = 'books' if books|count != 1 else 'bks' %} {{
-        books|length }} {{ bks }} found
+                    ✱ - {# Calculating Number of Authors for current letter if letter IS NOT
+'*' #} {% set bks = 'books' if books|count != 1 else 'bks' %} {{
+                    books|length }} {{ bks }} found
                 </h6>
                 <br />
                 {% for letter in letters %}
                     {% set ttl = 'books' if books_by_letter|count !=
-                                                                                                                            1 else 'book' %} {% set ns = namespace(author_number=0, book_number=0,
-                                                                                                                                  book_number_nolimit=0) %}
+                                            1 else 'book' %} {% set ns = namespace(author_number=0, book_number=0,
+                     book_number_nolimit=0) %}
                     {% for author in authors %}
- 
                         {% if
-    author.lname.startswith(letter) %}
- 
+                            author.lname.startswith(letter) %}
                             {% for book in author.books %}
- 
                                 {% if
-    book.title.startswith(letter) %}
-                                    {% set ns.author_number = ns.author_number
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    + 1 %}
+                                    book.title.startswith(letter) %}
+                                    {% set ns.author_number = ns.author_number + 1 %}
                                 {% endif %}
- 
                             {% endfor %}
- 
                         {% endif %}
- 
                     {% endfor %}
- 
                     {% if
-    ns.author_number > 0 %}
-                        <h6>
-{{ letter }}
-                        </h6>
+                        ns.author_number > 0 %}
+                        <h6>{{ letter }}</h6>
                         <hr />
                     {% endif %}
- 
                     {% for author in authors %}
                         {% set ns.book_number = 0 %} {#
     Count how many book starting from said letter the author has #}
                         {% for book
-    in author.books %}
- 
+                            in author.books %}
                             {% if book.title.startswith(letter) %}
- 
                                 {% set
-                                                                                                                                                                                                    ns.book_number = ns.book_number + 1 %}
- 
+                                ns.book_number = ns.book_number + 1 %}
                             {% endif %}
- 
                         {% endfor %}
- 
                         {% if
-    ns.book_number > 0 %}
+                            ns.book_number > 0 %}
                             <h6>
-        {{ author.fullname }}
+                                {{ author.fullname }}
                                 <a style="text-decoration: none"
                                    href="{{ url_for('author.bibliography', author=author.fullname) }}">
-                                                                                                                                                                                                            {{ ns.book_number }} books</a>
-        in collection
+                                {{ ns.book_number }} books</a>
+                                in collection
                             </h6>
                         {% endif %}
-                                                                                                                                                 {# List the books of the author #} {% set ns.book_number = 0 %}
+                        {# List the books of the author #} {% set ns.book_number = 0 %}
                         {% for book in author.books %}
- 
                             {% if book.title.startswith(letter) %}
- 
                                 {% set
-                                                                                                                                                                                                    ns.book_number = ns.book_number + 1 %}
- 
+                                ns.book_number = ns.book_number + 1 %}
                                 {% if ns.book_number <= limit and
-    limit != 0 %}
- 
-{% include 'books/list_author_books.html' %}
- 
+                                    limit != 0 %}
+                                    {% include 'books/list_author_books.html' %}
                                 {% elif limit ==
-    0 %}
- 
-{% include 'books/list_author_books.html' %}
- 
+                                    0 %}
+                                    {% include 'books/list_author_books.html' %}
                                 {% endif %}
- 
                             {% endif %}
-{%
-    endfor %}
-                            {% if ns.book_number > 0 %}
-                                <br />
-                            {% endif %}
- 
+                            {%
+                            endfor %}
+                            {% if ns.book_number > 0 %}<br />{% endif %}
                         {% endfor %}
                         <br />
                     {% endfor %}
- 
                 {% endif %}
             </ul>
         {% elif flag == 'books_by_letter' %}
             <ul>
                 {% if books_by_letter|count == 0 %}
-                    <h4 class="red">
-Library is empty
-                    </h4>
+                    <h4 class="red">Library is empty</h4>
                 {% else %}
                     <h6>
                         {% if letter != '*' %}
- {{ letter }}
+                            {{ letter }}
                         {% else %}
- ✱
+                            ✱
                         {% endif %}
- -
+                        -
                         {% set
-                                                                                                                                                        ttl = 'books' if books_by_letter|count != 1 else 'book' %}
- {{
-        books_by_letter|length }} {{ ttl }} by {{ authors_count }} authors found
+                        ttl = 'books' if books_by_letter|count != 1 else 'book' %}
+                        {{
+                        books_by_letter|length }} {{ ttl }} by {{ authors_count }} authors found
                     </h6>
                     <br />
                     {% for author_letter in letters %}
- 
                         {% for author in authors %}
- 
                             {% if
-    author.lname.startswith(author_letter) %}
-{% set ns = namespace(book_number=0) %}
+                                author.lname.startswith(author_letter) %}
+                                {% set ns = namespace(book_number=0) %}
                                 {% for book in author.books %}
- 
                                     {% if
-    book.title.startswith(letter) or letter == '*' %}
-{% set ns.book_number = ns.book_number+1 %}
+                                        book.title.startswith(letter) or letter == '*' %}
+                                        {% set ns.book_number = ns.book_number+1 %}
                                     {% endif %}
- 
                                 {% endfor %}
- 
                                 {% if ns.book_number > 0 %}
                                     <h6>
-        {{ author.fullname }}
+                                        {{ author.fullname }}
                                         <a style="text-decoration: none"
                                            href="{{ url_for('author.bibliography', author=author.fullname) }}">
-                                                                                                                                                                                                                                                            {{ ns.book_number }} books</a>
+                                        {{ ns.book_number }} books</a>
                                     </h6>
                                 {% endif %}
- 
                                 {% for book in author.books %}
- 
                                     {% if
-    book.title.startswith(letter) %}
- 
-{% include 'books/list_author_books.html'
-    %}
- 
+                                        book.title.startswith(letter) %}
+                                        {% include 'books/list_author_books.html'
+                                        %}
                                     {% endif %}
- 
                                     {% if letter == '*' %}
- 
-{% include
-    'books/list_author_books.html' %}
- 
+                                        {% include
+                                        'books/list_author_books.html' %}
                                     {% endif %}
- 
                                 {% endfor %}
- 
                                 {% if
-    ns.book_number > 0 %}
+                                    ns.book_number > 0 %}
                                     <br />
                                 {% endif %}
- 
                             {% endif %}
- 
                         {% endfor %}
- 
                     {% endfor %}
                 {% endif %}
             </ul>
         {% elif flag == 'authors_list' %}
             <ul>
-                {% if authors|count == 0 %}
-                    <h4 class="red">
-Library is empty
-                    </h4>
-                {% endif %}
+                {% if authors|count == 0 %}<h4 class="red">Library is empty</h4>{% endif %}
                 <h6 class="black-bold">
-                                                                                                                                ✱ - {# Calculating Number of Authors for current letter if letter IS NOT
-        '*' #} {% set auth = 'authors' if authors_by_letter|count != 1 else
-              'author' %} {{ authors|length }} {{ auth }} found
+                    ✱ - {# Calculating Number of Authors for current letter if letter IS NOT
+'*' #} {% set auth = 'authors' if authors_by_letter|count != 1 else
+                     'author' %} {{ authors|length }} {{ auth }} found
                 </h6>
                 <br />
                 {% if authors|count != 0 %}
                     {% for letter in letters %}
-                                                                                                                        {# Calculating Number of Authors for current letter #}
-{% set ns = namespace(author_number = 0, author_limit_number = 0) %}
+                        {# Calculating Number of Authors for current letter #}
+                        {% set ns = namespace(author_number = 0, author_limit_number = 0) %}
                         {% for author in authors %}
                             {% if author.lname.startswith(letter) %}
-{% set ns.author_number = ns.author_number+1 %}
+                                {% set ns.author_number = ns.author_number+1 %}
                             {% endif %}
                         {% endfor %}
-{% set auth = 'authors' if ns.author_number != 1 else 'author' %}
-                        <h6 class="black-bold">
-                            {{ letter }} - {{ ns.author_number }} {{ auth }} found
-                        </h6>
-                                                                                                                        {# List Authors for current letter #}
-{% set ns.author_limit_number = 0 %}
+                        {% set auth = 'authors' if ns.author_number != 1 else 'author' %}
+                        <h6 class="black-bold">{{ letter }} - {{ ns.author_number }} {{ auth }} found</h6>
+                        {# List Authors for current letter #}
+                        {% set ns.author_limit_number = 0 %}
                         {% for author in authors %}
                             {% if author.lname.startswith(letter) %}
                                 {% if ns.author_limit_number < limit and limit != 0 %}
-{% set ns.author_limit_number = ns.author_limit_number + 1 %}
-{% include 'authors/list_authors_per_letter.html' %}
+                                    {% set ns.author_limit_number = ns.author_limit_number + 1 %}
+                                    {% include 'authors/list_authors_per_letter.html' %}
                                 {% elif limit == 0 %}
- 
-{% include 'authors/list_authors_per_letter.html' %}
+                                    {% include 'authors/list_authors_per_letter.html' %}
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
@@ -309,48 +244,43 @@ Library is empty
         {% elif flag == 'authors_by_letter' %}
             <ul>
                 {% if authors_by_letter|count == 0 %}
-                    <h4 class="red">
-                        Library is empty
-                    </h4>
+                    <h4 class="red">Library is empty</h4>
                 {% else %}
                     <h6 class="black-bold">
                         {% if letter != '*' %}
- {{ letter }}
+                            {{ letter }}
                         {% else %}
- ✱
+                            ✱
                         {% endif %}
-                                                                                                                                                 - {#
+                        - {#
         Calculating Number of Authors for current letter if letter IS NOT '*' #}
-{% set auth = 'authors' if authors_by_letter|count != 1 else 'author' %}
-        {{ authors_by_letter|length }} {{ auth }} found
+                        {% set auth = 'authors' if authors_by_letter|count != 1 else 'author' %}
+                        {{ authors_by_letter|length }} {{ auth }} found
                     </h6>
- 
                     {% if letter == '*' %}
                         {% for letter in letters %}
-                                                                                    {# Calculating Number of Authors for current letter if letter IS '*' #}
-{% set ns = namespace(author_number=0) %}
+                            {# Calculating Number of Authors for current letter if letter IS '*' #}
+                            {% set ns = namespace(author_number=0) %}
                             {% for author in authors_by_letter %}
                                 {% if author.lname.startswith(letter) %}
-{% set ns.author_number = ns.author_number+1 %}
+                                    {% set ns.author_number = ns.author_number+1 %}
                                 {% endif %}
                             {% endfor %}
-{% set auth = 'authors' if ns.author_number != 1 else 'author' %}
-                            <h6 class="black-bold">
-                                {{ letter }} - {{ ns.author_number }} {{ auth }} found
-                            </h6>
-                                                                                    {# List Authors for current letter if letter IS '*' #}
+                            {% set auth = 'authors' if ns.author_number != 1 else 'author' %}
+                            <h6 class="black-bold">{{ letter }} - {{ ns.author_number }} {{ auth }} found</h6>
+                            {# List Authors for current letter if letter IS '*' #}
                             {% for author in authors_by_letter %}
                                 {% if author.lname.startswith(letter) %}
-{% include 'authors/list_authors_per_asterisk.html' %}
+                                    {% include 'authors/list_authors_per_asterisk.html' %}
                                 {% endif %}
                             {% endfor %}
                             <br />
                         {% endfor %}
                     {% endif %}
-                                                                                                    {# List Authors for current letter if letter IS NOT '*' #}
+                    {# List Authors for current letter if letter IS NOT '*' #}
                     {% if letter != '*' %}
                         {% for author in authors_by_letter %}
-{% include 'authors/list_authors_per_asterisk.html' %}
+                            {% include 'authors/list_authors_per_asterisk.html' %}
                         {% endfor %}
                     {% endif %}
                 {% endif %}
@@ -358,18 +288,14 @@ Library is empty
         {% elif flag == 'publishers_list' %}
             <ul>
                 {% if publishers|count == 0 %}
-                    <h4 class="red">
-                        Library is empty
-                    </h4>
+                    <h4 class="red">Library is empty</h4>
                 {% else %}
-{% set publ = 'publishers' if publishers|count != 1 else 'publisher' %}
-                    <h6 class="black-bold">
-                        ✱ - {{ publishers|length }} {{ publ }} found
-                    </h6>
+                    {% set publ = 'publishers' if publishers|count != 1 else 'publisher' %}
+                    <h6 class="black-bold">✱ - {{ publishers|length }} {{ publ }} found</h6>
                     <br />
                     {% for letter in letters %}
                         {% with choice=choice %}
-{% include 'publishers/publishers_by_letter.html' %}
+                            {% include 'publishers/publishers_by_letter.html' %}
                         {% endwith %}
                         <br />
                     {% endfor %}
@@ -378,28 +304,26 @@ Library is empty
         {% elif flag == 'publishers_by_letter' %}
             <ul>
                 {% if publishers_by_letter|count == 0 %}
-                    <h4 class="red">
-                        Library is empty
-                    </h4>
+                    <h4 class="red">Library is empty</h4>
                 {% else %}
                     <h6 class="black-bold">
-                                                                                                                    {# Calculating Number of Publishers for current letter if letter IS NO '*' #}
+                        {# Calculating Number of Publishers for current letter if letter IS NO '*' #}
                         {% if letter == '*' %}
-{% set publ = 'publishers' if publishers_by_letter|count != 1 else 'publisher' %}
-                        ✱ - {{ publishers_by_letter|length }} {{ publ }} found
+                            {% set publ = 'publishers' if publishers_by_letter|count != 1 else 'publisher' %}
+                            ✱ - {{ publishers_by_letter|length }} {{ publ }} found
                         </h6>
                         <br />
                         {% for letter in letters %}
                             {% with choice=choice %}
-{% include 'publishers/publishers_by_letter.html' %}
+                                {% include 'publishers/publishers_by_letter.html' %}
                             {% endwith %}
                             <br />
                         {% endfor %}
                     {% endif %}
-                                                                                                    {# List Publishers for current letter if letter IS NOT '*' #}
+                    {# List Publishers for current letter if letter IS NOT '*' #}
                     {% if letter != '*' %}
                         {% with choice=choice %}
-{% include 'publishers/publishers_by_letter.html' %}
+                            {% include 'publishers/publishers_by_letter.html' %}
                         {% endwith %}
                     {% endif %}
                 {% endif %}

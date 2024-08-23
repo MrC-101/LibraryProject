@@ -1,18 +1,12 @@
 {# Calculating Number of Publishers for current letter #}
 {% set ns = namespace(publisher_number=0) %}
 {% for publisher in choice %}
- 
     {% if publisher.publ_name.startswith(letter) %}
- 
-{% set ns.publisher_number = ns.publisher_number+1 %}
+        {% set ns.publisher_number = ns.publisher_number+1 %}
     {% endif %}
- 
 {% endfor %}
- 
 {% set publ = 'publishers' if ns.publisher_number != 1 else 'publisher' %}
-<h6 class="black-bold">
-    {{ letter }} - {{ ns.publisher_number }} {{ publ }} found
-</h6>
+<h6 class="black-bold">{{ letter }} - {{ ns.publisher_number }} {{ publ }} found</h6>
 {# List Publishers for current letter if letter IS '*' #}
 {% for publisher in choice %}
     {% if publisher.publ_name.startswith(letter) %}
@@ -26,8 +20,8 @@
                    href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">Delete</a>
             </button>
             &ensp;▫️
-{% set auth = 'author' if publisher.authors|count == 1 else 'authors' %}
-{% set bks = 'book' if publisher.books|count == 1 else 'books' %}
+            {% set auth = 'author' if publisher.authors|count == 1 else 'authors' %}
+            {% set bks = 'book' if publisher.books|count == 1 else 'books' %}
             <a href="{{ url_for('publisher.publisher_details', id=publisher.id) }}">{{ publisher.publ_name }}</a>
             - {{ publisher.publ_est }} - {{ publisher.publ_country }} -
             {{ publisher.publ_city }} -

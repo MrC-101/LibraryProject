@@ -2,7 +2,6 @@ import sqlalchemy
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
 import os
-from flask import flash
 from dotenv import load_dotenv
 
 
@@ -55,4 +54,3 @@ def vacuum():
     print(DATABASE_URL)
     print(info)
     print("=" * length + "\n")
-

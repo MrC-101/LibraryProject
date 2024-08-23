@@ -1,106 +1,117 @@
 body {
-    color: rgb(90, 90, 90);
-    text-decoration: none;
+  color: rgb(90, 90, 90);
+  text-decoration: none;
 }
 li {
-    margin: 4px;
+  margin: 4px;
 }
 a {
-    text-decoration: none;
-    color: darkgray;
+  text-decoration: none;
+  color: darkgray;
 }
 a:hover {
-    text-decoration: none;
-    color: inherit;
-    font-weight: bold;
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
 }
 .inherit {
-    color: inherit;
-    text-decoration: none;
-    font-weight: normal !important;
+  color: inherit;
+  text-decoration: none;
+  font-weight: normal !important;
 }
 .inherit-bold {
-    color: inherit;
-    text-decoration: none;
-    font-weight: bold !important;
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold !important;
 }
 body-overflow {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 .float-right {
-    text-decoration: none;
+  text-decoration: none;
 }
 .green {
-    text-decoration: none;
-    color: rgb(9, 145, 9);
+  text-decoration: none;
+  color: rgb(9, 145, 9);
 }
 .black {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 .white {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 .red {
-    color: red;
-    text-decoration: none;
+  color: red;
+  text-decoration: none;
 }
 .black-bold {
-    color: rgb(115, 115, 115);
-    font-weight: bold;
-    text-decoration: none;
+  color: rgb(115, 115, 115);
+  font-weight: bold;
+  text-decoration: none;
 }
 .darkgray {
-    color: darkgray;
-    text-decoration: none;
+  color: darkgray;
+  text-decoration: none;
 }
 .orangered {
-    text-decoration: none;
-    color: orangered;
+  text-decoration: none;
+  color: orangered;
 }
 .orange {
-    font-weight: bold;
-    color: orange;
+  font-weight: bold;
+  color: orange;
 }
 .cadetblue {
-    color: cadetblue;
-    text-decoration: none;
+  color: cadetblue;
+  text-decoration: none;
 }
 .az-green-normal {
-    color: rgb(10, 175, 10);
-    font-size: large;
-    font-weight: normal;
+  color: rgb(10, 175, 10);
+  font-size: large;
+  font-weight: normal;
 }
 .az-green-bold {
-    font-size: large;
-    font-weight: bold;
-    color: rgb(24, 135, 82);
+  font-size: large;
+  font-weight: bold;
+  color: rgb(24, 135, 82);
 }
 .az-darkgrey-normal {
-    font-size: large;
-    font-weight: normal;
-    color: rgb(125, 125, 125);
+  font-size: large;
+  font-weight: normal;
+  color: rgb(125, 125, 125);
 }
 .az-normal {
-    font-size: small;
-    font-weight: normal;
+  font-size: small;
+  font-weight: normal;
 }
 .az-nav {
-    text-align: justify;
-    justify-items: last baseline;
+  text-align: justify;
+  justify-items: last baseline;
 }
 .limit-btn {
-    color: black;
-    --bs-btn-font-size: 0.75rem;
+  color: black;
+  --bs-btn-font-size: 0.75rem;
 }
 .auth-btn {
-    --bs-btn-padding-y: 0.25rem;
-    --bs-btn-padding-x: 0.5rem;
-    --bs-btn-font-size: 0.6rem;
+  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-font-size: 0.6rem;
 }
 .grey {
-    color: rgb(50, 50, 50);
-    text-decoration: none;
-    font-weight: inherit;
+  color: rgb(50, 50, 50);
+  text-decoration: none;
+  font-weight: inherit;
+}
+.dropd {
+  font-size: medium;
+}
+.dropd-red {
+  color: red;
+  font-size: medium;
+}
+.dropd-bold {
+  font-size: x-large;
+  font-weight: bold;
 }
