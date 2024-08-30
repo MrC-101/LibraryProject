@@ -5,3 +5,5 @@ books-collection*
 %localappdata%/Malwarebytes/Logs/MBAMSI.log
 %localappdata%/Malwarebytes/Logs/MBAMSI.lock
 .vscode
+migrations
+20240809142353.nb3

@@ -1,28 +1,27 @@
 <li>
   <button class="btn btn-outline-secondary btn-sm">
-    <a class="darkgrey" href="{{ url_for('book.edit_title', id=book.id) }}"
-      >Edit
+    <a class="darkgrey" href="{{ url_for('book.edit_title', id=book.id) }}">Edit
     </a>
   </button>
   <button class="btn btn-outline-danger btn-sm">
-    <a
-      class="orangered"
-      href="{{ url_for('book.book_details', id=book.id, book=book) }}"
-      >Delete
+    <a class="orangered"
+       href="{{ url_for('book.book_details', id=book.id, book=book) }}">Delete
     </a>
   </button>
   &nbsp; ▫️
-  <a href="{{ url_for('author.author_details', id=author.id) }}"
-    >{{author.knownas}}
+  <a href="{{ url_for('author.author_details', id=author.id) }}">{{ author.knownas }}
   </a>
-  ▫️ {{book.first_publish}} -
+  ▫️ {{ book.first_publish }} -
   <a href="{{ url_for('book.book_details', id=book.id) }}">{{ book.title }}</a>
-
-  {% if book.authors|length > 1 %} -
-  <span class="orange">Co-author(s):</span>
-  {% for author in book.authors %} {% if author.fullname != book.author %}
-  <a href="{{ url_for('author.bibliography', author=author.fullname) }}">
-    {{ author.fullname }} &nbsp;
-  </a>
-  {% endif %} {% endfor %} {% endif %}
+  {% if book.authors|length > 1 %}
+    -
+    <span class="orange">Co-author(s):</span>
+    {% for author in book.authors %}
+      {% if author.fullname != book.author %}
+        <a href="{{ url_for('author.bibliography', author=author.fullname) }}">
+            {{ author.fullname }} &nbsp;
+        </a>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 </li>
